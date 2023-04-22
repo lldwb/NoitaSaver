@@ -23,25 +23,37 @@ public class FileUtils {
         FileUtils.readPath = readPath;
         // 获取源文件夹中所有文件的路径列表
         List<String> list = folder(readPath, writePath);
+
+        List<Thread> threadList = new ArrayList<>();
+
         // 逐一将源文件夹中的文件写入目标文件夹
         for (final String path : list) {
             // 构造目标文件路径
             final String write = writePath + path.substring(readPath.length());
+
             // 输出目标文件路径
-            System.out.println(write);
+//            System.out.println(write);
+
             // 使用多线程将源文件夹中的文件写入目标文件夹中
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        io(path, write);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            Thread thread = new Thread(() -> {
+                try {
+                    io(path, write);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            }).start();
+            });
+            thread.start();
+            threadList.add(thread);
         }
 
-
+        //
+        for(Thread thread:threadList){
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -81,17 +93,16 @@ public class FileUtils {
      * @param writePath 目标地址
      * @throws IOException
      */
-    public static void io(String readPath, String writePath) throws IOException {
-
+    public static synchronized void io(String readPath, String writePath) throws IOException {
         // 输入文件操作对象
         File read = new File(readPath);
         // 输出文件操作对象
         File write = new File(writePath);
 
         // 输入文件流
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(read));
+        FileInputStream inputStream = new FileInputStream(read);
         // 输出文件流
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(write));
+        FileOutputStream outputStream = new FileOutputStream(write);
 
 
         // 返回指定的文件长度
