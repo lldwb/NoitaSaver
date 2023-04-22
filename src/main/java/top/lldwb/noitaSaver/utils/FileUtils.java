@@ -22,7 +22,7 @@ public class FileUtils {
         // 设置源文件夹地址
         FileUtils.readPath = readPath;
         // 获取源文件夹中所有文件的路径列表
-        List<String> list = folder(readPath, writePath);
+        List<String> list = getFilePathList(readPath, writePath);
 
         List<Thread> threadList = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class FileUtils {
             // 使用多线程将源文件夹中的文件写入目标文件夹中
             Thread thread = new Thread(() -> {
                 try {
-                    io(path, write);
+                    fileIO(path, write);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -47,7 +47,7 @@ public class FileUtils {
         }
 
         //
-        for(Thread thread:threadList){
+        for (Thread thread : threadList) {
             try {
                 thread.join();
             } catch (InterruptedException e) {
@@ -63,7 +63,7 @@ public class FileUtils {
      * @param writePath 目标文件夹地址
      * @return 指定文件夹中所有文件的路径列表
      */
-    public static List folder(String readPath, String writePath) {
+    public static List getFilePathList(String readPath, String writePath) {
         // 在目标文件夹中创建子文件夹
         new File(writePath + readPath.substring(FileUtils.readPath.length())).mkdir();
         // 初始化路径列表
@@ -74,12 +74,33 @@ public class FileUtils {
             String paths = readPath + '\\' + file;
             // 如果当前文件是文件夹，则递归获取该文件夹中的所有文件
             if (new File(paths).isDirectory()) {
-//                System.out.println(paths);
-//                System.out.println(writePath + paths.substring(FileUtils.readPath.length()));
-                // 如果当前文件是普通文件，则将其路径添加到路径列表中
-                list.addAll(folder(paths, writePath));
+                list.addAll(getFilePathList(paths, writePath));
             } else {
+                // 如果当前文件是普通文件，则将其路径添加到路径列表中
                 list.add(paths);
+            }
+        }
+        // 返回路径列表
+        return list;
+    }
+
+    /**
+     * 读取指定文件夹下的文件夹名称列表
+     *
+     * @param path 源文件夹地址
+     * @return 返回文件夹名称列表
+     */
+    public static List getFolderNameList(String path) {
+        // 初始化路径列表
+        List<String> list = new ArrayList();
+        // 遍历源文件夹中的所有文件
+        for (String file : new File(path).list()) {
+            // 构造当前文件的路径
+            String paths = path + '\\' + file;
+            // 判断是否是文件夹
+            if (new File(paths).isDirectory()) {
+                list.add(file);
+//                System.out.println(file);
             }
         }
         // 返回路径列表
@@ -93,7 +114,7 @@ public class FileUtils {
      * @param writePath 目标地址
      * @throws IOException
      */
-    public static synchronized void io(String readPath, String writePath) throws IOException {
+    public static synchronized void fileIO(String readPath, String writePath) throws IOException {
         // 输入文件操作对象
         File read = new File(readPath);
         // 输出文件操作对象
