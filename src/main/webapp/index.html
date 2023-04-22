@@ -1,56 +1,54 @@
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>生成二维码</title>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/vue.js"></script>
-	<!-- 引入样式 -->
-	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-	<!-- 引入组件库 -->
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-</head>
+    <meta charset="utf-8">
+    <title>存档管理</title>
+    <head>
+        <script src="js/vue.js"></script>
+        <script src="js/vue-router.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    </head>
 <body>
 <div id="qrc">
-
-	<el-dropdown>
-	<el-dropdown split-button type="primary" @click="handleClick">
-		更多菜单
-		<el-dropdown-menu slot="dropdown">
-			<el-dropdown-item>黄金糕</el-dropdown-item>
-			<el-dropdown-item>狮子头</el-dropdown-item>
-			<el-dropdown-item>螺蛳粉</el-dropdown-item>
-			<el-dropdown-item>双皮奶</el-dropdown-item>
-			<el-dropdown-item>蚵仔煎</el-dropdown-item>
-		</el-dropdown-menu>
-	</el-dropdown>
+    <template>
+        <el-select v-model="value" placeholder="请选择存档">
+            <el-option
+                    v-for="file in list"
+                    :value="file">
+            </el-option>
+        </el-select>
+    </template>
 </div>
 
 <script type="text/javascript">
-	new Vue({
-		el: "#qrc",
-		data: {
-			url: "",
-			sizeShow: false,
-			size: null
-		},
-		methods: {
-			handleClick() {
-				$.ajax({
-					url: "getFolderNameList",
-					dataType: "JSON",
-					data: {
-						path: "C:/Users/11/Desktop/安然的尾巴/账号/steam%20账号",
-					},
-					success: function(result) {
-						console.log(result);
-					},
-					error: function() {
-						$()
-					}
-				});
-			}
-		}
-	})
+    const vue = new Vue({
+        el: "#qrc",
+        data: {
+            list: null,
+            value:''
+        },
+        methods: {
+            s() {
+            }
+        },
+        mounted() {
+            $.ajax({
+                url: "getFolderNameList",
+                dataType: "JSON",
+                data: {
+                    path: "C:\\Users\\lldwb\\Desktop\\Noita",
+                },
+                success: function (result) {
+                    console.log(result);
+                    vue.list = result;
+                }
+            });
+        },
+
+    });
 </script>
 </body>
 </html>
