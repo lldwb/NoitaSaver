@@ -13,7 +13,7 @@ public class UnArchiveFolderCopyImpl implements FolderCopy {
     /**
      * 将指定的存档文件夹读档
      *
-     * @param readPath  源文件夹地址
+     * @param readPath  存档地址
      * @param writePath 目标文件夹地址
      */
     @Override

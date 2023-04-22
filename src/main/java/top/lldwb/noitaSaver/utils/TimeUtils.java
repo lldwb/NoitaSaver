@@ -1,0 +1,13 @@
+package top.lldwb.noitaSaver.utils;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class TimeUtils {
+    public static String currentTime(){
+        // 自定义时间格式
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        // 返回根据自定义时间格式生成的字符串
+        return dateTimeFormatter.format(LocalDateTime.now());
+    }
+}

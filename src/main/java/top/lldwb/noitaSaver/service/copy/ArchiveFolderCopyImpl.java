@@ -1,9 +1,9 @@
 package top.lldwb.noitaSaver.service.copy;
 
 import top.lldwb.noitaSaver.utils.FileUtils;
+import top.lldwb.noitaSaver.utils.TimeUtils;
 
 import java.io.File;
-import java.time.LocalDateTime;
 
 /**
  * 存档类，实现FolderCopy接口，用于将文件夹存档
@@ -18,10 +18,10 @@ public class ArchiveFolderCopyImpl implements FolderCopy {
      */
     @Override
     public void copy(String readPath, String writePath) {
-        String localDateTime= LocalDateTime.now().toString();
+        String localDateTime = TimeUtils.currentTime();
         // 在目标文件夹中创建子文件夹
-        new File(readPath+localDateTime).mkdir();
-        FileUtils.copyDirectory(readPath, writePath + localDateTime + "\\save00");
+        new File(writePath + localDateTime).mkdir();
+        FileUtils.copyDirectory(readPath, writePath + "\\" + localDateTime);
         System.out.println("存档成功！");
     }
 }
