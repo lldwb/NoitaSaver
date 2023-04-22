@@ -17,4 +17,14 @@ public interface FolderCopy {
      * @param writePath 目标文件夹地址
      */
     void copy(String readPath, String writePath);
+
+    static FolderCopy getFolderCopyFactory(String get){
+        if ("存档".equals(get)){
+            return new ArchiveFolderCopyImpl();
+        }else if ("读档".equals(get)){
+            return new UnArchiveFolderCopyImpl();
+        }else {
+            return null;
+        }
+    }
 }
