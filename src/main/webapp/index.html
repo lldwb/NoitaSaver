@@ -13,6 +13,8 @@
     </head>
 <body>
 <div id="qrc">
+    <input type="file" id="file" webkitdirectory directory/>
+    <button @click="button()"></button>
     <template>
         <el-select v-model="value" placeholder="请选择存档">
             <el-option
@@ -28,26 +30,38 @@
         el: "#qrc",
         data: {
             list: null,
-            value:''
+            value: '',
+            path: "G:\\"
         },
         methods: {
-            s() {
+            button() {
+                this.path = document.getElementById('file').value;
+                console.log(this.path);
+                $.ajax({
+                    url: "getFolderNameList",
+                    dataType: "JSON",
+                    data: {
+                        path: this.path,
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        vue.list = result;
+                    }
+                })
             }
         },
-        mounted() {
+        mounted:
             $.ajax({
                 url: "getFolderNameList",
                 dataType: "JSON",
                 data: {
-                    path: "C:\\Users\\lldwb\\Desktop\\Noita",
+                    path: "G:\\",
                 },
                 success: function (result) {
                     console.log(result);
                     vue.list = result;
                 }
-            });
-        },
-
+            }),
     });
 </script>
 </body>

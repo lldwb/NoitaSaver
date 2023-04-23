@@ -20,7 +20,7 @@ public class ArchiveFolderCopyImpl implements FolderCopy {
     public void copy(String readPath, String writePath) {
         String localDateTime = TimeUtils.currentTime();
         // 在目标文件夹中创建子文件夹
-        new File(writePath + localDateTime).mkdir();
+//        new File(writePath + localDateTime).mkdir();
         FileUtils.copyDirectory(readPath, writePath + "\\" + localDateTime);
         System.out.println("存档成功！");
     }

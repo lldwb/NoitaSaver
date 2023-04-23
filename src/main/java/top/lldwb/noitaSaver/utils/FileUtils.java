@@ -34,19 +34,20 @@ public class FileUtils {
             // 输出目标文件路径
 //            System.out.println(write);
 
-            // 使用多线程将源文件夹中的文件写入目标文件夹中
             Thread thread = new Thread(() -> {
                 try {
-                    fileIO(path, write);
+                    FileUtils.fileIO(path, write);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
             thread.start();
-            threadList.add(thread);
+            // 使用多线程将源文件夹中的文件写入目标文件夹中
+            if (new File(path).length() >= 1024 * 1024) {
+                threadList.add(thread);
+            }
         }
 
-        //
         for (Thread thread : threadList) {
             try {
                 thread.join();
@@ -114,17 +115,19 @@ public class FileUtils {
      * @param writePath 目标地址
      * @throws IOException
      */
-    public static synchronized void fileIO(String readPath, String writePath) throws IOException {
+    public static void fileIO(String readPath, String writePath) throws IOException {
         // 输入文件操作对象
         File read = new File(readPath);
         // 输出文件操作对象
         File write = new File(writePath);
 
+        System.out.println(readPath);
         // 输入文件流
         FileInputStream inputStream = new FileInputStream(read);
         // 输出文件流
         FileOutputStream outputStream = new FileOutputStream(write);
 
+        System.out.println(readPath);
 
         // 返回指定的文件长度
         byte[] bytes = new byte[(int) read.length()];
@@ -132,10 +135,13 @@ public class FileUtils {
         if (inputStream.read(bytes) != -1) {
             // 将字节数组中的数据写入输出文件
             outputStream.write(bytes);
+            System.out.println(readPath);
         }
 
+        System.out.println(readPath);
         //关闭流对象
         inputStream.close();
         outputStream.close();
+        System.out.println(readPath);
     }
 }
