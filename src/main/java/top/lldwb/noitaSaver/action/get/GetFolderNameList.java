@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.action;
+package top.lldwb.noitaSaver.action.get;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaver.utils.FileUtils;
