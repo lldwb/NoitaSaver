@@ -13,16 +13,20 @@
     </head>
 <body>
 <div id="qrc">
-    <input type="file" id="file" webkitdirectory directory/>
-    <button @click="button()"></button>
+
+    需要存档的文件夹路径
+    <el-input v-model="path" placeholder="需要存档的文件夹路径"></el-input>
+    存档保存路径
+    <el-input v-model="saverPath" placeholder="存档保存路径"></el-input>
+    <el-button @click="getFolderName">读取存档保存路径</el-button>
     <template>
         <el-select v-model="value" placeholder="请选择存档">
-            <el-option
-                    v-for="file in list"
-                    :value="file">
+            <el-option v-for="file in list" :value="file">
             </el-option>
         </el-select>
     </template>
+    <el-button @click="archiveFolderCopy">存档</el-button>
+    <el-button @click="unArchiveFolderCopyImpl">读档</el-button>
 </div>
 
 <script type="text/javascript">
@@ -30,18 +34,63 @@
         el: "#qrc",
         data: {
             list: null,
+            // 选择的存档地址
             value: '',
-            path: "G:\\"
+            // 存档保存路径
+            saverPath: `G:\\test`,
+            // 需要存档的文件夹路径
+            path: "G:\\test\\测压工具"
         },
         methods: {
-            button() {
-                this.path = document.getElementById('file').value;
-                console.log(this.path);
+            // 获取存档列表
+            getFolderName() {
                 $.ajax({
                     url: "getFolderNameList",
                     dataType: "JSON",
                     data: {
-                        path: this.path,
+                        path: this.saverPath,
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        vue.list = result;
+                    }
+                })
+            },
+            // 存档
+            archiveFolderCopy() {
+                $.ajax({
+                    url: "archiveFolderCopy",
+                    dataType: "JSON",
+                    data: {
+                        writePath: this.path,
+                        readPath: this.saverPath
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        vue.list = result;
+                    }
+                });
+
+                $.ajax({
+                    url: "getFolderNameList",
+                    dataType: "JSON",
+                    data: {
+                        path: this.saverPath,
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        vue.list = result;
+                    }
+                });
+            },
+            // 读档
+            unArchiveFolderCopyImpl() {
+                $.ajax({
+                    url: "unArchiveFolderCopy",
+                    dataType: "JSON",
+                    data: {
+                        writePath: this.saverPath + '\\' + this.value,
+                        readPath: this.path
                     },
                     success: function (result) {
                         console.log(result);
@@ -50,18 +99,17 @@
                 })
             }
         },
-        mounted:
-            $.ajax({
-                url: "getFolderNameList",
-                dataType: "JSON",
-                data: {
-                    path: "G:\\",
-                },
-                success: function (result) {
-                    console.log(result);
-                    vue.list = result;
-                }
-            }),
+        mounted: $.ajax({
+            url: "getFolderNameList",
+            dataType: "JSON",
+            data: {
+                path: this.saverPath,
+            },
+            success: function (result) {
+                console.log(result);
+                vue.list = result;
+            }
+        })
     });
 </script>
 </body>
