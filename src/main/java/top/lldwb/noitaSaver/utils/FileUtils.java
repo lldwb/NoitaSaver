@@ -43,11 +43,10 @@ public class FileUtils {
             });
             thread.start();
             // 使用多线程将源文件夹中的文件写入目标文件夹中
-            if (new File(path).length() >= 1024 * 1024) {
+//            if (new File(path).length() >= 1024 * 1024) {
                 threadList.add(thread);
-            }
+//            }
         }
-
         for (Thread thread : threadList) {
             try {
                 thread.join();
@@ -121,13 +120,13 @@ public class FileUtils {
         // 输出文件操作对象
         File write = new File(writePath);
 
-        System.out.println(readPath);
+//        System.out.println(readPath);
         // 输入文件流
         FileInputStream inputStream = new FileInputStream(read);
         // 输出文件流
         FileOutputStream outputStream = new FileOutputStream(write);
 
-        System.out.println(readPath);
+//        System.out.println(readPath);
 
         // 返回指定的文件长度
         byte[] bytes = new byte[(int) read.length()];
@@ -135,13 +134,13 @@ public class FileUtils {
         if (inputStream.read(bytes) != -1) {
             // 将字节数组中的数据写入输出文件
             outputStream.write(bytes);
-            System.out.println(readPath);
+//            System.out.println(readPath);
         }
 
-        System.out.println(readPath);
+//        System.out.println(readPath);
         //关闭流对象
         inputStream.close();
         outputStream.close();
-        System.out.println(readPath);
+//        System.out.println(readPath);
     }
 }

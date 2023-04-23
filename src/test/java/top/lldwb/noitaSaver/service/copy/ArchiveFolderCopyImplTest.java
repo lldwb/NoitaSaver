@@ -9,9 +9,9 @@ public class ArchiveFolderCopyImplTest {
 
     @Test
     public void tset() {
-        String writePath="E:\\我的世界\\测压工具";
+        String writePath="C:\\Users\\lldwb\\AppData\\LocalLow\\Nolla_Games_Noita\\save00";
 
-        String readPath="G:\\";
+        String readPath="C:\\Users\\lldwb\\Desktop\\Noita";
         FolderCopy folderCopy = new ArchiveFolderCopyImpl();
         folderCopy.copy(writePath,readPath);
     }
