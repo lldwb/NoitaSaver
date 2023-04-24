@@ -37,24 +37,14 @@
             // 选择的存档地址
             value: '',
             // 存档保存路径
-            saverPath: `G:\\test`,
+            saverPath: "C:\\Users\\lldwb\\Desktop\\Noita",
             // 需要存档的文件夹路径
-            path: "G:\\test\\测压工具"
+            path: "C:\\Users\\lldwb\\AppData\\LocalLow\\Nolla_Games_Noita\\save00"
         },
         methods: {
             // 获取存档列表
             getFolderName() {
-                $.ajax({
-                    url: "getFolderNameList",
-                    dataType: "JSON",
-                    data: {
-                        path: this.saverPath,
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        vue.list = result;
-                    }
-                })
+                getList();
             },
             // 存档
             archiveFolderCopy() {
@@ -65,21 +55,12 @@
                         writePath: this.path,
                         readPath: this.saverPath
                     },
-                    success: function (result) {
-                        console.log(result);
-                        vue.list = result;
-                    }
-                });
-
-                $.ajax({
-                    url: "getFolderNameList",
-                    dataType: "JSON",
-                    data: {
-                        path: this.saverPath,
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        vue.list = result;
+                    success: function () {
+                        this.$message({
+                            message: '存档成功',
+                            type: 'success'
+                        });
+                        getList();
                     }
                 });
             },
@@ -92,25 +73,32 @@
                         writePath: this.saverPath + '\\' + this.value,
                         readPath: this.path
                     },
-                    success: function (result) {
-                        console.log(result);
-                        vue.list = result;
+                    success: function () {
+                        this.$message({
+                            message: '读档成功',
+                            type: 'success'
+                        });
                     }
                 })
             }
         },
-        mounted: $.ajax({
+        mounted(){
+            getList();
+        }
+    });
+    const getList = () => {
+        $.ajax({
             url: "getFolderNameList",
             dataType: "JSON",
             data: {
-                path: this.saverPath,
+                path: vue.saverPath,
             },
             success: function (result) {
                 console.log(result);
                 vue.list = result;
             }
         })
-    });
+    };
 </script>
 </body>
 </html>
