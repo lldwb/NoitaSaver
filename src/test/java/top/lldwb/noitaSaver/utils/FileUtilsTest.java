@@ -13,31 +13,18 @@ import java.util.*;
 public class FileUtilsTest {
     @Test
     public void ioFolder() {
-//        Thread thread = new Thread(() ->
-//        {
-//            try {
-//                FileUtils.fileIO("E:\\我的世界\\测压工具\\EndMinecraftPlus-master.zip", "G:\\2023-04-23_10-10-53\\EndMinecraftPlus-master.zip");
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        thread.start();
-//        try {
-//            thread.join();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
         try {
             // 输入文件操作对象
-            File read = new File("E:\\000\\521个黄油链接.xls");
+            File read = new File("F:\\原神启动器.zip");
+            // 输出文件操作对象
+            File write = new File("G:\\原神启动器.zip");
+
             // 输入文件流
             FileInputStream inputStream = new FileInputStream(read);
+            // 输出文件流
+            FileOutputStream outputStream = new FileOutputStream(write);
             // 返回指定的文件长度
 //            byte[] bytes = new byte[(int) read.length()];
-            byte[] bytes = new byte[1024];
-            Map<Integer, byte[]> map = new HashMap<>();
 
 //            // 读取输入文件的数据到字节数组中
 //            while (inputStream.read(bytes) != -1) {
@@ -48,35 +35,60 @@ public class FileUtilsTest {
 //                System.out.println("1234===================");
 //            }
 
-
+            Map<Integer, byte[]> map = new HashMap<>();
             List<Thread> list = new ArrayList<>();
-            while (inputStream.read(bytes) != -1) {
+            for (int i = 0; i < 3; i++) {
                 Thread thread = new Thread(() -> {
+                    byte[] bytes = new byte[1024];
                     synchronized (inputStream) {
                         try {
-                            if (inputStream.read(bytes) != -1) {
+                            while (inputStream.read(bytes) != -1) {
                                 String str = new String();
                                 // 将字节数组中的数据写入输出文件
                                 for (byte by : bytes) {
                                     str = str + by;
                                 }
-                                System.out.println(str + "===================");
+                                map.put(map.size()+1, bytes);
                             }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-
                     }
                 });
                 thread.start();
                 list.add(thread);
             }
+
+
+            for (Thread thread : list) {
+                thread.join();
+            }
+
+            list = new ArrayList<>();
+
+            //关闭流对象
+            inputStream.close();
+            for (int i = 0; i < 3; i++) {
+                Thread thread = new Thread(() -> {
+                    for (byte[] bytes: map.values()){
+                        try {
+                            System.out.println(map);
+                            outputStream.write(bytes);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+                thread.start();
+                list.add(thread);
+            }
+
             for (Thread thread : list) {
                 thread.join();
             }
 
             //关闭流对象
-            inputStream.close();
+            outputStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
