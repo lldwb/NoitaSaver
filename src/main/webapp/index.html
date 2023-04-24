@@ -25,8 +25,8 @@
             </el-option>
         </el-select>
     </template>
-    <el-button @click="archiveFolderCopy">存档</el-button>
-    <el-button @click="unArchiveFolderCopyImpl">读档</el-button>
+    <el-button @click="archiveFolderCopy" :disabled="archiveBoolean">存档</el-button>
+    <el-button @click="unArchiveFolderCopy" :disabled="unArchiveBoolean">读档</el-button>
 </div>
 
 <script type="text/javascript">
@@ -39,7 +39,11 @@
             // 存档保存路径
             saverPath: "C:\\Users\\lldwb\\Desktop\\Noita",
             // 需要存档的文件夹路径
-            path: "C:\\Users\\lldwb\\AppData\\LocalLow\\Nolla_Games_Noita\\save00"
+            path: "C:\\Users\\lldwb\\AppData\\LocalLow\\Nolla_Games_Noita\\save00",
+            // 存档
+            archiveBoolean: false,
+            // 读档
+            unArchiveBoolean: false
         },
         methods: {
             // 获取存档列表
@@ -48,33 +52,35 @@
             },
             // 存档
             archiveFolderCopy() {
+                this.archiveBoolean = true;
                 $.ajax({
                     url: "archiveFolderCopy",
-                    dataType: "JSON",
                     data: {
                         writePath: this.path,
                         readPath: this.saverPath
                     },
-                    success: function () {
-                        this.$message({
+                    success() {
+                        getList();
+                        vue.archiveBoolean = false;
+                        vue.$message({
                             message: '存档成功',
                             type: 'success'
                         });
-                        getList();
                     }
                 });
             },
             // 读档
-            unArchiveFolderCopyImpl() {
+            unArchiveFolderCopy() {
+                this.unArchiveBoolean = true;
                 $.ajax({
                     url: "unArchiveFolderCopy",
-                    dataType: "JSON",
                     data: {
                         writePath: this.saverPath + '\\' + this.value,
                         readPath: this.path
                     },
-                    success: function () {
-                        this.$message({
+                    success() {
+                        vue.unArchiveBoolean = false;
+                        vue.$message({
                             message: '读档成功',
                             type: 'success'
                         });
@@ -82,7 +88,7 @@
                 })
             }
         },
-        mounted(){
+        mounted() {
             getList();
         }
     });
@@ -93,7 +99,7 @@
             data: {
                 path: vue.saverPath,
             },
-            success: function (result) {
+            success(result) {
                 console.log(result);
                 vue.list = result;
             }
