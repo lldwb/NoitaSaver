@@ -139,43 +139,16 @@ public class FileUtils {
     }
 
 
+    // 设置缓存大小为10MB
+    private static final int BUFFER_SIZE = 1024 * 1024 * 10;
+
     /**
-     * 大文件本地多线程io操作
+     * 本地多线程IO复制大文件
      *
-     * @param readPath  源地址
-     * @param writePath 目标地址
+     * @param readPath  源文件路径
+     * @param writePath 目标文件路径
      * @throws IOException
      */
     public static void largeFileIO(String readPath, String writePath) {
-        new Thread(() -> {
-            try {
-                // 输入文件操作对象
-                File read = new File(readPath);
-                // 输出文件操作对象
-                File write = new File(writePath);
-
-                // 输入文件流
-                FileInputStream inputStream = new FileInputStream(read);
-                // 输出文件流
-                FileOutputStream outputStream = new FileOutputStream(write);
-
-                // 返回指定的文件长度
-                byte[] bytes = new byte[(int) read.length()];
-
-                // 读取输入文件的数据到字节数组中
-                if (inputStream.read(bytes) != -1) {
-                    // 将字节数组中的数据写入输出文件
-                    outputStream.write(bytes);
-                }
-
-                //关闭流对象
-                inputStream.close();
-                outputStream.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
     }
-
-
 }
