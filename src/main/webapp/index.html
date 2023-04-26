@@ -27,8 +27,8 @@
     </template>
     <el-button @click="archiveFolderCopy" :disabled="archiveBoolean">存档</el-button>
     <el-button @click="unArchiveFolderCopy" :disabled="unArchiveBoolean">读档</el-button>
+    <el-button @click="deleteFileFolder" :disabled="deleteBoolean">删除</el-button>
 </div>
-
 <script type="text/javascript">
     const vue = new Vue({
         el: "#qrc",
@@ -43,7 +43,9 @@
             // 存档
             archiveBoolean: false,
             // 读档
-            unArchiveBoolean: false
+            unArchiveBoolean: false,
+            // 删除
+            deleteBoolean: false
         },
         methods: {
             // 获取存档列表
@@ -86,10 +88,50 @@
                         });
                     }
                 })
+            },
+            // 删除
+            deleteFileFolder() {
+                this.$confirm('此操作将永久删除该存档, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    vue.deleteBoolean = true;
+                    $.ajax({
+                        url: "deleteFileFolder",
+                        data: {
+                            path: vue.saverPath + '\\' + vue.value,
+                        },
+                        success() {
+                            vue.deleteBoolean = false;
+                            vue.$message({
+                                message: '删除存档成功',
+                                type: 'success'
+                            });
+                            getList();
+                            vue.value = '';
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         },
         mounted() {
-            getList();
+            $.ajax({
+                url: "getFolderNameList",
+                dataType: "JSON",
+                data: {
+                    path: vue.saverPath,
+                },
+                success(result) {
+                    console.log(result);
+                    vue.list = result;
+                }
+            })
         }
     });
     const getList = () => {

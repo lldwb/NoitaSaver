@@ -1,8 +1,7 @@
 package top.lldwb.noitaSaver.utils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * IO工具类，提供文件和文件夹的读写操作
@@ -58,6 +57,7 @@ public class FileUtils {
 
     /**
      * 获取指定文件夹中所有文件的路径列表
+     * 并创建文件夹
      *
      * @param readPath  源文件夹地址
      * @param writePath 目标文件夹地址
@@ -82,6 +82,34 @@ public class FileUtils {
         }
         // 返回路径列表
         return list;
+    }
+
+    /**
+     * 获取指定文件夹中所有文件的路径列表
+     * 并创建文件夹
+     *
+     * @param path 源文件夹地址
+     * @return 返回Map<String, Boolean>,String 路径|Boolean 判断是否是文件(true 文件|false 文件夹)
+     */
+    public static Map<String, Boolean> getFileFolderPathList(String path) {
+        // 初始化路径列表
+        Map<String, Boolean> map = new HashMap<>();
+        // 遍历源文件夹中的所有文件
+        for (String file : new File(path).list()) {
+            // 构造当前文件的路径
+            String paths = path + '\\' + file;
+            // 如果当前文件是文件夹，则递归获取该文件夹中的所有文件
+            // 并将其文件夹路径添加到路径列表中
+            if (new File(paths).isDirectory()) {
+                map.put(paths, false);
+                map.putAll(getFileFolderPathList(paths));
+            } else {
+                // 如果当前文件是普通文件，则将其路径添加到路径列表中
+                map.put(paths, true);
+            }
+        }
+        // 返回路径列表
+        return map;
     }
 
     /**
@@ -138,6 +166,39 @@ public class FileUtils {
         outputStream.close();
     }
 
+    /**
+     * 删除文件夹和其中文件
+     *
+     * @param path 需要删除的路径
+     */
+    public static void deleteFileFolder(String path) {
+        // 获取文件和文件夹的路径集合
+        // Key:文件(文件夹)路径 Value:判断是否是文件(true 文件|false 文件夹)
+        Map<String, Boolean> map = getFileFolderPathList(path);
+        // 文件夹路径集合
+        List<String> folderPath = new ArrayList<>();
+        // 遍历文件和文件夹的路径集合，先删除文件并将文件夹路径存入文件夹路径集合
+        for (String paths : map.keySet()) {
+            if (map.get(paths)) {
+                new File(paths).delete();
+            } else {
+                folderPath.add(paths);
+            }
+        }
+
+        // 创建一个定制排序的规则，保证文件夹是降序排序
+        // 越接近删除的路径越后面，保证可以完整删除全部文件
+        Comparator<String> comparator = (o1, o2) -> o2.length() - o1.length();
+        folderPath.sort(comparator);
+        Collections.sort(folderPath, comparator);
+        // 遍历文件夹集合来删除
+        for (String paths : folderPath) {
+            new File(paths).delete();
+        }
+
+        // 最后删除目标路径的根目录
+        new File(path).delete();
+    }
 
     // 设置缓存大小为10MB
     private static final int BUFFER_SIZE = 1024 * 1024 * 10;
