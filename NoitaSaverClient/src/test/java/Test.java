@@ -20,6 +20,7 @@ public class Test {
             // 输出流对象用来向服务器发送数据
             OutputStream os = s.getOutputStream();
 
+            // 创建一个Writer对象bw，这个对象用于向Socket的输出流os中写入字符数据。数据会被先写入到BufferedWriter中，再通过OutputStreamWriter将数据转化为字节流
             Writer bw = new BufferedWriter(new OutputStreamWriter(os));
             //向服务器端发送一条消息
             bw.write("测试客户端和服务器通信，服务器接收到消息返回到客户端\n");
