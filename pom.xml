@@ -3,49 +3,81 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>top.lldwb.noitaSaver</groupId>
     <artifactId>noitaSaver</artifactId>
+
+    <!--  继承，父模块的pom.xml文件中的packaging必须设置为pom，即文档对象模型  -->
     <packaging>pom</packaging>
+
+    <!--  聚合操作  -->
     <modules>
-        <module>NoitaSaverServer</module>
         <module>NoitaSaverClient</module>
+        <module>NoitaSaverServer</module>
     </modules>
+
     <version>1.0-SNAPSHOT</version>
     <name>noitaSaver Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
     <properties>
-        <tomcatd9>9.0.65</tomcatd9>
+        <!-- 内置属性-->
+        <!-- 设置项目的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 设置java的版本为1.8-->
+        <java.version>1.8</java.version>
+        <!-- 源码编译的版本为1.8-->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <!-- 目标字节码的版本为1.8-->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- 指定编译器版本为1.8-->
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+
+        <!-- 自定义属性-->
+        <!-- 配置控制台输出参数的编码格式 -->
+        <argLine>-Dfile.encoding=UTF-8</argLine>
+        <tomcatd.version>9.0.65</tomcatd.version>
+        <jupiter.version>5.9.2</jupiter.version>
     </properties>
+
+    <!--    按需要依赖标识符-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.9.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>3.6.0</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
         <!-- tomcat依赖包10版本10.0.22 9版本9.0.65 -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcatd9}</version>
+            <version>${tomcatd.version}</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.5</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.6.0</version>
-        </dependency>
-
     </dependencies>
+
     <build>
         <finalName>noitaSaver</finalName>
         <plugins>

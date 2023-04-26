@@ -149,9 +149,9 @@ public class FileUtils {
         File write = new File(writePath);
 
         // 输入文件流
-        FileInputStream inputStream = new FileInputStream(read);
+        InputStream inputStream = new FileInputStream(read);
         // 输出文件流
-        FileOutputStream outputStream = new FileOutputStream(write);
+        OutputStream outputStream = new FileOutputStream(write);
 
         // 返回指定的文件长度
         byte[] bytes = new byte[(int) read.length()];
