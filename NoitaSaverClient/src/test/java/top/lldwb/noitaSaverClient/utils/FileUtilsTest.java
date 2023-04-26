@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.utils;
+package top.lldwb.noitaSaverClient.utils;
 
 import org.junit.jupiter.api.Test;
 

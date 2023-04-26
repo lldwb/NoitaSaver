@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.utils;
+package top.lldwb.noitaSaverClient.utils;
 
 import java.io.*;
 import java.util.*;

@@ -1,9 +1,6 @@
-package top.lldwb.noitaSaver.service.copy;
+package top.lldwb.noitaSaverClient.service.copy;
 
-import top.lldwb.noitaSaver.utils.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
+import top.lldwb.noitaSaverClient.utils.FileUtils;
 
 /**
  * 读档类，实现FolderCopy接口，用于将文件夹读档

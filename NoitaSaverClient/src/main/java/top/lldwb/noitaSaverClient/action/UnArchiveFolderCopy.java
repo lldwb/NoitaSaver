@@ -1,6 +1,6 @@
-package top.lldwb.noitaSaver.action;
+package top.lldwb.noitaSaverClient.action;
 
-import top.lldwb.noitaSaver.service.DeleteFileFolderService;
+import top.lldwb.noitaSaverClient.service.copy.FolderCopy;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 删除API
+ * 读档API
  * @author 安然的尾巴
  * @version 1.0
  */
-@WebServlet("/deleteFileFolder")
-public class DeleteFileFolder extends HttpServlet {
+@WebServlet("/unArchiveFolderCopy")
+public class UnArchiveFolderCopy extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 
-        // 删除路径
-        String path = req.getParameter("path");
-        DeleteFileFolderService.deleteFileFolder(path);
+        // 源文件夹地址
+        String writePath = req.getParameter("writePath");
+        // 目标文件夹地址
+        String readPath = req.getParameter("readPath");
+
+        FolderCopy folderCopy = FolderCopy.getFolderCopyFactory("读档");
+        folderCopy.copy(writePath, readPath);
     }
 }

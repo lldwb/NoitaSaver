@@ -1,7 +1,6 @@
-package top.lldwb.noitaSaver.service;
+package top.lldwb.noitaSaverClient.service;
 
-import top.lldwb.noitaSaver.service.copy.FolderCopy;
-import top.lldwb.noitaSaver.utils.FileUtils;
+import top.lldwb.noitaSaverClient.utils.FileUtils;
 
 /**
  * 删除的业务类
