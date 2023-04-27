@@ -11,6 +11,9 @@
     <modules>
         <module>NoitaSaverClient</module>
         <module>NoitaSaverServer</module>
+        <module>MailUtil</module>
+        <module>MD5Util</module>
+        <module>DbUtil</module>
     </modules>
 
     <version>1.0-SNAPSHOT</version>

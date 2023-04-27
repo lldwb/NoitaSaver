@@ -38,6 +38,7 @@ public class Test {
             bw.write(mess + "\n");
             // 通过flush()方法刷新缓存，确保数据被立即发送
             bw.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

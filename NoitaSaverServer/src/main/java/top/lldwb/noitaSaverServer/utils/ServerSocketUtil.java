@@ -102,7 +102,9 @@ public class ServerSocketUtil {
             System.out.println(str);
 
             String[] strings = str.split("/");
-
+            for (String string:strings){
+                System.out.println(string);
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
