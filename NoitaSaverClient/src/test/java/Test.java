@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author 安然的尾巴
@@ -8,11 +9,11 @@ import java.net.UnknownHostException;
  */
 public class Test {
     @org.junit.jupiter.api.Test
-    public void test(){
+    public void test() {
         try {
-            // 创建一个Socket对象用于与服务器进行通信
+            // 创建一个流套接字并将其连接到指定主机上的指定端口号。
             // host:服务器地址 port:服务器端口
-            Socket s = new Socket("127.0.0.1",8888);
+            Socket s = new Socket("127.0.0.1", 8888);
 
             //构建IO
             // 输入流对象用来读取服务器发来的数据
@@ -36,7 +37,7 @@ public class Test {
             // br.readLine读取一行数据
             String mess = br.readLine();
 
-            System.out.println("服务器："+mess);
+            System.out.println("服务器：" + mess);
             // 关闭连接
 //            s.close();
         } catch (UnknownHostException e) {
@@ -44,5 +45,21 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testByte() {
+        int length = 1234;
+        String lengthString = String.valueOf(length);
+        byte[] dateByte = lengthString.getBytes();
+
+        length = 0;
+        for (int i = 0; i < dateByte.length; i++) {
+            length += dateByte[i] * (10 * (10 - i));
+            System.out.println(dateByte[i]);
+            System.out.println(String.valueOf(dateByte[i]));
+        }
+        System.out.println(dateByte);
+        System.out.println(length);
     }
 }
