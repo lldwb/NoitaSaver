@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * IO工具类，提供文件和文件夹的读写操作
  */
-public class FileUtils {
+public class FileUtil {
 
     // 源文件夹地址
     public static String readPath;
@@ -19,7 +19,7 @@ public class FileUtils {
      */
     public static void copyDirectory(String readPath, String writePath) {
         // 设置源文件夹地址
-        FileUtils.readPath = readPath;
+        FileUtil.readPath = readPath;
         // 获取源文件夹中所有文件的路径列表
         List<String> list = getFilePathList(readPath, writePath);
 
@@ -35,7 +35,7 @@ public class FileUtils {
 
             Thread thread = new Thread(() -> {
                 try {
-                    FileUtils.fileIO(path, write);
+                    FileUtil.fileIO(path, write);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,7 +65,7 @@ public class FileUtils {
      */
     public static List getFilePathList(String readPath, String writePath) {
         // 在目标文件夹中创建子文件夹
-        new File(writePath + readPath.substring(FileUtils.readPath.length())).mkdir();
+        new File(writePath + readPath.substring(FileUtil.readPath.length())).mkdir();
         // 初始化路径列表
         List<String> list = new ArrayList();
         // 遍历源文件夹中的所有文件

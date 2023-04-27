@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.util.*;
 
-public class FileUtilsTest {
+public class FileUtilTest {
     @Test
     public void ioFolder() {
         try {
@@ -94,6 +94,6 @@ public class FileUtilsTest {
     @Test
     public void s() {// 定义源文件和目标文件的路径
 
-        FileUtils.deleteFileFolder("G:\\CNTV");
+        FileUtil.deleteFileFolder("G:\\CNTV");
     }
 }

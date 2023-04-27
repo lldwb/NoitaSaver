@@ -1,6 +1,6 @@
 package top.lldwb.noitaSaverClient.service.copy;
 
-import top.lldwb.noitaSaverClient.utils.FileUtils;
+import top.lldwb.noitaSaverClient.utils.FileUtil;
 
 /**
  * 读档类，实现FolderCopy接口，用于将文件夹读档
@@ -15,7 +15,7 @@ public class UnArchiveFolderCopyImpl implements FolderCopy {
      */
     @Override
     public void copy(String readPath, String writePath) {
-        FileUtils.copyDirectory(readPath, writePath);
+        FileUtil.copyDirectory(readPath, writePath);
         System.out.println("读档成功！");
     }
 }

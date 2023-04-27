@@ -3,7 +3,7 @@ package top.lldwb.noitaSaverClient.utils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TimeUtils {
+public class TimeUtil {
     public static String currentTime(){
         // 自定义时间格式
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");

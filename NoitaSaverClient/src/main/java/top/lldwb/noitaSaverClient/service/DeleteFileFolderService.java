@@ -1,6 +1,6 @@
 package top.lldwb.noitaSaverClient.service;
 
-import top.lldwb.noitaSaverClient.utils.FileUtils;
+import top.lldwb.noitaSaverClient.utils.FileUtil;
 
 /**
  * 删除的业务类
@@ -11,6 +11,6 @@ public class DeleteFileFolderService {
      * @param path 删除路径
      */
     public static void deleteFileFolder(String path){
-        FileUtils.deleteFileFolder(path);
+        FileUtil.deleteFileFolder(path);
     }
 }

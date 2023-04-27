@@ -1,7 +1,8 @@
+import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author 安然的尾巴
@@ -49,17 +50,6 @@ public class Test {
 
     @org.junit.jupiter.api.Test
     public void testByte() {
-        int length = 1234;
-        String lengthString = String.valueOf(length);
-        byte[] dateByte = lengthString.getBytes();
-
-        length = 0;
-        for (int i = 0; i < dateByte.length; i++) {
-            length += dateByte[i] * (10 * (10 - i));
-            System.out.println(dateByte[i]);
-            System.out.println(String.valueOf(dateByte[i]));
-        }
-        System.out.println(dateByte);
-        System.out.println(length);
+        ClientSocketUtil.clientSocket(null);
     }
 }

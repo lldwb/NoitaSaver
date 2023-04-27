@@ -1,7 +1,7 @@
 package top.lldwb.noitaSaverClient.action.get;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.lldwb.noitaSaverClient.utils.FileUtils;
+import top.lldwb.noitaSaverClient.utils.FileUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class GetFolderNameList extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
         ObjectMapper om = new ObjectMapper();
 
-        String json = om.writeValueAsString(FileUtils.getFolderNameList(req.getParameter("path")));
+        String json = om.writeValueAsString(FileUtil.getFolderNameList(req.getParameter("path")));
         resp.getWriter().print(json);
     }
 }

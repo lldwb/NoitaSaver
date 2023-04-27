@@ -1,3 +1,5 @@
+import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,5 +41,9 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @org.junit.jupiter.api.Test
+    public void ss(){
+        ServerSocketUtil.getServerSocketUtils();
     }
 }

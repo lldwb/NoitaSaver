@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>top.lldwb.noitaSaver</groupId>
-    <artifactId>noitaSaver</artifactId>
+    <artifactId>NoitaSaver</artifactId>
 
     <!--  继承，父模块的pom.xml文件中的packaging必须设置为pom，即文档对象模型  -->
     <packaging>pom</packaging>
