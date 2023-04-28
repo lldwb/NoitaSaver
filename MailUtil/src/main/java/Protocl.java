@@ -4,7 +4,8 @@
  * @version 1.0
  */
 public enum Protocl {
-    SMTP("smtp");
+    SMTP("SMTP"),
+    POP3("POP3");
     Protocl(String value){
         this.value = value;
     }

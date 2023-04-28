@@ -9,24 +9,7 @@ import java.util.Properties;
  * @author lldwb
  * @date 2023/4/19
  */
-public class MailUtil {
-    /**
-     * 邮件发送
-     * 创建Session调用send发送
-     *
-     * @param reception 接收邮箱
-     * @param subject   邮件标题
-     * @param text      邮件正文
-     */
-    public static void sendSession(String reception, String subject, String text) {
-        // 发送邮箱服务器
-        String server = "mail.lldwb.top";
-        // 发送邮箱
-        String sendMail = "lldwb@lldwb.top";
-        // 发送邮箱密码
-        String sendPasswd = "LLdwb15979809462";
-        sendSession(reception, subject, text, server, sendMail, sendPasswd);
-    }
+public class Mail {
 
     /**
      * 邮件发送
@@ -38,38 +21,17 @@ public class MailUtil {
      * @param server     发送邮箱服务器
      * @param sendMail   发送邮箱
      * @param sendPasswd 发送邮箱密码
-     */
-    public static void sendSession(String reception, String subject, String text, String server, String sendMail, String sendPasswd) {
-        // 邮箱传输协议，默认smtp
-        String protocol = "smtp";
-        // 服务器端口
-        int port = 465;
-        // STARTTLS 协议
-        boolean starttls = true;
-        sendSession(reception, subject, text, server, sendMail, sendPasswd, protocol, port, starttls);
-    }
-
-    /**
-     * 邮件发送
-     * 创建Session调用send发送
-     *
-     * @param reception  接收邮箱
-     * @param subject    邮件标题
-     * @param text       邮件正文
-     * @param server     发送邮箱服务器
-     * @param sendMail   发送邮箱
-     * @param sendPasswd 发送邮箱密码
-     * @param protocol   邮箱传输协议，默认smtp
+     * @param protocl   邮箱传输协议，默认smtp
      * @param port       服务器端口，默认465
      * @param starttls   STARTTLS 协议，默认true
      */
-    public static void sendSession(String reception, String subject, String text, String server, String sendMail, String sendPasswd, String protocol, int port, boolean starttls) {
+    public static void sendSession(String reception, String subject, String text, String server, String sendMail, String sendPasswd, Protocl protocl, int port, boolean starttls) {
         // 创建邮件会话
         Properties props = new Properties();
 
         // 设置邮箱服务器配置
         props.setProperty("mail.host", server);// 服务器
-        props.setProperty("mail.transport.protocol", protocol);// 邮箱传输协议
+        props.setProperty("mail.transport.protocol", protocl.value);// 邮箱传输协议
         props.setProperty("mail.port", String.valueOf(port));// 服务器端口
         props.setProperty("mail.starttls.enable", String.valueOf(starttls));// STARTTLS协议
 

@@ -20,4 +20,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>in.sourceshift.genericmodules</groupId>
+            <artifactId>mailutils</artifactId>
+            <version>17.0.0</version>
+        </dependency>
+    </dependencies>
 </project>
