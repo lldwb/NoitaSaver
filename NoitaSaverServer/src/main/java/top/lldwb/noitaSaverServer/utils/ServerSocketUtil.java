@@ -1,5 +1,7 @@
 package top.lldwb.noitaSaverServer.utils;
 
+import top.lldwb.noitaSaverServer.service.connection.SocketConnection;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -94,18 +96,7 @@ public class ServerSocketUtil {
             // 返回客户端地址并打印出来
             System.out.println("客户端:" + socket.getInetAddress().getLocalHost() + "已连接到服务器");
 
-            // 创建一个缓冲流，用于读取信息
-            // InputStreamReader是字节流和字符流之间的桥梁:它读取字节，并使用指定的字符集将其解码为字符
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            // 读取一行文本。一行被视为以换行符('\n')、换行符('\r')或换行符后紧跟着的换行符中的任何一个结束。
-            String str = reader.readLine();
-            System.out.println(str);
-
-            String[] strings = str.split("/");
-            for (String string:strings){
-                System.out.println(string);
-            }
-
+            SocketConnection.getSocketConnection(socket);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

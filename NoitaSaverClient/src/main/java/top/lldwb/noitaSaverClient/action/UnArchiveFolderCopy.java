@@ -1,5 +1,6 @@
 package top.lldwb.noitaSaverClient.action;
 
+import top.lldwb.noitaSaverClient.service.copy.Copy;
 import top.lldwb.noitaSaverClient.service.copy.FolderCopy;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,7 @@ public class UnArchiveFolderCopy extends HttpServlet {
         // 目标文件夹地址
         String readPath = req.getParameter("readPath");
 
-        FolderCopy folderCopy = FolderCopy.getFolderCopyFactory("读档");
+        FolderCopy folderCopy = FolderCopy.getFolderCopyFactory(Copy.UnArchive);
         folderCopy.copy(writePath, readPath);
     }
 }

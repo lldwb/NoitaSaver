@@ -18,10 +18,15 @@ public interface FolderCopy {
      */
     void copy(String readPath, String writePath);
 
-    static FolderCopy getFolderCopyFactory(String get){
-        if ("存档".equals(get)){
+    /**
+     * 静态工厂方法
+     * @param copy 枚举常量
+     * @return
+     */
+    static FolderCopy getFolderCopyFactory(Copy copy){
+        if (Copy.Archive==copy){
             return new ArchiveFolderCopyImpl();
-        }else if ("读档".equals(get)){
+        }else if (Copy.UnArchive==copy){
             return new UnArchiveFolderCopyImpl();
         }else {
             return null;
