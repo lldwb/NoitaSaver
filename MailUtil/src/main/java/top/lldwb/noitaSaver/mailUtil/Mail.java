@@ -39,7 +39,7 @@ public class Mail {
 
         // 产生一个用于邮件发送的Session对象并调用send
         new Thread(() ->
-                send(Session.getInstance(props), reception, subject, text, sendMail, sendPasswd)).start();
+                send(Session.getInstance(props), reception, subject, text, sendMail, sendPasswd,protocl)).start();
         // 主线程继续执行其他任务
     }
 
@@ -52,8 +52,9 @@ public class Mail {
      * @param text       邮件正文
      * @param sendMail   发送邮箱
      * @param sendPasswd 发送邮箱密码
+     * @param protocl   邮箱传输协议，默认smtp
      */
-    private static void send(Session session, String reception, String subject, String text, String sendMail, String sendPasswd) {
+    private static void send(Session session, String reception, String subject, String text, String sendMail, String sendPasswd, Protocl protocl) {
         // 创建邮件消息
         Message message = new MimeMessage(session);
         try {
@@ -68,7 +69,7 @@ public class Mail {
 
         // 创建用于SMTP邮件传输的Transport对象
         try {
-            Transport transport = transport = session.getTransport("smtp");
+            Transport transport  = session.getTransport(protocl.value);
             // 连接到SMTP邮件服务器
             transport.connect(sendMail, sendPasswd);
             // 发送包含在MimeMessage对象中的邮件

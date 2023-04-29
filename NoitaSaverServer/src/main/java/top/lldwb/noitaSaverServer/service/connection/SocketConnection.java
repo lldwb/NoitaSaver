@@ -1,8 +1,6 @@
 package top.lldwb.noitaSaverServer.service.connection;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -16,25 +14,27 @@ public interface SocketConnection {
      * 连接处理
      */
 
-    String connectionHandling(Socket socket) throws IOException;
+    String connectionHandling(InputStream inputStream, OutputStream outputStream) throws IOException;
 
     /**
-     * 返回
-     * @param socket
+     *
+     * @param reader
      * @return
      * @throws IOException
      */
-    static SocketConnection getSocketConnection(Socket socket) throws IOException {
-        // 创建一个缓冲流，用于读取信息
-        // InputStreamReader是字节流和字符流之间的桥梁:它读取字节，并使用指定的字符集将其解码为字符
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    static SocketConnection getSocketConnection(BufferedReader reader) throws IOException {
+        // 读取一行文本。一行被视为以换行符('\n')、换行符('\r')或换行符后紧跟着的换行符中的任何一个结束。
+        String types = reader.readLine();
+        System.out.println(types);
 
-        // 读取一行文本。一行被视为以换行符('\n')、换行符('\r')或换行符后紧跟着的换行符中的任何一个结束。
-//        String types = reader.readLine();
-//        System.out.println(types);
-        // 读取一行文本。一行被视为以换行符('\n')、换行符('\r')或换行符后紧跟着的换行符中的任何一个结束。
+//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+//        writer.write("接收成功\n");
+//        writer.flush();
+
+//        reader.close();
+
         // 格式:“类型\n”
-        switch (reader.readLine()) {
+        switch (types) {
             case "登录":
                 return null;
             case "云备份":

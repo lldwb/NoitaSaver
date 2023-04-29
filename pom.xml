@@ -12,7 +12,7 @@
         <module>NoitaSaverClient</module>
         <module>NoitaSaverServer</module>
         <module>MailUtil</module>
-        <module>MD5Util</module>
+        <module>EncryptionUtil</module>
         <module>DbUtil</module>
     </modules>
 

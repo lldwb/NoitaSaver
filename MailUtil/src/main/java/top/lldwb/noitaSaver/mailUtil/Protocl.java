@@ -6,7 +6,7 @@ package top.lldwb.noitaSaver.mailUtil;
  * @version 1.0
  */
 public enum Protocl {
-    SMTP("SMTP"),
+    SMTP("smtp"),
     POP3("POP3");
     Protocl(String value){
         this.value = value;

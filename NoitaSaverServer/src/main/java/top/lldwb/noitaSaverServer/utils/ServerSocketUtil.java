@@ -1,5 +1,6 @@
 package top.lldwb.noitaSaverServer.utils;
 
+import top.lldwb.noitaSaverServer.service.connection.MailSocketConnection;
 import top.lldwb.noitaSaverServer.service.connection.SocketConnection;
 
 import java.io.*;
@@ -64,7 +65,7 @@ public class ServerSocketUtil {
     private ServerSocketUtil(int port, int backlog) {
         try {
             // 设置服务器配置:监听端口,连接次数
-            ServerSocket serverSocket = new ServerSocket(port,backlog);
+            ServerSocket serverSocket = new ServerSocket(port, backlog);
             System.out.println("启动服务器....");
 
             while (true) {
@@ -89,6 +90,7 @@ public class ServerSocketUtil {
     /**
      * 与客户端通信的Socket对象的方法，
      * 根据需求自定义修改
+     *
      * @param socket 与客户端通信的Socket对象
      */
     private void ServerSocket(Socket socket) {
@@ -96,8 +98,32 @@ public class ServerSocketUtil {
             // 返回客户端地址并打印出来
             System.out.println("客户端:" + socket.getInetAddress().getLocalHost() + "已连接到服务器");
 
-            SocketConnection socketConnection = SocketConnection.getSocketConnection(socket);
-            socketConnection.connectionHandling(socket);
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String types = reader.readLine();
+            System.out.println(types);
+            // 格式:“类型\n”
+            switch (types) {
+                case "登录":
+                    break;
+                case "云备份":
+                    break;
+                case "云恢复":
+                    break;
+                case "邮箱":
+                    String reception = reader.readLine();
+                    System.out.println(reception);
+                    MailUtil.sendSession(reception,"验证码","2345");
+                    break;
+                case "注册":
+                    break;
+                default:
+                    break;
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
