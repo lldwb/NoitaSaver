@@ -1,5 +1,7 @@
 package top.lldwb.noitaSaverServer.utils;
 
+import top.lldwb.noitaSaver.mailUtil.*;
+
 /**
  * @author 安然的尾巴
  * @version 1.0
@@ -42,7 +44,7 @@ public class MailUtil {
         int port = 465;
         // STARTTLS 协议
         boolean starttls = true;
-
+        Mail.sendSession(reception, subject, text, server, sendMail, sendPasswd, Protocl.SMTP, port, starttls);
 //        MailUtil.sendSession(reception, subject, text, server, sendMail, sendPasswd, protocol, port, starttls);
     }
 }

@@ -12,9 +12,18 @@ import java.net.Socket;
  * @version 1.0
  */
 public interface SocketConnection {
-    // 连接处理
-    String connectionHandling(Socket socket);
+    /**
+     * 连接处理
+     */
 
+    String connectionHandling(Socket socket) throws IOException;
+
+    /**
+     * 返回
+     * @param socket
+     * @return
+     * @throws IOException
+     */
     static SocketConnection getSocketConnection(Socket socket) throws IOException {
         // 创建一个缓冲流，用于读取信息
         // InputStreamReader是字节流和字符流之间的桥梁:它读取字节，并使用指定的字符集将其解码为字符
@@ -33,7 +42,7 @@ public interface SocketConnection {
             case "云恢复":
                 return null;
             case "邮箱":
-                return null;
+                return new MailSocketConnection();
             case "注册":
                 return null;
             default:

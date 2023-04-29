@@ -96,7 +96,8 @@ public class ServerSocketUtil {
             // 返回客户端地址并打印出来
             System.out.println("客户端:" + socket.getInetAddress().getLocalHost() + "已连接到服务器");
 
-            SocketConnection.getSocketConnection(socket);
+            SocketConnection socketConnection = SocketConnection.getSocketConnection(socket);
+            socketConnection.connectionHandling(socket);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,3 +1,5 @@
+package top.lldwb.noitaSaver.mailUtil;
+
 /**
  * 邮箱传输协议类型
  * @author 安然的尾巴
