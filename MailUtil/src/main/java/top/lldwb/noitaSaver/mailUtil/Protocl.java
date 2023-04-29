@@ -8,8 +8,8 @@ package top.lldwb.noitaSaver.mailUtil;
 public enum Protocl {
     SMTP("smtp"),
     POP3("POP3");
+    String value;
     Protocl(String value){
         this.value = value;
     }
-    String value;
 }

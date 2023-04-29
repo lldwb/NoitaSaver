@@ -18,21 +18,10 @@ public interface SocketConnection {
 
     /**
      *
-     * @param reader
+     * @param types
      * @return
-     * @throws IOException
      */
-    static SocketConnection getSocketConnection(BufferedReader reader) throws IOException {
-        // 读取一行文本。一行被视为以换行符('\n')、换行符('\r')或换行符后紧跟着的换行符中的任何一个结束。
-        String types = reader.readLine();
-        System.out.println(types);
-
-//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-//        writer.write("接收成功\n");
-//        writer.flush();
-
-//        reader.close();
-
+    static SocketConnection getSocketConnection(String types) {
         // 格式:“类型\n”
         switch (types) {
             case "登录":

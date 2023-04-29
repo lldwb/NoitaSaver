@@ -21,7 +21,6 @@ public class ClientSocketUtil {
         // host:服务器地址 port:服务器端口
         Socket socket = new Socket("127.0.0.1", 8888);
 
-
 //        InputStream inputStream = socket.getInputStream();
 //        OutputStream outputStream = socket.getOutputStream();
 //
@@ -36,7 +35,6 @@ public class ClientSocketUtil {
 //        writer.write("3247187440@qq.com\n");
 //        // 刷新缓冲流，保证立刻发送
 //        writer.flush();
-
 
         return socket;
     }
