@@ -12,7 +12,7 @@ public class QueryRunner {
     /**
      * 用于执行select
      */
-    public <T> T query(Connection conn, String sql, ResultSetHandler<T> handler, Object... objects) throws SQLException {
+    public <T> T query(Connection conn, String sql, ResultSetHandler<T> handler, Object... objects) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         if (conn == null) {
             throw new SQLException("连接对象为null");
         }
