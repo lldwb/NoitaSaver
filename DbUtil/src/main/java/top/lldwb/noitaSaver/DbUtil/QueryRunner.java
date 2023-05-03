@@ -10,7 +10,17 @@ import java.sql.SQLException;
 public class QueryRunner {
 
     /**
-     * 用于执行select
+     * 用于执行select并处理
+     * @param conn 连接对象
+     * @param sql SQL语句
+     * @param handler 结果集处理的具体实现类
+     * @param objects 条件语句
+     * @return 返回处理过的查询结果
+     * @param <T> 实体类
+     * @throws SQLException 如果参数为空返回
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
      */
     public <T> T query(Connection conn, String sql, ResultSetHandler<T> handler, Object... objects) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         if (conn == null) {

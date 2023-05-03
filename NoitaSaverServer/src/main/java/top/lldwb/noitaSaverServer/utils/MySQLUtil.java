@@ -1,5 +1,8 @@
 package top.lldwb.noitaSaverServer.utils;
 
+import top.lldwb.noitaSaver.DbUtil.Handler.BeanListHandler;
+import top.lldwb.noitaSaver.DbUtil.QueryRunner;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,7 +15,7 @@ public class MySQLUtil {
     //密码
     private static final String PASSWORD = "@dwb123456";
     //QueryRunner对象
-//    QueryRunner queryRunner = new QueryRunner();
+    QueryRunner queryRunner = new QueryRunner();
     //数据库连接对象并传入数据库参数
     Connection conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 
@@ -28,11 +31,10 @@ public class MySQLUtil {
      @return 返回符合条件的记录封装为的List对象
      @throws SQLException
      */
-    public <T> List<T> pdsList(T t, String sql, Object... obj) throws SQLException {
-//        List<T> list = queryRunner.query(conn,sql,new  BeanListHandler<T>((Class<? extends T>) t.getClass()),obj);
-//        List<T> list
+    public <T> List<T> pdsList(T t, String sql, Object... obj) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        List<T> list = queryRunner.query(conn,sql,new BeanListHandler<T>((Class<? extends T>) t.getClass()),obj);
 //        DbUtils.close(conn);
-//        return list;
-        return null;
+        return list;
+//        return null;
     }
 }
