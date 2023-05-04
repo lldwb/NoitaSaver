@@ -13,9 +13,10 @@
 使用apache-tomcat-9.0.64和Java1.8启动。
 
 ## 技术栈
-后端技术栈：多线程、io、简单工厂设计模式、注解、MVC设计模式、DateTime、Lambda表达式等、集合、递归。
-前端技术栈：es6、jquery、element-ui等。
-开发工具：Maven、idea。
+1. 后端技术栈：多线程、io、简单工厂设计模式、注解、MVC设计模式、DateTime、Lambda表达式等、集合、递归。
+2. 前端技术栈：es6、jquery、element-ui等。 
+3. 开发工具：Maven、idea。
+
 ## 项目仓库
 https://github.com/lldwb/NoitaSaver.git
 
