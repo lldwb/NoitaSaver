@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet("/getFolderNameList")
 public class GetFolderNameList extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
         ObjectMapper om = new ObjectMapper();

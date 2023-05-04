@@ -12,13 +12,14 @@ import java.io.IOException;
 
 /**
  * 存档API
+ *
  * @author 安然的尾巴
  * @version 1.0
  */
 @WebServlet("/archiveFolderCopy")
 public class ArchiveFolderCopy extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 

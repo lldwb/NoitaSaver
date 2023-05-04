@@ -3,7 +3,6 @@ package top.lldwb.noitaSaverClient.action.defaultPath;
 import top.lldwb.noitaSaverClient.entity.DefaultPath;
 import top.lldwb.noitaSaverClient.service.DefaultService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
