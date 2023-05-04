@@ -38,6 +38,7 @@
         <argLine>-Dfile.encoding=UTF-8</argLine>
         <tomcatd.version>9.0.65</tomcatd.version>
         <jupiter.version>5.9.2</jupiter.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <!--    按需要依赖标识符-->
@@ -78,6 +79,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>${jupiter.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

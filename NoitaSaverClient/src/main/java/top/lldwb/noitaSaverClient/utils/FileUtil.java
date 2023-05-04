@@ -1,5 +1,7 @@
 package top.lldwb.noitaSaverClient.utils;
 
+import top.lldwb.noitaSaverClient.entity.DefaultPath;
+
 import java.io.*;
 import java.util.*;
 
@@ -63,7 +65,7 @@ public class FileUtil {
      * @param writePath 目标文件夹地址
      * @return 指定文件夹中所有文件的路径列表
      */
-    public static List getFilePathList(String readPath, String writePath) {
+    private static List getFilePathList(String readPath, String writePath) {
         // 在目标文件夹中创建子文件夹
         new File(writePath + readPath.substring(FileUtil.readPath.length())).mkdir();
         // 初始化路径列表
@@ -136,13 +138,28 @@ public class FileUtil {
     }
 
     /**
+     * 修改默认地址
+     */
+    public static void setDefaultPath(DefaultPath defaultPath) throws IOException {
+        new File("C:\\Users\\Public\\Documents\\NoitaSaverClient").mkdir();
+        Serialization(defaultPath);
+    }
+
+    /**
+     * 读取默认地址
+     */
+    public static DefaultPath getDefaultPath() throws IOException, ClassNotFoundException {
+        return DeSerialization();
+    }
+
+    /**
      * 将指定文件从源地址复制到目标地址
      *
      * @param readPath  源地址
      * @param writePath 目标地址
      * @throws IOException
      */
-    public static void fileIO(String readPath, String writePath) throws IOException {
+    private static void fileIO(String readPath, String writePath) throws IOException {
         // 输入文件操作对象
         File read = new File(readPath);
         // 输出文件操作对象
@@ -200,16 +217,42 @@ public class FileUtil {
         new File(path).delete();
     }
 
-    // 设置缓存大小为10MB
-    private static final int BUFFER_SIZE = 1024 * 1024 * 10;
+    /**
+     * 序列化
+     * @param t
+     * @param <T>
+     */
+    private static <T> void Serialization(T t) throws IOException {
+        OutputStream objectOutput = new BufferedOutputStream(new FileOutputStream("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.lldwb"));
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(objectOutput);
+        objectOutputStream.writeObject(t);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
 
     /**
-     * 本地多线程IO复制大文件
-     *
-     * @param readPath  源文件路径
-     * @param writePath 目标文件路径
-     * @throws IOException
+     * 反序列化
+     * @param <T>
+     * @return
      */
-    public static void largeFileIO(String readPath, String writePath) {
+    private static <T> T DeSerialization() throws IOException, ClassNotFoundException {
+        InputStream objectInput = new BufferedInputStream(new FileInputStream("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.lldwb"));
+        ObjectInputStream objectInputStream = new ObjectInputStream(objectInput);
+        T t = (T) objectInputStream.readObject();
+        objectInputStream .close();
+        return t;
     }
+
+//    // 设置缓存大小为10MB
+//    private static final int BUFFER_SIZE = 1024 * 1024 * 10;
+//
+//    /**
+//     * 本地多线程IO复制大文件
+//     *
+//     * @param readPath  源文件路径
+//     * @param writePath 目标文件路径
+//     * @throws IOException
+//     */
+//    public static void largeFileIO(String readPath, String writePath) {
+//    }
 }

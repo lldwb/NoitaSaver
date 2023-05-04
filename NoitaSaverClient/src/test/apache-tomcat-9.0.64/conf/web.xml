@@ -627,7 +627,7 @@
 -->
 
 
-  <!-- ==================== Default Session Configuration ================= -->
+  <!-- ==================== DefaultPath Session Configuration ================= -->
   <!-- You can set the default session timeout (in minutes) for all newly   -->
   <!-- created sessions by modifying the value below.                       -->
 
@@ -636,7 +636,7 @@
     </session-config>
 
 
-  <!-- ===================== Default MIME Type Mappings =================== -->
+  <!-- ===================== DefaultPath MIME Type Mappings =================== -->
   <!-- When serving static resources, Tomcat will automatically generate    -->
   <!-- a "Content-Type" header based on the resource's filename extension,  -->
   <!-- based on these mappings.  Additional mappings can be added here (to  -->
@@ -4715,7 +4715,7 @@
         <mime-type>application/vnd.handheld-entertainment+xml</mime-type>
     </mime-mapping>
 
-  <!-- ==================== Default Welcome File List ===================== -->
+  <!-- ==================== DefaultPath Welcome File List ===================== -->
   <!-- When a request URI refers to a directory, the default servlet looks  -->
   <!-- for a "welcome file" within that directory and, if present, to the   -->
   <!-- corresponding resource URI for display.                              -->

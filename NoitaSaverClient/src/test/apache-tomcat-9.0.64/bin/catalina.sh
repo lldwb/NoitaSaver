@@ -34,7 +34,7 @@
 #
 #   CATALINA_OUT    (Optional) Full path to a file where stdout and stderr
 #                   will be redirected.
-#                   Default is $CATALINA_BASE/logs/catalina.out
+#                   DefaultPath is $CATALINA_BASE/logs/catalina.out
 #
 #   CATALINA_OUT_CMD (Optional) Command which will be executed and receive
 #                   as its stdin the stdout and stderr from the Tomcat java
@@ -84,7 +84,7 @@
 #
 #   JPDA_SUSPEND    (Optional) Java runtime options used when the "jpda start"
 #                   command is executed. Specifies whether JVM should suspend
-#                   execution immediately after startup. Default is "n".
+#                   execution immediately after startup. DefaultPath is "n".
 #
 #   JPDA_OPTS       (Optional) Java runtime options used when the "jpda start"
 #                   command is executed. If used, JPDA_TRANSPORT, JPDA_ADDRESS,
@@ -95,7 +95,7 @@
 #                       address=$JPDA_ADDRESS,server=y,suspend=$JPDA_SUSPEND
 #
 #   JSSE_OPTS       (Optional) Java runtime options used to control the TLS
-#                   implementation when JSSE is used. Default is:
+#                   implementation when JSSE is used. DefaultPath is:
 #                   "-Djdk.tls.ephemeralDHKeySize=2048"
 #
 #   CATALINA_PID    (Optional) Path of the file which should contains the pid
@@ -119,7 +119,7 @@
 #
 #   USE_NOHUP       (Optional) If set to the string true the start command will
 #                   use nohup so that the Tomcat process will ignore any hangup
-#                   signals. Default is "false" unless running on HP-UX in which
+#                   signals. DefaultPath is "false" unless running on HP-UX in which
 #                   case the default is "true"
 # -----------------------------------------------------------------------------
 
