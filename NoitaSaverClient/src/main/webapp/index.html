@@ -13,30 +13,47 @@
     </head>
 <body>
 <div id="qrc">
+    <el-tabs tab-position="left" type="border-card">
+        <el-tab-pane label="存档界面">
 
-    需要存档的文件夹路径
-    <el-input v-model="path" placeholder="需要存档的文件夹路径"></el-input>
-    存档保存路径
-    <el-input v-model="saverPath" placeholder="存档保存路径"></el-input>
-    <el-button @click="getFolderName">读取存档保存路径</el-button>
-    <template>
-        <el-select v-model="value" placeholder="请选择存档">
-            <el-option v-for="file in list" :value="file">
-            </el-option>
-        </el-select>
-    </template>
-    <el-button @click="archiveFolderCopy" :disabled="archiveBoolean">存档</el-button>
-    <el-button @click="unArchiveFolderCopy" :disabled="unArchiveBoolean">读档</el-button>
-    <el-button @click="deleteFileFolder" :disabled="deleteBoolean">删除</el-button>
-    <el-button @click="defaultPath" :disabled="defaultPathBoolean">设置为默认设置</el-button>
+            <el-button type="primary" @click="getFolderName">刷新</el-button>
+            <el-button type="success" @click="archiveFolderCopy" :disabled="archiveBoolean">存档</el-button>
+
+            <template>
+                <el-table :data="list" style="width: 100%" stripe>
+                    <el-table-column prop="name" label="存档界面" width="200">
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+                                删除</el-button> -->
+                            <el-button size="mini" type="success" @click="unArchiveFolderCopy(scope.row.name)"
+                                       :disabled="unArchiveBoolean">读档
+                            </el-button>
+                            <el-button size="mini" type="danger" @click="deleteFileFolder(scope.row.name)"
+                                       :disabled="deleteBoolean">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-tab-pane>
+        <el-tab-pane label="配置管理">
+            需要存档的文件夹路径
+            <el-input v-model="path" placeholder="需要存档的文件夹路径"></el-input>
+            存档保存路径
+            <el-input v-model="saverPath" placeholder="存档保存路径"></el-input>
+            <el-button @click="defaultPath" :disabled="defaultPathBoolean">设置为默认设置</el-button>
+        </el-tab-pane>
+        <el-tab-pane label="用户管理">角色管理</el-tab-pane>
+    </el-tabs>
 </div>
 <script type="text/javascript">
     const vue = new Vue({
         el: "#qrc",
         data: {
             list: null,
-            // 选择的存档地址
-            value: '',
             // 需要存档的文件夹路径
             path: "C:\\Users\\lldwb\\AppData\\LocalLow\\Nolla_Games_Noita\\save00",
             // 存档保存路径
@@ -75,12 +92,12 @@
                 });
             },
             // 读档
-            unArchiveFolderCopy() {
+            unArchiveFolderCopy(name) {
                 this.unArchiveBoolean = true;
                 $.ajax({
                     url: "unArchiveFolderCopy",
                     data: {
-                        writePath: this.saverPath + '\\' + this.value,
+                        writePath: this.saverPath + '\\' + name,
                         readPath: this.path
                     },
                     success() {
@@ -93,7 +110,7 @@
                 })
             },
             // 删除
-            deleteFileFolder() {
+            deleteFileFolder(name) {
                 this.$confirm('此操作将永久删除该存档, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -103,7 +120,7 @@
                     $.ajax({
                         url: "deleteFileFolder",
                         data: {
-                            path: vue.saverPath + '\\' + vue.value,
+                            path: vue.saverPath + '\\' + name,
                         },
                         success() {
                             vue.deleteBoolean = false;
