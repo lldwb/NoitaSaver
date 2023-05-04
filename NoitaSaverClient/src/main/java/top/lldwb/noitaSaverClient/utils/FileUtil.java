@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverClient.utils;
 
 import top.lldwb.noitaSaverClient.entity.DefaultPath;
+import top.lldwb.noitaSaverClient.entity.Folder;
 
 import java.io.*;
 import java.util.*;
@@ -122,14 +123,14 @@ public class FileUtil {
      */
     public static List getFolderNameList(String path) {
         // 初始化路径列表
-        List<String> list = new ArrayList();
+        List<Folder> list = new ArrayList();
         // 遍历源文件夹中的所有文件
         for (String file : new File(path).list()) {
             // 构造当前文件的路径
             String paths = path + '\\' + file;
             // 判断是否是文件夹
             if (new File(paths).isDirectory()) {
-                list.add(file);
+                list.add(new Folder(file));
 //                System.out.println(file);
             }
         }
