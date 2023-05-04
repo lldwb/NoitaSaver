@@ -20,6 +20,6 @@ public class ArchiveFolderCopyImpl implements FolderCopy {
         // 在目标文件夹中创建子文件夹
 //        new File(writePath + localDateTime).mkdir();
         FileUtil.copyDirectory(readPath, writePath + "\\" + localDateTime);
-        System.out.println("存档成功！");
+//        System.out.println("存档成功！");
     }
 }

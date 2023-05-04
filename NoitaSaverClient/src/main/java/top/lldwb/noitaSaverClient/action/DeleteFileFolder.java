@@ -27,7 +27,7 @@ public class DeleteFileFolder extends HttpServlet {
         DeleteFileFolderService.deleteFileFolder(path);
 
         // 判断是否删除所有存档，如果是删除所有存档后创建一个新的文件夹
-        if (!req.getParameter("boolean").isEmpty()){
+        if (req.getParameter("boolean")!=null){
             new File(path).mkdir();
         }
     }

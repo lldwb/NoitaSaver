@@ -16,6 +16,6 @@ public class UnArchiveFolderCopyImpl implements FolderCopy {
     @Override
     public void copy(String readPath, String writePath) {
         FileUtil.copyDirectory(readPath, writePath);
-        System.out.println("读档成功！");
+//        System.out.println("读档成功！");
     }
 }
