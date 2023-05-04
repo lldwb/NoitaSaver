@@ -13,7 +13,7 @@
 		</head>
 	<body>
 		<div id="qrc">
-			<el-tabs tab-position="left" type="border-card">
+			<el-tabs tab-position="left" height="100%">
 				<el-tab-pane>
 					<span slot="label"><i class="el-icon-folder"></i> 存档界面</span>
 
@@ -25,8 +25,9 @@
 					<el-button type="danger" @click="deleteAllFileFolder" :disabled="deleteBoolean"
 						icon="el-icon-document-delete">
 						删除所有</el-button>
+
 					<template>
-						<el-table :data="list" style="width: 100%" stripe>
+						<el-table :data="list" style="width: 100%" height="90%" stripe>
 							<el-table-column prop="name" :label="tableName" width="200">
 							</el-table-column>
 							<el-table-column label="操作">
@@ -56,180 +57,180 @@
 				</el-tab-pane>
 			</el-tabs>
 		</div>
-		<script type="text/javascript">
-			const getList = vueRouter => {
-				$.ajax({
-					url: "getFolderNameList",
-					dataType: "JSON",
-					data: {
-						path: vueRouter.saverPath,
-					},
-					success(result) {
-						console.log(result);
-						vueRouter.list = result;
-						vueRouter.tableName = "存档列表(已有" + vueRouter.list.length + "个存档)";
-					}
-				})
-			};
-			const vue = new Vue({
-				el: "#qrc",
+	</body>
+	<script type="text/javascript">
+		const getList = vueRouter => {
+			$.ajax({
+				url: "getFolderNameList",
+				dataType: "JSON",
 				data: {
-					list: null,
-					// 需要存档的文件夹路径
-					path: "",
-					// 存档保存路径
-					saverPath: "",
-					// 存档
-					archiveBoolean: false,
-					// 读档
-					unArchiveBoolean: false,
-					// 删除相关按钮
-					deleteBoolean: false,
-					// 默认设置
-					defaultPathBoolean: false,
-					// 存档列表名字设置
-					tableName: ""
+					path: vueRouter.saverPath,
 				},
-				methods: {
-					// 获取存档列表
-					getFolderName() {
-						getListVue();
-					},
-					// 存档
-					archiveFolderCopy() {
-						this.archiveBoolean = true;
-						$.ajax({
-							url: "archiveFolderCopy",
-							data: {
-								writePath: this.path,
-								readPath: this.saverPath
-							},
-							success() {
-								getListVue();
-								vue.archiveBoolean = false;
-								vue.$message({
-									message: '存档成功',
-									type: 'success'
-								});
-							}
-						});
-					},
-					// 读档
-					unArchiveFolderCopy(name) {
-						this.unArchiveBoolean = true;
-						$.ajax({
-							url: "unArchiveFolderCopy",
-							data: {
-								writePath: this.saverPath + '\\' + name,
-								readPath: this.path
-							},
-							success() {
-								vue.unArchiveBoolean = false;
-								vue.$message({
-									message: '读档成功',
-									type: 'success'
-								});
-							}
-						})
-					},
-					// 删除
-					deleteFileFolder(name) {
-						this.$confirm('此操作将永久删除该存档, 是否继续?', '提示', {
-							confirmButtonText: '确定',
-							cancelButtonText: '取消',
-							type: 'warning'
-						}).then(() => {
-							vue.deleteBoolean = true;
-							$.ajax({
-								url: "deleteFileFolder",
-								data: {
-									path: vue.saverPath + '\\' + name,
-								},
-								success() {
-									vue.deleteBoolean = false;
-									vue.$message({
-										message: '删除存档成功',
-										type: 'success'
-									});
-									getListVue();
-									vue.value = '';
-								}
-							})
-						}).catch(() => {
-							this.$message({
-								type: 'info',
-								message: '已取消删除'
-							});
-						});
-					},
-					// 删除所有
-					deleteAllFileFolder() {
-						this.$confirm('此操作将永久删除所有存档, 是否继续?', '提示', {
-							confirmButtonText: '确定',
-							cancelButtonText: '取消',
-							type: 'warning'
-						}).then(() => {
-							vue.deleteBoolean = true;
-							$.ajax({
-								url: "deleteFileFolder",
-								data: {
-									path: vue.saverPath,
-									boolean: true
-								},
-								success() {
-									vue.deleteBoolean = false;
-									vue.$message({
-										message: '删除成功',
-										type: 'success'
-									});
-									getListVue();
-									vue.value = '';
-								}
-							})
-						}).catch(() => {
-							this.$message({
-								type: 'info',
-								message: '已取消删除'
-							});
-						});
-					},
-					// 默认设置
-					defaultPath() {
-						this.defaultPathBoolean = true;
-						$.ajax({
-							url: "setDefaultPath",
-							data: {
-								readPath: this.path,
-								writePath: this.saverPath
-							},
-							success() {
-								vue.defaultPathBoolean = false;
-								vue.$message({
-									message: '设置成功',
-									type: 'success'
-								});
-							}
-						})
-					}
+				success(result) {
+					console.log(result);
+					vueRouter.list = result;
+					vueRouter.tableName = "存档列表(已有" + vueRouter.list.length + "个存档)";
+				}
+			})
+		};
+		const vue = new Vue({
+			el: "#qrc",
+			data: {
+				list: null,
+				// 需要存档的文件夹路径
+				path: "",
+				// 存档保存路径
+				saverPath: "",
+				// 存档
+				archiveBoolean: false,
+				// 读档
+				unArchiveBoolean: false,
+				// 删除相关按钮
+				deleteBoolean: false,
+				// 默认设置
+				defaultPathBoolean: false,
+				// 存档列表名字设置
+				tableName: ""
+			},
+			methods: {
+				// 获取存档列表
+				getFolderName() {
+					getListVue();
 				},
-				mounted() {
+				// 存档
+				archiveFolderCopy() {
+					this.archiveBoolean = true;
 					$.ajax({
-						url: "getDefaultPath",
-						dataType: "JSON",
-						success(result) {
-							// 源地址
-							vue.path = result.readPath;
-							// 存档路径
-							vue.saverPath = result.writePath;
-
-							getList(vue);
+						url: "archiveFolderCopy",
+						data: {
+							writePath: this.path,
+							readPath: this.saverPath
+						},
+						success() {
+							getListVue();
+							vue.archiveBoolean = false;
+							vue.$message({
+								message: '存档成功',
+								type: 'success'
+							});
+						}
+					});
+				},
+				// 读档
+				unArchiveFolderCopy(name) {
+					this.unArchiveBoolean = true;
+					$.ajax({
+						url: "unArchiveFolderCopy",
+						data: {
+							writePath: this.saverPath + '\\' + name,
+							readPath: this.path
+						},
+						success() {
+							vue.unArchiveBoolean = false;
+							vue.$message({
+								message: '读档成功',
+								type: 'success'
+							});
+						}
+					})
+				},
+				// 删除
+				deleteFileFolder(name) {
+					this.$confirm('此操作将永久删除该存档, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						vue.deleteBoolean = true;
+						$.ajax({
+							url: "deleteFileFolder",
+							data: {
+								path: vue.saverPath + '\\' + name,
+							},
+							success() {
+								vue.deleteBoolean = false;
+								vue.$message({
+									message: '删除存档成功',
+									type: 'success'
+								});
+								getListVue();
+								vue.value = '';
+							}
+						})
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});
+					});
+				},
+				// 删除所有
+				deleteAllFileFolder() {
+					this.$confirm('此操作将永久删除所有存档, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						vue.deleteBoolean = true;
+						$.ajax({
+							url: "deleteFileFolder",
+							data: {
+								path: vue.saverPath,
+								boolean: true
+							},
+							success() {
+								vue.deleteBoolean = false;
+								vue.$message({
+									message: '删除成功',
+									type: 'success'
+								});
+								getListVue();
+								vue.value = '';
+							}
+						})
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});
+					});
+				},
+				// 默认设置
+				defaultPath() {
+					this.defaultPathBoolean = true;
+					$.ajax({
+						url: "setDefaultPath",
+						data: {
+							readPath: this.path,
+							writePath: this.saverPath
+						},
+						success() {
+							vue.defaultPathBoolean = false;
+							vue.$message({
+								message: '设置成功',
+								type: 'success'
+							});
 						}
 					})
 				}
-			});
-			const getListVue = () => {
-				getList(vue);
-			};
-		</script>
-	</body>
+			},
+			mounted() {
+				$.ajax({
+					url: "getDefaultPath",
+					dataType: "JSON",
+					success(result) {
+						// 源地址
+						vue.path = result.readPath;
+						// 存档路径
+						vue.saverPath = result.writePath;
+
+						getList(vue);
+					}
+				})
+			}
+		});
+		const getListVue = () => {
+			getList(vue);
+		};
+	</script>
 </html>
