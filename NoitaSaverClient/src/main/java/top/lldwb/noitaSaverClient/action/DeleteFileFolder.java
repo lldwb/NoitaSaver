@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -24,5 +25,10 @@ public class DeleteFileFolder extends HttpServlet {
         // 删除路径
         String path = req.getParameter("path");
         DeleteFileFolderService.deleteFileFolder(path);
+
+        // 判断是否删除所有存档，如果是删除所有存档后创建一个新的文件夹
+        if (!req.getParameter("boolean").isEmpty()){
+            new File(path).mkdir();
+        }
     }
 }
