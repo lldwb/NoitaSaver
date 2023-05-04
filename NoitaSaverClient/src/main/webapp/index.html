@@ -27,7 +27,7 @@
 						删除所有</el-button>
 					<template>
 						<el-table :data="list" style="width: 100%" stripe>
-							<el-table-column prop="name" label="存档界面" width="200">
+							<el-table-column prop="name" :label="tableName" width="200">
 							</el-table-column>
 							<el-table-column label="操作">
 								<template slot-scope="scope">
@@ -43,7 +43,7 @@
 					</template>
 				</el-tab-pane>
 				<el-tab-pane>
-					<span slot="label"><i class="el-icon-setting"></i> 配置管理</span>
+					<span slot="label"><i class="el-icon-setting"></i>配置管理</span>
 					需要存档的文件夹路径
 					<el-input v-model="path" placeholder="需要存档的文件夹路径"></el-input>
 					存档保存路径
@@ -57,6 +57,20 @@
 			</el-tabs>
 		</div>
 		<script type="text/javascript">
+			const getList = vueRouter => {
+				$.ajax({
+					url: "getFolderNameList",
+					dataType: "JSON",
+					data: {
+						path: vueRouter.saverPath,
+					},
+					success(result) {
+						console.log(result);
+						vueRouter.list = result;
+						vueRouter.tableName = "存档列表(已有" + vueRouter.list.length + "个存档)";
+					}
+				})
+			};
 			const vue = new Vue({
 				el: "#qrc",
 				data: {
@@ -72,12 +86,14 @@
 					// 删除相关按钮
 					deleteBoolean: false,
 					// 默认设置
-					defaultPathBoolean: false
+					defaultPathBoolean: false,
+					// 存档列表名字设置
+					tableName: ""
 				},
 				methods: {
 					// 获取存档列表
 					getFolderName() {
-						getList();
+						getListVue();
 					},
 					// 存档
 					archiveFolderCopy() {
@@ -89,7 +105,7 @@
 								readPath: this.saverPath
 							},
 							success() {
-								getList();
+								getListVue();
 								vue.archiveBoolean = false;
 								vue.$message({
 									message: '存档成功',
@@ -135,7 +151,7 @@
 										message: '删除存档成功',
 										type: 'success'
 									});
-									getList();
+									getListVue();
 									vue.value = '';
 								}
 							})
@@ -166,7 +182,7 @@
 										message: '删除成功',
 										type: 'success'
 									});
-									getList();
+									getListVue();
 									vue.value = '';
 								}
 							})
@@ -206,33 +222,13 @@
 							// 存档路径
 							vue.saverPath = result.writePath;
 
-							$.ajax({
-								url: "getFolderNameList",
-								dataType: "JSON",
-								data: {
-									path: vue.saverPath,
-								},
-								success(result) {
-									console.log(result);
-									vue.list = result;
-								}
-							})
+							getList(vue);
 						}
 					})
 				}
 			});
-			const getList = () => {
-				$.ajax({
-					url: "getFolderNameList",
-					dataType: "JSON",
-					data: {
-						path: vue.saverPath,
-					},
-					success(result) {
-						console.log(result);
-						vue.list = result;
-					}
-				})
+			const getListVue = () => {
+				getList(vue);
 			};
 		</script>
 	</body>
