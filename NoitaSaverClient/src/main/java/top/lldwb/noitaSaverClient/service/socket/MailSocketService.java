@@ -17,12 +17,12 @@ public class MailSocketService {
      * @throws IOException
      */
     public String mailVerificationCode(String mail) throws IOException {
-        Socket socket = ClientSocketUtil.clientSocket();
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        bufferedWriter.write(mail);
-        bufferedWriter.flush();
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        return bufferedReader.readLine();
+//        Socket socket = ClientSocketUtil.clientSocket();
+//        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+//        bufferedWriter.write(mail);
+//        bufferedWriter.flush();
+//
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//        return bufferedReader.readLine();
     }
 }
