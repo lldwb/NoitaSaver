@@ -20,7 +20,7 @@
 ## 技术栈
 1. 后端技术栈：多线程、io(字符、字节、序列化)、简单工厂设计模式、注解、MVC设计模式、DateTime、Lambda表达式等、集合、递归、Socket通讯、反射。
 2. 前端技术栈：es6、jquery、element-ui等。 
-3. 开发工具：Maven、idea。
+3. 开发工具：Maven、Idea、Git。
 
 ## 项目仓库
 https://github.com/lldwb/NoitaSaver.git
