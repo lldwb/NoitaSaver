@@ -44,7 +44,7 @@ user用户表
 |---------------------|-------------|-----------|---------------------------|
 | id                  | int         | 自增1,主键,非空 |                           |
 | name                | varchar(15) | 非空        | 名字                        |
-| emailAuthentication | boolen      | 非空        | 邮箱认证                      |
+| emailAuthentication | boolean     | 非空        | 邮箱认证                      |
 | accesskey           | char(32)    |           | 访问秘钥，(id+时间戳+随机函数)使用MD5加密 |
 
 ## 项目架构
