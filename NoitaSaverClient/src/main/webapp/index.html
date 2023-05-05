@@ -20,7 +20,8 @@
 				<el-tab-pane>
 					<span slot="label"><i class="el-icon-folder"></i> 存档界面</span>
 
-					<el-button type="primary" @click="getFolderName" icon="el-icon-refresh">刷新</el-button>
+					<el-button type="primary" @click="getFolderName" :disabled="getFolderNameBoolean"
+						icon="el-icon-refresh">刷新</el-button>
 					<el-button type="success" @click="archiveFolderCopy" :disabled="archiveBoolean"
 						icon="el-icon-document-add">
 						存档
@@ -63,6 +64,7 @@
 	</body>
 	<script type="text/javascript">
 		const getList = vueRouter => {
+			this.getFolderNameBoolean = true;
 			$.ajax({
 				url: "getFolderNameList",
 				dataType: "JSON",
@@ -70,9 +72,15 @@
 					path: vueRouter.saverPath,
 				},
 				success(result) {
-					console.log(result);
+					// console.log(result);
 					vueRouter.list = result;
 					vueRouter.tableName = "存档列表(已有" + vueRouter.list.length + "个存档)";
+					this.getFolderNameBoolean = false;
+					vueRouter.$message({
+						message: '已刷新',
+						duration: 1000,
+						type: 'success'
+					});
 				}
 			})
 		};
@@ -88,6 +96,8 @@
 				archiveBoolean: false,
 				// 读档
 				unArchiveBoolean: false,
+				// 刷新
+				getFolderNameBoolean: false,
 				// 删除相关按钮
 				deleteBoolean: false,
 				// 默认设置
