@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverClient.entity;
+package top.lldwb.noitaSaverServer.entity;
 
 import lombok.Data;
 
@@ -12,17 +12,20 @@ import java.io.Serializable;
  */
 @Data
 public class User implements Serializable {
-    public int id;
     /**
-     * 用户名
+     * 用户ID，自增1，主键，非空
      */
-    public String name;
+    private int userId;
     /**
-     * 邮箱认证状态
+     * 用户名，最长15个字符，非空
      */
-    public boolean emailAuthentication;
+    private String userName;
     /**
-     * 访问秘钥，(id+时间戳+随机函数)使用MD5加密
+     * 用户状态，0表示未邮箱认证，1表示通过认证，2表示注销，非空
      */
-    public String accesskey;
+    private int userState;
+    /**
+     * 访问秘钥，(id+时间戳+随机函数)使用MD5加密，最长32个字符
+     */
+    private String userKey;
 }
