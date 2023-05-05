@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 用户实体类
+ *
  * @author 安然的尾巴
  * @version 1.0
  */
