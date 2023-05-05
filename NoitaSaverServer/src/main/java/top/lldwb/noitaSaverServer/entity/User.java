@@ -2,6 +2,8 @@ package top.lldwb.noitaSaverServer.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 用户实体类
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class User {
+public class User implements Serializable {
     public int id;
     /**
      * 用户名
