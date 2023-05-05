@@ -24,5 +24,6 @@ public class MailSocketService {
 //
 //        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //        return bufferedReader.readLine();
+        return null;
     }
 }
