@@ -36,7 +36,7 @@
 
 https://github.com/lldwb/NoitaSaver.git
 
-## 数据库`NoitaSaver`
+## 数据库`noitaSaver`
 
 `user`用户表
 
