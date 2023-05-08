@@ -1,7 +1,7 @@
 package top.lldwb.noitaSaverServer.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.lldwb.noitaSaverServer.servlet.Controller.ResponseData;
+import top.lldwb.noitaSaverServer.servlet.ResponseData;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

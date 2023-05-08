@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverServer.servlet.Controller;
+package top.lldwb.noitaSaverServer.servlet;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

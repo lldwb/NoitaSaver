@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverServer.servlet.Controller;
+package top.lldwb.noitaSaverServer.servlet;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

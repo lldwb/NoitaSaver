@@ -1,6 +1,6 @@
 import org.reflections.Reflections;
 import top.lldwb.noitaSaverServer.action.Controller;
-import top.lldwb.noitaSaverServer.servlet.Controller.WebController;
+import top.lldwb.noitaSaverServer.servlet.WebController;
 import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 
 import java.io.*;
