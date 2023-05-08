@@ -1,11 +1,15 @@
 package top.lldwb.noitaSaverServer.utils;
 
+import top.lldwb.noitaSaverServer.dao.Dao;
+import top.lldwb.noitaSaverServer.entity.User;
 import top.lldwb.noitaSaverServer.service.connection.MailSocketConnection;
 import top.lldwb.noitaSaverServer.service.connection.SocketConnection;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,12 +106,23 @@ public class ServerSocketUtil {
             OutputStream outputStream = socket.getOutputStream();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
             String types = reader.readLine();
             System.out.println(types);
+
+            Dao dao = new Dao();
+
             // 格式:“类型\n”
             switch (types) {
                 case "登录":
+                    User user = (User) objectInputStream.readObject();
+
+                    objectOutputStream.writeObject(dao.login(user));
+                    objectOutputStream.flush();
                     break;
                 case "云备份":
                     break;
@@ -116,15 +131,24 @@ public class ServerSocketUtil {
                 case "邮箱":
                     String reception = reader.readLine();
                     System.out.println(reception);
-                    MailUtil.sendSession(reception,"验证码","2345");
+                    MailUtil.sendSession(reception, "验证码", "2345");
                     break;
                 case "注册":
                     break;
                 default:
                     break;
             }
-
+        } catch (UnknownHostException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
             throw new RuntimeException(e);
         }
     }

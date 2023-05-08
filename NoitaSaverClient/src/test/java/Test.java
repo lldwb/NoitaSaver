@@ -1,4 +1,5 @@
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
+import top.lldwb.noitaSaverClient.utils.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -49,7 +50,7 @@ public class Test {
     }
 
     @org.junit.jupiter.api.Test
-    public void s(){
+    public void s() {
         try {
             // 创建一个流套接字并将其连接到指定主机上的指定端口号。
             // host:服务器地址 port:服务器端口
@@ -93,7 +94,12 @@ public class Test {
     }
 
     @org.junit.jupiter.api.Test
-    public void testByte() {
-//        ClientSocketUtil.clientSocket(null);
+    public void testByte() throws IOException, ClassNotFoundException {
+        User user = new User();
+        user.setUserName("1");
+        user.setUserPassword("1");
+
+        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
+        System.out.println(user);
     }
 }
