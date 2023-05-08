@@ -21,6 +21,10 @@ public class User implements Serializable {
      */
     private String userName;
     /**
+     * 密码，最长15个字符，非空
+     */
+    private String userPassword;
+    /**
      * 用户状态，0表示未邮箱认证，1表示通过认证，2表示注销，非空
      */
     private int userState;

@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverServer.servlet;
+package top.lldwb.noitaSaverServer.servlet.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

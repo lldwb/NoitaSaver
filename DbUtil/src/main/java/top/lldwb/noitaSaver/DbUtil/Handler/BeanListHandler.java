@@ -37,7 +37,7 @@ public class BeanListHandler<T> implements ResultSetHandler<List<T>> {
                 for (Field field : type.getDeclaredFields()) {
                     String metaString = metaData.getColumnLabel(i);
                     // 检测是否有别名的字段
-                    if (field.isAnnotationPresent(AnotherName.class) ? field.getDeclaredAnnotation(AnotherName.class).value().equals(metaString) : false || field.getName().equals(metaString)) {
+                    if (field.isAnnotationPresent(AnotherName.class) ? field.getDeclaredAnnotation(AnotherName.class).value().equals(metaString) : field.getName().equals(metaString)) {
                         // 如果有别名录入别名
                         field.setAccessible(true);
                         field.set(t, rs.getObject(i));
