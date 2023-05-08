@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverServer.servlet.Controller;
+package top.lldwb.noitaSaverServer.action;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -1,8 +1,12 @@
+import org.reflections.Reflections;
+import top.lldwb.noitaSaverServer.action.Controller;
+import top.lldwb.noitaSaverServer.servlet.Controller.WebController;
 import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Set;
 
 /**
  * @author 安然的尾巴
@@ -87,5 +91,19 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void ss(){
         ServerSocketUtil.getServerSocketUtils();
+    }
+    @org.junit.jupiter.api.Test
+    public void sf(){
+        // 扫描IDataValidator所在的包 com.lm.validate
+        Reflections reflections = new Reflections(Controller.class.getPackage().getName());
+        // 获取包com.lm.validate下面所有IDataValidator实现类
+        Set<Class<? extends Controller>> implClass = reflections.getSubTypesOf(Controller.class);
+        for (Class<? extends Controller> clazz : implClass) {
+            System.out.println(clazz.getName());
+            if (clazz.isAnnotationPresent(WebController.class)) {
+                System.out.println(clazz.getDeclaredAnnotation(WebController.class).value());
+
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@ package top.lldwb.noitaSaverServer.servlet.Dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.reflections.Reflections;
-import top.lldwb.noitaSaverServer.servlet.Controller.Controller;
+import top.lldwb.noitaSaverServer.action.Controller;
 import top.lldwb.noitaSaverServer.servlet.Controller.ResponseData;
 import top.lldwb.noitaSaverServer.servlet.Controller.WebController;
 
