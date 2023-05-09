@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverServer.action;
 
 import top.lldwb.noitaSaverServer.servlet.WebController;
+import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +12,11 @@ import java.io.IOException;
  * @author 安然的尾巴
  * @version 1.0
  */
-@WebController("/loginAdministrator")
+@WebController("/openServer")
 public class LoginAdministrator extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().print("12345");
+        ServerSocketUtil.getServerSocketUtils();
+        response.getWriter().print("启动服务器成功");
     }
 }

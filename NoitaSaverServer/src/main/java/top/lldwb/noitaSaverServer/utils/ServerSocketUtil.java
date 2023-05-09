@@ -77,10 +77,10 @@ public class ServerSocketUtil {
 //                socketList.add(socket);
 
                 // 创建一个新的线程处理与该客户端的通信
-//                new Thread(new ServerSocketThread(socket)).start();
+                new Thread(new ServerSocketThread(socket)).start();
 
 
-                new ServerSocketThread(socket).run();
+//                new ServerSocketThread(socket).run();
             }
         } catch (IOException e) {
             e.printStackTrace();

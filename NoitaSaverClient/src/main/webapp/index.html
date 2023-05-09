@@ -88,10 +88,18 @@
 			el: "#qrc",
 			data: {
 				list: null,
+				// 存档列表名字设置
+				tableName: "",
 				// 需要存档的文件夹路径
 				path: "",
 				// 存档保存路径
 				saverPath: "",
+				
+				// 用户名
+				name:"",
+				// 密码
+				password:"",
+				
 				// 存档
 				archiveBoolean: false,
 				// 读档
@@ -101,9 +109,7 @@
 				// 删除相关按钮
 				deleteBoolean: false,
 				// 默认设置
-				defaultPathBoolean: false,
-				// 存档列表名字设置
-				tableName: ""
+				defaultPathBoolean: false
 			},
 			methods: {
 				// 获取存档列表
