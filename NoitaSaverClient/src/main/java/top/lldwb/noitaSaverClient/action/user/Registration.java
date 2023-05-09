@@ -1,5 +1,8 @@
 package top.lldwb.noitaSaverClient.action.user;
 
+import top.lldwb.noitaSaverClient.service.UserService;
+import top.lldwb.noitaSaverClient.utils.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,10 @@ import java.io.IOException;
 public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        try {
+            UserService.registration(new User());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
