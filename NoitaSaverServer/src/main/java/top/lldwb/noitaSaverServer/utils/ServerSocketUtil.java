@@ -1,15 +1,10 @@
 package top.lldwb.noitaSaverServer.utils;
 
-import top.lldwb.noitaSaverServer.dao.Dao;
-import top.lldwb.noitaSaverServer.entity.User;
-import top.lldwb.noitaSaverServer.service.connection.MailSocketConnection;
-import top.lldwb.noitaSaverServer.service.connection.SocketConnection;
+import top.lldwb.noitaSaverServer.service.ServerSocketThread;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,75 +77,13 @@ public class ServerSocketUtil {
 //                socketList.add(socket);
 
                 // 创建一个新的线程处理与该客户端的通信
-                new Thread(() -> ServerSocket(socket)).start();
+//                new Thread(new ServerSocketThread(socket)).start();
 
-//                ServerSocket(socket);
+
+                new ServerSocketThread(socket).run();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    /**
-     * 与客户端通信的Socket对象的方法，
-     * 根据需求自定义修改
-     *
-     * @param socket 与客户端通信的Socket对象
-     */
-    private void ServerSocket(Socket socket) {
-        try {
-            // 返回客户端地址并打印出来
-            System.out.println("客户端:" + socket.getInetAddress().getLocalHost() + "已连接到服务器");
-
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-
-            String types = reader.readLine();
-            System.out.println(types);
-
-            Dao dao = new Dao();
-
-            // 格式:“类型\n”
-            switch (types) {
-                case "登录":
-                    User user = (User) objectInputStream.readObject();
-
-                    objectOutputStream.writeObject(dao.login(user));
-                    objectOutputStream.flush();
-                    break;
-                case "云备份":
-                    break;
-                case "云恢复":
-                    break;
-                case "邮箱":
-                    String reception = reader.readLine();
-                    System.out.println(reception);
-                    MailUtil.sendSession(reception, "验证码", "2345");
-                    break;
-                case "注册":
-                    break;
-                default:
-                    break;
-            }
-        } catch (UnknownHostException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

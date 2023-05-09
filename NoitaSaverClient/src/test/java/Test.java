@@ -101,5 +101,6 @@ public class Test {
 
         ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
         System.out.println(user);
+        clientSocketUtil.login(user);
     }
 }

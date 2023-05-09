@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MySQLUtil {
-    private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/PDS_Sim_DB?serverTimezone=Asia/Shanghai";
+    private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/noitaSaver?serverTimezone=Asia/Shanghai";
     //账号
     private static final String USER_NAME = "root";
     //密码
