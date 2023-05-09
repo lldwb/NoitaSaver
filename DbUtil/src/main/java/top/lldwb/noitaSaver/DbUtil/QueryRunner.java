@@ -11,13 +11,14 @@ public class QueryRunner {
 
     /**
      * 用于执行select并处理
-     * @param conn 连接对象
-     * @param sql SQL语句
+     *
+     * @param conn    连接对象
+     * @param sql     SQL语句
      * @param handler 结果集处理的具体实现类
      * @param objects 条件语句
+     * @param <T>     实体类
      * @return 返回处理过的查询结果
-     * @param <T> 实体类
-     * @throws SQLException 如果参数为空返回
+     * @throws SQLException           如果参数为空返回
      * @throws NoSuchFieldException
      * @throws InstantiationException
      * @throws IllegalAccessException
@@ -52,8 +53,23 @@ public class QueryRunner {
     /**
      * 用于执行insert update delete
      */
-    public int update() {
-        return 1;
+    public int update(Connection conn, String sql, Object... objects) throws SQLException {
+        if (conn == null) {
+            throw new SQLException("连接对象为null");
+        }
+        if (sql == null) {
+            throw new SQLException("sql语句为null");
+        }
+        //创建预编译语句
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        //添加参数
+        if (objects != null) {
+            for (int i = 1; i <= objects.length; i++) {
+                pstm.setObject(i, objects[i - 1]);
+            }
+        }
+        // 执行并返回执行的数据
+        return pstm.executeUpdate();
     }
 
     /**

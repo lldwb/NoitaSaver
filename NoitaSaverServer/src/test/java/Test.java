@@ -1,17 +1,11 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.reflections.Reflections;
 import top.lldwb.noitaSaverClient.utils.User;
-import top.lldwb.noitaSaverServer.action.Controller;
-import top.lldwb.noitaSaverServer.dao.GetUser;
-import top.lldwb.noitaSaverServer.servlet.WebController;
+import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.Set;
 
 /**
  * @author 安然的尾巴
@@ -103,7 +97,7 @@ public class Test {
         user.setUserName("1");
         user.setUserPassword("1");
         // 根据user的名字返回User对象
-        User userDao = GetUser.getUser(user.getUserName());
+        User userDao = UserDao.getUser(user.getUserName());
         System.out.println(userDao);
         System.out.println(user.getUserName().equals(userDao.getUserName()) && user.getUserPassword().equals(userDao.getUserPassword()));
 //        System.out.println(userDao.getUserName().equals(user.getUserName()) && userDao.getUserPassword().equals(user.getUserPassword()));

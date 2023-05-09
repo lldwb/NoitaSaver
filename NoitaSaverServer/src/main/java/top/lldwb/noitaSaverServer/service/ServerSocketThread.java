@@ -2,7 +2,7 @@ package top.lldwb.noitaSaverServer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.utils.User;
-import top.lldwb.noitaSaverServer.dao.GetUser;
+import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
 import java.io.*;
@@ -42,20 +42,7 @@ public class ServerSocketThread implements Runnable {
             // 格式:“类型\n”
             switch (types) {
                 case "登录":
-                    User user = this.receiveObject(User.class);
-
-                    // 通过 GetUser 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-                    User userDao = GetUser.getUser(user.getUserName());
-
-                    // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
-                    if (user.getUserPassword().equals(userDao.getUserPassword())) {
-                        this.sendObject(true);
-                        this.sendObject(userDao);
-                    }
-                    // 如果密码不一致，向客户端发送 false
-                    else {
-                        this.sendObject(false);
-                    }
+                    login();
                     break;
                 case "云备份":
                     break;
@@ -67,13 +54,57 @@ public class ServerSocketThread implements Runnable {
                     MailUtil.sendSession(types, "验证码", "2345");
                     break;
                 case "注册":
+                    registration();
                     break;
                 default:
                     break;
             }
 
-        } catch (IOException | SQLException | NoSuchFieldException | InstantiationException | IllegalAccessException e) {
+        } catch (IOException | SQLException | NoSuchFieldException | InstantiationException |
+                 IllegalAccessException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 登录
+     */
+    private void login() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+
+        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUser(user.getUserName());
+
+        // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
+        if (user.getUserPassword().equals(userDao.getUserPassword())) {
+            this.sendObject(true);
+            this.sendObject(userDao);
+        }
+        // 如果密码不一致，向客户端发送 false
+        else {
+            this.sendObject(false);
+        }
+    }
+
+    /**
+     * 注册
+     */
+    private void registration() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+
+        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUser(user.getUserName());
+
+        // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
+        if (!user.getUserName().equals(userDao.getUserName())) {
+            this.sendObject(true);
+            this.sendObject(userDao);
+        }
+        // 如果密码不一致，向客户端发送 false
+        else {
+            this.sendObject(false);
         }
     }
 
