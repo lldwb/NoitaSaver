@@ -53,4 +53,8 @@ public class MySQLUtil {
     public <T> T pdsT(T t, String sql, Object... obj) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return queryRunner.query(conn, sql, new BeanHandler<T>((Class<? extends T>) t.getClass()), obj);
     }
+
+    public int update(String sql, Object... obj) throws SQLException {
+        return queryRunner.update(conn,sql,obj);
+    }
 }

@@ -14,7 +14,7 @@ public class UserDao {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", name);
     }
 
-    public static void setUser(String name, String Password) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", name, Password);
+    public static int setUser(String name, String password) throws SQLException {
+        return new MySQLUtil().update("insert into user(user_name,user_password) values(?,?)", name, password);
     }
 }

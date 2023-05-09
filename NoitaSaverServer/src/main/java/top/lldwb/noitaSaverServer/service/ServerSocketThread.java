@@ -94,15 +94,12 @@ public class ServerSocketThread implements Runnable {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
 
-        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUser(user.getUserName());
-
-        // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
-        if (!user.getUserName().equals(userDao.getUserName())) {
+        // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
+        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) || UserDao.setUser(user.getUserName(), user.getUserPassword()) != 0) {
             this.sendObject(true);
-            this.sendObject(userDao);
+            this.sendObject(UserDao.getUser(user.getUserName()));
         }
-        // 如果密码不一致，向客户端发送 false
+        // 如果有，向客户端发送 false
         else {
             this.sendObject(false);
         }
