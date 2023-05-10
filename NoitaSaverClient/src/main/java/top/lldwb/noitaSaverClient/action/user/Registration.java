@@ -27,14 +27,16 @@ public class Registration extends HttpServlet {
         User user = new User();
         user.setUserName(req.getParameter("name"));
         user.setUserPassword(req.getParameter("password"));
-        user.setUserPassword(req.getParameter("mail"));
+        user.setUserMail(req.getParameter("mail"));
 
-//        resp.getWriter().print(UserService.registration(user));
-        user = UserService.registration(user);
 //        resp.getWriter().print(user);
-        resp.getWriter().print(new ObjectMapper().writeValueAsString(user));
+        user = UserService.registration(user);
         // 获取并存放用户登录状态到 Session
         req.getSession().setAttribute("user", user);
+
+        resp.getWriter().print(user);
+//        resp.getWriter().print(new ObjectMapper().writeValueAsString(user));
+
 
     }
 }

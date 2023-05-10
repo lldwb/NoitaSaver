@@ -101,8 +101,9 @@ public class ServerSocketThread implements Runnable {
         System.out.println(user);
 
         // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) || UserDao.setUser(user.getUserName(),user.getUserPassword(),user.getUserMail()) != 0) {
-//            System.out.println(true);
+        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName())) {
+            System.out.println(UserDao.setUser(user.getUserName(),user.getUserPassword(),user.getUserMail()));
+            System.out.println(true);
             this.sendObject(true);
             this.sendObject(UserDao.getUser(user.getUserName()));
         }

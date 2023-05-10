@@ -114,10 +114,13 @@
 								data: {
 									name: this.ruleForm.name,
 									password: this.ruleForm.pass,
-									mail:this.ruleForm .mail
+									mail: this.ruleForm.mail
 								},
-								success() {
+								dataType:"JSON",
+								success(result) {
 									console.log(sessionStorage.getItem('user'));
+									console.log(result);
+									console.log(result.getResponseHeader("user"));
 									if (sessionStorage.getItem('user') != null) {
 										location.href = 'index.html';
 									}

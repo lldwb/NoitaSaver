@@ -65,7 +65,7 @@ public class ClientSocketUtil {
      * @return 判断是否有用户，如果没有创建并返回User对象
      */
     public User registration(User user) throws IOException, ClassNotFoundException {
-        if (user.getUserName() == null || user.getUserPassword() == null) {
+        if (user.getUserName() == null || user.getUserPassword() == null || user.getUserMail() == null) {
             return null;
         }
 
@@ -96,7 +96,7 @@ public class ClientSocketUtil {
      * 发送字符串
      */
     private void sendString(String judgment) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream,"utf-8"));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
         writer.write(judgment + "\n");
         writer.flush();
     }
@@ -114,7 +114,7 @@ public class ClientSocketUtil {
      * @return
      */
     private String receiveString() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
         return reader.readLine();
     }
 }
