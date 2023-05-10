@@ -18,6 +18,14 @@
 		<div id="app">
 			<el-row>
 				<el-col :span="8" :offset="8">
+					<h1 align="center">登录</h1>
+
+					<el-image :src="">
+						<div slot="placeholder" class="image-slot">
+							加载中<span class="dot">...</span>
+						</div>
+					</el-image>
+
 					<!-- el-form：表单 -->
 					<!-- ref="ruleForm"：添加引用名 ruleForm ，这样可以通过 this.$refs.ruleForm 获取这个组件的对象 -->
 					<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
@@ -40,6 +48,7 @@
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+							<el-button type="primary" @click="registration">注册</el-button>
 						</el-form-item>
 					</el-form>
 				</el-col>
@@ -81,9 +90,9 @@
 				return {
 					// 表单绑定的值
 					ruleForm: {
+						name: '',
 						pass: '',
-						checkPass: '',
-						name: ''
+						checkPass: ''
 					},
 					// 	表单验证规则
 					rules: {
@@ -112,12 +121,28 @@
 					// 返回一个布尔值，表示是否验证通过。在回调函数中根据验证结果进行相应的处理。
 					this.$refs[formName].validate((valid) => {
 						if (valid) {
-							alert('输入无误');
+							// alert('输入无误');
+
+							$.ajax({
+								url: "login",
+								data: {
+									name: this.name,
+									password: this.pass
+								},
+								success() {
+									if (sessionStorage.getItem('user') != null) {
+										location.href = 'index.html';
+									}
+								}
+							})
 						} else {
 							console.log('输入错误');
 							return false;
 						}
 					});
+				},
+				registration() {
+					location.href = 'registration.html';
 				}
 			}
 		})
