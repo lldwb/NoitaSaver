@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverServer.utils;
 
-import top.lldwb.noitaSaver.mailUtil.*;
+import top.lldwb.noitaSaver.encrypt.mailUtil.Mail;
+import top.lldwb.noitaSaver.encrypt.mailUtil.Protocl;
 
 /**
  * @author 安然的尾巴

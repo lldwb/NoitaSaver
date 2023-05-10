@@ -1,6 +1,6 @@
-package top.lldwb.noitaSaver.DbUtil;
+package top.lldwb.noitaSaver.encrypt.DbUtil;
 
-import top.lldwb.noitaSaver.DbUtil.Handler.ResultSetHandler;
+import top.lldwb.noitaSaver.encrypt.DbUtil.Handler.ResultSetHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
