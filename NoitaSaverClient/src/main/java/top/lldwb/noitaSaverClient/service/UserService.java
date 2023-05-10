@@ -1,7 +1,9 @@
 package top.lldwb.noitaSaverClient.service;
 
+import top.lldwb.noitaSaver.encrypt.EncryptTypes;
+import top.lldwb.noitaSaver.encrypt.EncryptUtil;
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
-import top.lldwb.noitaSaverClient.utils.User;
+import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.IOException;
 
@@ -19,8 +21,9 @@ public class UserService {
      * @return 判断是否正确密码，如果正确返回User对象
      */
     public static User login(User user) throws IOException, ClassNotFoundException {
-        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
-        return clientSocketUtil.login(user);
+        // 对用户密码加密
+        user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
+        return new ClientSocketUtil().login(user);
     }
 
     /**
@@ -30,7 +33,8 @@ public class UserService {
      * @return 判断是否有用户，如果没有创建并返回User对象
      */
     public static User registration(User user) throws IOException, ClassNotFoundException {
-        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
-        return clientSocketUtil.registration(user);
+        // 对用户密码加密
+        user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
+        return new ClientSocketUtil().registration(user);
     }
 }

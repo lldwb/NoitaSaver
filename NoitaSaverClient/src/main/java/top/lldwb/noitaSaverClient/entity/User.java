@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverClient.utils;
+package top.lldwb.noitaSaverClient.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

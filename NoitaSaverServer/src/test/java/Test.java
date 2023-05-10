@@ -1,4 +1,4 @@
-import top.lldwb.noitaSaverClient.utils.User;
+import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 

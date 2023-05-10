@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverClient.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.*;
 import java.net.Socket;

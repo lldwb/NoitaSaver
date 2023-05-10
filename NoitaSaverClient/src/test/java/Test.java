@@ -1,5 +1,5 @@
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
-import top.lldwb.noitaSaverClient.utils.User;
+import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.*;
 import java.net.Socket;

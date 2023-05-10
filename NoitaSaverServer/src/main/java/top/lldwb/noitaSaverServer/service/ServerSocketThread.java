@@ -1,7 +1,7 @@
 package top.lldwb.noitaSaverServer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.lldwb.noitaSaverClient.utils.User;
+import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 

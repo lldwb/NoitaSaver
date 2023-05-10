@@ -1,7 +1,8 @@
 package top.lldwb.noitaSaverClient.action.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.service.UserService;
-import top.lldwb.noitaSaverClient.utils.User;
+import top.lldwb.noitaSaverClient.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +21,16 @@ import java.io.IOException;
 public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
+
+        User user = new User();
+        user.setUserName(req.getParameter("name"));
+        user.setUserPassword(req.getParameter("password"));
+
         try {
-            UserService.registration(new User());
+            // 获取并存放用户登录状态到 Session
+            req.getSession().setAttribute("user",new ObjectMapper().writeValueAsString(UserService.registration(user)));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
