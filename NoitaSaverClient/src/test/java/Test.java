@@ -1,3 +1,4 @@
+import top.lldwb.noitaSaverClient.service.UserService;
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
 import top.lldwb.noitaSaverClient.entity.User;
 
@@ -98,9 +99,10 @@ public class Test {
         User user = new User();
         user.setUserName("1");
         user.setUserPassword("1");
+        user.setUserMail("lldwb@lldwb.top");
 
-        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
         System.out.println(user);
-        clientSocketUtil.login(user);
+        System.out.println(UserService.registration(user));
+//        System.out.println(UserService.login(user));
     }
 }

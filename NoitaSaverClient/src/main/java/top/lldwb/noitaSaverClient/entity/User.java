@@ -34,6 +34,12 @@ public class User {
     @AnotherName("user_password")
     private String userPassword;
     /**
+     * 邮箱，最长255个字符，非空
+     */
+    @AnotherName("user_mail")
+    private String userMail;
+
+    /**
      * 用户状态，0表示未邮箱认证，1表示通过认证，2表示注销，非空
      */
     @AnotherName("user_state")

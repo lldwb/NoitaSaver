@@ -46,8 +46,9 @@ public class Test {
             e.printStackTrace();
         }
     }
+
     @org.junit.jupiter.api.Test
-    public void s(){
+    public void s() {
         try {
             // 设置服务器监听端口
             ServerSocket ss = new ServerSocket(8888);
@@ -87,19 +88,24 @@ public class Test {
             e.printStackTrace();
         }
     }
+
     @org.junit.jupiter.api.Test
-    public void ss(){
+    public void ss() {
         ServerSocketUtil.getServerSocketUtils();
     }
+
     @org.junit.jupiter.api.Test
     public void sf() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         User user = new User();
         user.setUserName("1");
         user.setUserPassword("1");
+        user.setUserMail("lldwb@lldwb.top");
         // 根据user的名字返回User对象
-        User userDao = UserDao.getUser(user.getUserName());
-        System.out.println(userDao);
-        System.out.println(user.getUserName().equals(userDao.getUserName()) && user.getUserPassword().equals(userDao.getUserPassword()));
-//        System.out.println(userDao.getUserName().equals(user.getUserName()) && userDao.getUserPassword().equals(user.getUserPassword()));
+        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) || UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail()) != 0) {
+            System.out.println("1234");
+        }
+//        User userDao = UserDao.getUser(user.getUserName());
+//        System.out.println(userDao);
+//        System.out.println(user.getUserName().equals(userDao.getUserName()) && user.getUserPassword().equals(userDao.getUserPassword()));
     }
 }

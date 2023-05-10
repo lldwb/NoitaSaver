@@ -56,7 +56,8 @@
 				</el-tab-pane>
 				<el-tab-pane>
 					<span slot="label"><i class="el-icon-user"></i> 用户中心</span>
-					角色管理
+					<el-button type="primary" @click="login">登录</el-button>
+					<el-button type="primary" @click="registration">注册</el-button>
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -230,6 +231,14 @@
 							});
 						}
 					})
+				},
+				// 跳转到注册页面
+				registration() {
+					location.href = 'registration.html';
+				},
+				// 跳转到登录页面
+				login() {
+					location.href = 'login.html';
 				}
 			},
 			mounted() {

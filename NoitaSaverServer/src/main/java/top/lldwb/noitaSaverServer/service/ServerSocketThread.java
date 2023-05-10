@@ -39,6 +39,7 @@ public class ServerSocketThread implements Runnable {
         try {
             // 接收客户端发出的类型识别字符串
             String types = this.receiveString();
+            System.out.println(types);
             // 格式:“类型\n”
             switch (types) {
                 case "登录":
@@ -59,6 +60,7 @@ public class ServerSocketThread implements Runnable {
                 default:
                     break;
             }
+            socket.close();
 
         } catch (IOException | SQLException | NoSuchFieldException | InstantiationException |
                  IllegalAccessException e) {
@@ -72,9 +74,11 @@ public class ServerSocketThread implements Runnable {
     private void login() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
+        System.out.println(user);
 
         // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
         User userDao = UserDao.getUser(user.getUserName());
+        System.out.println(userDao);
 
         // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
         if (user.getUserPassword().equals(userDao.getUserPassword())) {
@@ -94,8 +98,11 @@ public class ServerSocketThread implements Runnable {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
 
+        System.out.println(user);
+
         // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) || UserDao.setUser(user.getUserName(), user.getUserPassword()) != 0) {
+        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) || UserDao.setUser(user.getUserName(),user.getUserPassword(),user.getUserMail()) != 0) {
+//            System.out.println(true);
             this.sendObject(true);
             this.sendObject(UserDao.getUser(user.getUserName()));
         }
@@ -117,7 +124,7 @@ public class ServerSocketThread implements Runnable {
      * 发送字符串
      */
     private void sendString(String judgment) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream,"utf-8"));
         writer.write(judgment + "\n");
         writer.flush();
     }
@@ -135,7 +142,7 @@ public class ServerSocketThread implements Runnable {
      * @return
      */
     private String receiveString() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
         return reader.readLine();
     }
 }

@@ -20,7 +20,7 @@ import java.io.IOException;
 @WebServlet("/login")
 public class Login extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 
@@ -28,11 +28,8 @@ public class Login extends HttpServlet {
         user.setUserName(req.getParameter("name"));
         user.setUserPassword(req.getParameter("password"));
 
-        try {
-            // 获取并存放用户登录状态到 Session
-            req.getSession().setAttribute("user",new ObjectMapper().writeValueAsString(UserService.login(user)));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        // 获取并存放用户登录状态到 Session
+        req.getSession().setAttribute("user", new ObjectMapper().writeValueAsString(UserService.login(user)));
+
     }
 }

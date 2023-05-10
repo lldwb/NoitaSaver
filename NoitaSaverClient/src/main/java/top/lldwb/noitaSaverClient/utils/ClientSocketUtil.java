@@ -79,6 +79,7 @@ public class ClientSocketUtil {
         if (this.receiveObject(Boolean.class)) {
             return this.receiveObject(User.class);
         } else {
+            System.out.println(1234);
             return null;
         }
     }
@@ -95,7 +96,7 @@ public class ClientSocketUtil {
      * 发送字符串
      */
     private void sendString(String judgment) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream,"utf-8"));
         writer.write(judgment + "\n");
         writer.flush();
     }
@@ -113,7 +114,7 @@ public class ClientSocketUtil {
      * @return
      */
     private String receiveString() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
         return reader.readLine();
     }
 }

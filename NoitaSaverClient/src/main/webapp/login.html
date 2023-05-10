@@ -19,13 +19,6 @@
 			<el-row>
 				<el-col :span="8" :offset="8">
 					<h1 align="center">登录</h1>
-
-					<el-image :src="">
-						<div slot="placeholder" class="image-slot">
-							加载中<span class="dot">...</span>
-						</div>
-					</el-image>
-
 					<!-- el-form：表单 -->
 					<!-- ref="ruleForm"：添加引用名 ruleForm ，这样可以通过 this.$refs.ruleForm 获取这个组件的对象 -->
 					<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
@@ -130,6 +123,7 @@
 									password: this.pass
 								},
 								success() {
+									console.log(sessionStorage.getItem('user'));
 									if (sessionStorage.getItem('user') != null) {
 										location.href = 'index.html';
 									}
@@ -141,6 +135,7 @@
 						}
 					});
 				},
+				// 跳转到注册页面
 				registration() {
 					location.href = 'registration.html';
 				}

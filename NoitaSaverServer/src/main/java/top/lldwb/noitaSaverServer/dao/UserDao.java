@@ -6,15 +6,36 @@ import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 import java.sql.SQLException;
 
 /**
+ * 有关用户的数据库操作类
+ *
  * @author 安然的尾巴
  * @version 1.0
  */
 public class UserDao {
+    /**
+     * 根据名字在数据库中获取 User 对象
+     *
+     * @param name 用户名
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public static User getUser(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", name);
     }
 
-    public static int setUser(String name, String password) throws SQLException {
-        return new MySQLUtil().update("insert into user(user_name,user_password) values(?,?)", name, password);
+    /**
+     * 在数据库中添加用户
+     *
+     * @param name     用户名
+     * @param password 密码
+     * @param mail     邮箱
+     * @return
+     * @throws SQLException
+     */
+    public static int setUser(String name, String password, String mail) throws SQLException {
+        return new MySQLUtil().update("insert into user(user_name,user_password,user_mail) values(?,?,?)", name, password, mail);
     }
 }
