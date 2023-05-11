@@ -1,6 +1,6 @@
 var getUser = () => {
 	$.ajax({
-		url: "",
+		url: "getSession",
 		dataType: "JSON",
 		success(result) {
 			return result;

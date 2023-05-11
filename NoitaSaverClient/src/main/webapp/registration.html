@@ -13,8 +13,6 @@
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 		<!-- 引入组件库 -->
 		<script src="js/element-ui@2.15.13.js"></script>
-		<!-- 获取 -->
-		<script src="js/g"></script>
 	</head>
 	<body>
 		<div id="app">
@@ -118,16 +116,24 @@
 									password: this.ruleForm.pass,
 									mail: this.ruleForm.mail
 								},
-								dataType:"JSON",
-								success(result) {
-									console.log(sessionStorage.getItem('user'));
-									console.log(result);
-									console.log(result.getResponseHeader("user"));
-									if (sessionStorage.getItem('user') != null) {
-										location.href = 'index.html';
-									}
+								success() {
+									$.ajax({
+										url: "getSession",
+										dataType: "JSON",
+										data: {
+											key: "user"
+										},
+										success(result) {
+											if (result.userName == vue.ruleForm.name &&
+												result.userMail == vue
+												.ruleForm.mail) {
+												location.href = 'index.html';
+											}
+										}
+									});
 								}
-							})
+							});
+
 						} else {
 							console.log('输入错误');
 							return false;

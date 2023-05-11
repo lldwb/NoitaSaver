@@ -114,21 +114,28 @@
 					// 返回一个布尔值，表示是否验证通过。在回调函数中根据验证结果进行相应的处理。
 					this.$refs[formName].validate((valid) => {
 						if (valid) {
-							// alert('输入无误');
 
 							$.ajax({
 								url: "login",
 								data: {
-									name: this.name,
-									password: this.pass
+									name: this.ruleForm.name,
+									password: this.ruleForm.pass
 								},
 								success() {
-									console.log(sessionStorage.getItem('user'));
-									if (sessionStorage.getItem('user') != null) {
-										location.href = 'index.html';
-									}
+									$.ajax({
+										url: "getSession",
+										dataType: "JSON",
+										data: {
+											key: "user"
+										},
+										success(result) {
+											if (result.userName == vue.ruleForm.name) {
+												location.href = 'index.html';
+											}
+										}
+									});
 								}
-							})
+							});
 						} else {
 							console.log('输入错误');
 							return false;

@@ -24,7 +24,10 @@ public class UserService {
         // 对用户密码加密
         user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
         try {
-            return new ClientSocketUtil().login(user);
+            ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
+            user = clientSocketUtil.login(user);
+            clientSocketUtil.close();
+            return user;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -42,7 +45,10 @@ public class UserService {
         // 对用户密码加密
         user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
         try {
-            return new ClientSocketUtil().registration(user);
+            ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
+            user = clientSocketUtil.registration(user);
+            clientSocketUtil.close();
+            return user;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

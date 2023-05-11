@@ -33,6 +33,14 @@ public class ClientSocketUtil {
         outputStream = socket.getOutputStream();
     }
 
+    public void close(){
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * 登录
      *
