@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -32,9 +33,10 @@ public class Registration extends HttpServlet {
 //        resp.getWriter().print(user);
         user = UserService.registration(user);
         // 获取并存放用户登录状态到 Session
-        req.getSession().setAttribute("user", new ObjectMapper().writeValueAsString(user));
+         HttpSession session = req.getSession();
+        session.setAttribute("user", new ObjectMapper().writeValueAsString(user));
 
-        resp.getWriter().print(user);
+//        resp.getWriter().print(user);
 //        resp.getWriter().print(new ObjectMapper().writeValueAsString(user));
 
 
