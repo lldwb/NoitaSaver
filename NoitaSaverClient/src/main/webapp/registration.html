@@ -108,7 +108,7 @@
 					// 返回一个布尔值，表示是否验证通过。在回调函数中根据验证结果进行相应的处理。
 					this.$refs[formName].validate((valid) => {
 						if (valid) {
-							// alert('输入无误');
+							// 去后端发起注册请求
 							$.ajax({
 								url: "registration",
 								data: {
@@ -117,6 +117,7 @@
 									mail: this.ruleForm.mail
 								},
 								success() {
+									// 去后端发起判断是否注册成功
 									$.ajax({
 										url: "getSession",
 										dataType: "JSON",
