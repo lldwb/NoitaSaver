@@ -93,6 +93,7 @@ public class FileUtilTest {
 
     @Test
     public void zipFolder() throws IOException {// 定义源文件和目标文件的路径
-        FileUtil.zipOutputFolder("G:\\test\\2023-05-06 09-13-37","G:\\test\\123");
+        FileUtil.zipOutputFolder("G:\\test\\20","G:\\test\\123");
+        FileUtil.zipInputFolder("G:\\test\\20test","G:\\test\\123");
     }
 }

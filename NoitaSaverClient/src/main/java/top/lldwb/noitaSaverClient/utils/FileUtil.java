@@ -6,6 +6,8 @@ import top.lldwb.noitaSaverClient.entity.Folder;
 import java.io.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -119,15 +121,15 @@ public class FileUtil {
     /**
      * 压缩文件夹
      *
-     * @param readPath  源路径
-     * @param writePath 压缩包存放路径/压缩包名称(不需要".zip"后缀)
+     * @param folderPath 源路径
+     * @param zipPath    压缩包存放路径/压缩包名称(不需要".zip"后缀)
      * @throws IOException
      */
-    public static void zipOutputFolder(String readPath, String writePath) throws IOException {
+    public static void zipOutputFolder(String folderPath, String zipPath) throws IOException {
         // 创建压缩流，传入文件输出流
-        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(writePath + ".zip"));
+        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipPath + ".zip"));
         // 获取指定文件夹中所有文件的路径列表
-        Map<String, Boolean> map = getFileFolderPathList(readPath);
+        Map<String, Boolean> map = getFileFolderPathList(folderPath);
 
         // 遍历路径列表
         for (String paths : map.keySet()) {
@@ -135,7 +137,7 @@ public class FileUtil {
             if (map.get(paths)) {
                 // 在zip流中创建一个ZIP条目，接受一个 ZipEntry 对象作为参数
                 // 获取相对于 readPath 的相对路径，作为新的 ZipEntry 的名称
-                zipOutputStream.putNextEntry(new ZipEntry(paths.replace(readPath + "\\", "")));
+                zipOutputStream.putNextEntry(new ZipEntry(paths.replace(folderPath + "\\", "")));
                 // 创建一个文件输入流，用于写入压缩流
                 FileInputStream inputStream = new FileInputStream(paths);
                 // 创建一个长度为文件长度的字节数组
@@ -150,6 +152,48 @@ public class FileUtil {
         }
 
         zipOutputStream.close();
+    }
+
+    /**
+     * 解压文件夹
+     *
+     * @param folderPath 解压的目标路径(不需要"\\"后缀)
+     * @param zipPath    压缩包存放路径/压缩包名称(不需要".zip"后缀)
+     */
+    public static void zipInputFolder(String folderPath, String zipPath) throws IOException {
+        // 添加文件夹路径和ZIP文件扩展名
+        folderPath = folderPath + "\\";
+        zipPath = zipPath + ".zip";
+
+        // 创建ZIP输入流
+        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipPath));
+        ZipEntry zipEntry;
+
+        // 逐个解压ZIP条目
+        while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+            // 构造ZIP条目对应的文件对象
+            File file = new File(folderPath + zipEntry.getName());
+            if (!file.getParentFile().exists()) {
+                // 判断解压后文件的父目录是否存在，如果不存在，则使用 mkdirs() 方法创建该目录。这样确保解压后的文件可以被正确地存储在对应的目录中。
+                file.getParentFile().mkdirs();
+            }
+
+            // 创建输出流和输入流
+            OutputStream outputStream = new FileOutputStream(file);
+            InputStream inputStream = new ZipFile(zipPath).getInputStream(zipEntry);
+
+            // 逐个读取字节并写入文件
+            byte[] bytes = new byte[1024];
+            int temp = 0;
+            while ((temp = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, temp);
+            }
+            // 逐个读取字节并写入文件
+            outputStream.close();
+            inputStream.close();
+        }
+        // 关闭ZIP输入流
+        zipInputStream.close();
     }
 
     /**
