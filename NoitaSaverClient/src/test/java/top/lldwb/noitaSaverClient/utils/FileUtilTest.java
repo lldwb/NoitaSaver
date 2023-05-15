@@ -92,8 +92,8 @@ public class FileUtilTest {
     }
 
     @Test
-    public void s() {// 定义源文件和目标文件的路径
-
-        FileUtil.deleteFileFolder("G:\\CNTV");
+    public void zipFolder() throws IOException {// 定义源文件和目标文件的路径
+        FileUtil.zipOutputFolder("G:\\test\\20","G:\\test\\123");
+        FileUtil.zipInputFolder("G:\\test\\20test","G:\\test\\123");
     }
 }

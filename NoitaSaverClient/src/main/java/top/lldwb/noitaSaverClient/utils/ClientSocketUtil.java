@@ -5,6 +5,7 @@ import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Map;
 
 /**
  * Socket工具类
@@ -33,7 +34,7 @@ public class ClientSocketUtil {
         outputStream = socket.getOutputStream();
     }
 
-    public void close(){
+    public void close() {
         try {
             this.socket.close();
         } catch (IOException e) {
@@ -91,6 +92,10 @@ public class ClientSocketUtil {
             return null;
         }
     }
+
+//    private Boolean sendFile(){
+//
+//    }
 
     /**
      * 发送java对象

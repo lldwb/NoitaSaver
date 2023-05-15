@@ -5,6 +5,10 @@ import top.lldwb.noitaSaverClient.entity.Folder;
 
 import java.io.*;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * IO工具类，提供文件和文件夹的读写操作
@@ -89,12 +93,11 @@ public class FileUtil {
 
     /**
      * 获取指定文件夹中所有文件的路径列表
-     * 并创建文件夹
      *
      * @param path 源文件夹地址
      * @return 返回Map<String, Boolean>,String 路径|Boolean 判断是否是文件(true 文件|false 文件夹)
      */
-    public static Map<String, Boolean> getFileFolderPathList(String path) {
+    private static Map<String, Boolean> getFileFolderPathList(String path) {
         // 初始化路径列表
         Map<String, Boolean> map = new HashMap<>();
         // 遍历源文件夹中的所有文件
@@ -113,6 +116,84 @@ public class FileUtil {
         }
         // 返回路径列表
         return map;
+    }
+
+    /**
+     * 压缩文件夹
+     *
+     * @param folderPath 源路径
+     * @param zipPath    压缩包存放路径/压缩包名称(不需要".zip"后缀)
+     * @throws IOException
+     */
+    public static void zipOutputFolder(String folderPath, String zipPath) throws IOException {
+        // 创建压缩流，传入文件输出流
+        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipPath + ".zip"));
+        // 获取指定文件夹中所有文件的路径列表
+        Map<String, Boolean> map = getFileFolderPathList(folderPath);
+
+        // 遍历路径列表
+        for (String paths : map.keySet()) {
+            // 判断是否是文件
+            if (map.get(paths)) {
+                // 在zip流中创建一个ZIP条目，接受一个 ZipEntry 对象作为参数
+                // 获取相对于 readPath 的相对路径，作为新的 ZipEntry 的名称
+                zipOutputStream.putNextEntry(new ZipEntry(paths.replace(folderPath + "\\", "")));
+                // 创建一个文件输入流，用于写入压缩流
+                FileInputStream inputStream = new FileInputStream(paths);
+                // 创建一个长度为文件长度的字节数组
+                byte[] bytes = new byte[(int) new File(paths).length()];
+                // 输入流中读取数据到字节数组
+                if (inputStream.read(bytes) != -1) {
+                    // 将文件数据写入压缩流
+                    zipOutputStream.write(bytes);
+                }
+                inputStream.close();
+            }
+        }
+
+        zipOutputStream.close();
+    }
+
+    /**
+     * 解压文件夹
+     *
+     * @param folderPath 解压的目标路径(不需要"\\"后缀)
+     * @param zipPath    压缩包存放路径/压缩包名称(不需要".zip"后缀)
+     */
+    public static void zipInputFolder(String folderPath, String zipPath) throws IOException {
+        // 添加文件夹路径和ZIP文件扩展名
+        folderPath = folderPath + "\\";
+        zipPath = zipPath + ".zip";
+
+        // 创建ZIP输入流
+        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipPath));
+        ZipEntry zipEntry;
+
+        // 逐个解压ZIP条目
+        while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+            // 构造ZIP条目对应的文件对象
+            File file = new File(folderPath + zipEntry.getName());
+            if (!file.getParentFile().exists()) {
+                // 判断解压后文件的父目录是否存在，如果不存在，则使用 mkdirs() 方法创建该目录。这样确保解压后的文件可以被正确地存储在对应的目录中。
+                file.getParentFile().mkdirs();
+            }
+
+            // 创建输出流和输入流
+            OutputStream outputStream = new FileOutputStream(file);
+            InputStream inputStream = new ZipFile(zipPath).getInputStream(zipEntry);
+
+            // 逐个读取字节并写入文件
+            byte[] bytes = new byte[1024];
+            int length = 0;
+            while ((length = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, length);
+            }
+            // 逐个读取字节并写入文件
+            outputStream.close();
+            inputStream.close();
+        }
+        // 关闭ZIP输入流
+        zipInputStream.close();
     }
 
     /**
@@ -220,6 +301,7 @@ public class FileUtil {
 
     /**
      * 序列化
+     *
      * @param t
      * @param <T>
      */
@@ -233,6 +315,7 @@ public class FileUtil {
 
     /**
      * 反序列化
+     *
      * @param <T>
      * @return
      */
@@ -240,7 +323,7 @@ public class FileUtil {
         InputStream objectInput = new BufferedInputStream(new FileInputStream("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.lldwb"));
         ObjectInputStream objectInputStream = new ObjectInputStream(objectInput);
         T t = (T) objectInputStream.readObject();
-        objectInputStream .close();
+        objectInputStream.close();
         return t;
     }
 
