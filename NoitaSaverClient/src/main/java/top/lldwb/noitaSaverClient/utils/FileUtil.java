@@ -123,8 +123,8 @@ public class FileUtil {
      * @param writePath 压缩包存放路径/压缩包名称(不需要".zip"后缀)
      * @throws IOException
      */
-    public static void zipFolder(String readPath, String writePath) throws IOException {
-        // 创建 压缩流 传入 文件输出流
+    public static void zipOutputFolder(String readPath, String writePath) throws IOException {
+        // 创建压缩流，传入文件输出流
         ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(writePath + ".zip"));
         // 获取指定文件夹中所有文件的路径列表
         Map<String, Boolean> map = getFileFolderPathList(readPath);
@@ -134,8 +134,8 @@ public class FileUtil {
             // 判断是否是文件
             if (map.get(paths)) {
                 // 在zip流中创建一个ZIP条目，接受一个 ZipEntry 对象作为参数
-                // 获取相对于 readPath 的相对路径 作为新的 ZipEntry 的名称。
-                zipOutputStream.putNextEntry(new ZipEntry(paths.replace(readPath+"\\","")));
+                // 获取相对于 readPath 的相对路径，作为新的 ZipEntry 的名称
+                zipOutputStream.putNextEntry(new ZipEntry(paths.replace(readPath + "\\", "")));
                 // 创建一个文件输入流，用于写入压缩流
                 FileInputStream inputStream = new FileInputStream(paths);
                 // 创建一个长度为文件长度的字节数组
