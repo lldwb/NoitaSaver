@@ -184,9 +184,9 @@ public class FileUtil {
 
             // 逐个读取字节并写入文件
             byte[] bytes = new byte[1024];
-            int temp = 0;
-            while ((temp = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, temp);
+            int length = 0;
+            while ((length = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, length);
             }
             // 逐个读取字节并写入文件
             outputStream.close();
