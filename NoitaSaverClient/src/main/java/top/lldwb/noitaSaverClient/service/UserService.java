@@ -14,15 +14,20 @@ import java.io.IOException;
  * @version 1.0
  */
 public class UserService {
+    public User userPassEncrypt(User user){
+        // 对用户密码加密
+        user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
+        return user;
+    }
     /**
      * 登录
      *
      * @param user 用户信息
      * @return 判断是否正确密码，如果正确返回User对象
      */
-    public static User login(User user) {
+    public User login(User user) {
         // 对用户密码加密
-        user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
+        user = this.userPassEncrypt(user);
         try {
             ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
             user = clientSocketUtil.login(user);
@@ -41,9 +46,9 @@ public class UserService {
      * @param user 用户信息
      * @return 判断是否有用户，如果没有创建并返回User对象
      */
-    public static User registration(User user) {
+    public User registration(User user) {
         // 对用户密码加密
-        user.setUserPassword(EncryptUtil.encrypt(user.getUserPassword() + user.getUserName(), EncryptTypes.MD5));
+        user = this.userPassEncrypt(user);
         try {
             ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
             user = clientSocketUtil.registration(user);
@@ -54,5 +59,22 @@ public class UserService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 云备份
+     * @param path 需要备份的地址
+     * @param user 用户对象，用于验证权限
+     * @return
+     * @throws IOException
+     */
+    public Boolean backupFolder(String path, User user) throws IOException {
+        // 进行用户密码加密
+        user = new UserService().userPassEncrypt(user);
+
+        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
+        Boolean aBoolean = clientSocketUtil.backupFolder(path,user);
+        clientSocketUtil.close();
+        return aBoolean;
     }
 }

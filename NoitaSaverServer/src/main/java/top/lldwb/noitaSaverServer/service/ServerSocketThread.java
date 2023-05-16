@@ -60,22 +60,10 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      * 登录
      */
     private void login() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        // 接收客户端发过来的JSON并转成Java对象
-        User user = this.receiveObject(User.class);
-        System.out.println(user);
-
-        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUser(user.getUserName());
-        System.out.println(userDao);
-
-        // 如果密码一致，向客户端发送 true，并将从数据库中获取到的用户对象也发送过去
-        if (user.getUserPassword().equals(userDao.getUserPassword())) {
-            this.sendObject(true);
-            this.sendObject(userDao);
-        }
-        // 如果密码不一致，向客户端发送 false
-        else {
-            this.sendObject(false);
+        // 验证用户
+        User user = this.checkUser();
+        if (user != null) {
+            this.sendObject(user);
         }
     }
 
@@ -103,17 +91,51 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
 
     /**
      * 备份文件
+     *
      * @throws IOException
      */
-    private void backupFile() throws IOException {
-        this.receiveFile("G:\\test\\1.zip");
-        this.sendObject(true);
+    private void backupFile() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 验证用户
+        User user = this.checkUser();
+        if (user != null) {
+            this.receiveFile("G:\\" + user.getUserId() + ".zip");
+        }
     }
 
     /**
      * 恢复文件
      */
-    private void restoreFile(){
+    private void restoreFile() {
 
+    }
+
+    /**
+     * 验证用户
+     *
+     * @return 返回用户对象，如果没有就是错误
+     * @throws IOException
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private User checkUser() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+        System.out.println(user);
+
+        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUser(user.getUserName());
+        System.out.println(userDao);
+        // 如果密码一致，向客户端发送 true 并返回 user 对象
+        if (user.getUserPassword().equals(userDao.getUserPassword())) {
+            this.sendObject(true);
+            return userDao;
+        }
+        // 如果密码不一致，向客户端发送 false 并返回 null
+        else {
+            this.sendObject(false);
+            return null;
+        }
     }
 }

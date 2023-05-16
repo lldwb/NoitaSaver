@@ -33,7 +33,7 @@ public class Registration extends HttpServlet {
         System.out.println(user);
 
 //        resp.getWriter().print(user);
-        user = UserService.registration(user);
+        user = new UserService().registration(user);
         // 获取并存放用户登录状态到 Session
          HttpSession session = req.getSession();
         session.setAttribute("user", new ObjectMapper().writeValueAsString(user));

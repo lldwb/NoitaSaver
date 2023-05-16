@@ -77,8 +77,6 @@ public abstract class SocketUtil {
             throw new IOException("地址为空");
         }
 
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-
         int length;
         int fileLength = receiveObject(Integer.class);
         int fileLengthBoolean = fileLength;

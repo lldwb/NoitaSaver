@@ -1,12 +1,12 @@
 package top.lldwb.noitaSaverClient.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaverClient.service.UserService;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Map;
+import java.sql.SQLException;
 
 /**
  * Socket工具类
@@ -44,11 +44,7 @@ public class ClientSocketUtil extends SocketUtil {
         // 发送判断信息
         this.sendString("登录");
 
-        // 发送实体类
-        this.sendObject(user);
-
-        // 获取
-        if (this.receiveObject(Boolean.class)) {
+        if (this.checkUser(user)) {
             return this.receiveObject(User.class);
         } else {
             return null;
@@ -81,13 +77,44 @@ public class ClientSocketUtil extends SocketUtil {
         }
     }
 
-    public void backupFile() throws IOException {
+    /**
+     * 向服务端发起云备份请求
+     * @param path 需要备份的地址
+     * @param user 用户对象，用于验证权限
+     * @return
+     * @throws IOException
+     */
+    public Boolean backupFolder(String path, User user) throws IOException {
         // 发送判断信息
         this.sendString("云备份");
-        super.sendFile(new File("G:\\test\\123.zip"));
-        // 获取
-        if (this.receiveObject(Boolean.class)) {
-            System.out.println("成功");
+        if (checkUser(user)) {
+            // 对文件夹进行压缩,创建一个临时文件
+            FileUtil.zipOutputFolder(path, "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath");
+            // 发送临时文件
+            super.sendFile(new File("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.zip"));
+            // 获取
+            if (this.receiveObject(Boolean.class)) {
+                System.out.println("成功");
+                // 删除临时文件
+                new File("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.zip").delete();
+                return true;
+            }
         }
+        return false;
+    }
+
+    /**
+     * 验证用户
+     *
+     * @param user 用户对象
+     * @return 返回服务端的判断结果
+     * @throws IOException
+     */
+    private Boolean checkUser(User user) throws IOException {
+        // 发送实体类
+        this.sendObject(user);
+
+        // 获取服务端发过来的判断结果
+        return this.receiveObject(Boolean.class);
     }
 }

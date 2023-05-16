@@ -101,7 +101,7 @@ public class Test {
         user.setUserMail("lldwb@lldwb.top");
 
         System.out.println(user);
-        System.out.println(UserService.registration(user));
+        System.out.println(new UserService().registration(user));
 //        System.out.println(UserService.login(user));
     }
 }

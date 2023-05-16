@@ -28,7 +28,7 @@ public class FileUtil {
         // 设置源文件夹地址
         FileUtil.readPath = readPath;
         // 获取源文件夹中所有文件的路径列表
-        List<String> list = getFilePathList(readPath, writePath);
+        List<String> list = getFileAddFolderPathList(readPath, writePath);
 
         List<Thread> threadList = new ArrayList<>();
 
@@ -49,9 +49,7 @@ public class FileUtil {
             });
             thread.start();
             // 使用多线程将源文件夹中的文件写入目标文件夹中
-//            if (new File(path).length() >= 1024 * 1024) {
             threadList.add(thread);
-//            }
         }
         for (Thread thread : threadList) {
             try {
@@ -70,7 +68,7 @@ public class FileUtil {
      * @param writePath 目标文件夹地址
      * @return 指定文件夹中所有文件的路径列表
      */
-    private static List getFilePathList(String readPath, String writePath) {
+    private static List getFileAddFolderPathList(String readPath, String writePath) {
         // 在目标文件夹中创建子文件夹
         new File(writePath + readPath.substring(FileUtil.readPath.length())).mkdir();
         // 初始化路径列表
@@ -81,7 +79,7 @@ public class FileUtil {
             String paths = readPath + '\\' + file;
             // 如果当前文件是文件夹，则递归获取该文件夹中的所有文件
             if (new File(paths).isDirectory()) {
-                list.addAll(getFilePathList(paths, writePath));
+                list.addAll(getFileAddFolderPathList(paths, writePath));
             } else {
                 // 如果当前文件是普通文件，则将其路径添加到路径列表中
                 list.add(paths);
@@ -97,7 +95,7 @@ public class FileUtil {
      * @param path 源文件夹地址
      * @return 返回Map<String, Boolean>,String 路径|Boolean 判断是否是文件(true 文件|false 文件夹)
      */
-    private static Map<String, Boolean> getFileFolderPathList(String path) {
+    private static Map<String, Boolean> getFileFolderPathMap(String path) {
         // 初始化路径列表
         Map<String, Boolean> map = new HashMap<>();
         // 遍历源文件夹中的所有文件
@@ -108,7 +106,7 @@ public class FileUtil {
             // 并将其文件夹路径添加到路径列表中
             if (new File(paths).isDirectory()) {
                 map.put(paths, false);
-                map.putAll(getFileFolderPathList(paths));
+                map.putAll(getFileFolderPathMap(paths));
             } else {
                 // 如果当前文件是普通文件，则将其路径添加到路径列表中
                 map.put(paths, true);
@@ -129,7 +127,7 @@ public class FileUtil {
         // 创建压缩流，传入文件输出流
         ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipPath + ".zip"));
         // 获取指定文件夹中所有文件的路径列表
-        Map<String, Boolean> map = getFileFolderPathList(folderPath);
+        Map<String, Boolean> map = getFileFolderPathMap(folderPath);
 
         // 遍历路径列表
         for (String paths : map.keySet()) {
@@ -273,7 +271,7 @@ public class FileUtil {
     public static void deleteFileFolder(String path) {
         // 获取文件和文件夹的路径集合
         // Key:文件(文件夹)路径 Value:判断是否是文件(true 文件|false 文件夹)
-        Map<String, Boolean> map = getFileFolderPathList(path);
+        Map<String, Boolean> map = getFileFolderPathMap(path);
         // 文件夹路径集合
         List<String> folderPath = new ArrayList<>();
         // 遍历文件和文件夹的路径集合，先删除文件并将文件夹路径存入文件夹路径集合

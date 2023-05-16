@@ -1,10 +1,9 @@
 package top.lldwb.noitaSaverClient.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.*;
-import java.net.Socket;
 
 /**
  * @author 安然的尾巴
@@ -14,7 +13,10 @@ public class ClientSocketUtilTest{
     @Test
     public void file() throws IOException {
         ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
-        clientSocketUtil.backupFile();
+        User user = new User();
+        user.setUserName("ll");
+        user.setUserPassword("ll");
+        System.out.println(clientSocketUtil.backupFolder("G:\\test\\20",user));
 //        File file = new File("G:\\test\\123.zip");
 //        System.out.println(file.length());
 //

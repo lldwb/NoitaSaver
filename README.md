@@ -44,7 +44,7 @@ https://github.com/lldwb/NoitaSaver.git
 |---------------|--------------|-----------|---------------------------|
 | user_id       | int          | 自增1,主键,非空 |                           |
 | user_name     | varchar(15)  | 非空,唯一     | 名字                        |
-| user_password | varchar(32)  | 非空        | 密码，使用MD5加密                |
+| user_password | char(32)     | 非空        | 密码，使用MD5加密                |
 | user_mail     | varchar(255) | 非空,唯一     | 邮箱                        |
 | user_state    | int          | 非空        | 状态(0未邮箱认证,1通过认证,2注销)      |
 | user_key      | char(32)     |           | 访问秘钥，(id+时间戳+随机函数)使用MD5加密 |
