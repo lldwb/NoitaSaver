@@ -23,16 +23,12 @@ public class BackupFolder extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 
-        User user = new ObjectMapper().readValue(req.getSession().getAttribute("user"),User.class);
-
-        user = new User();
+        User user = new User();
         user.setUserName(req.getParameter("name"));
         user.setUserPassword(req.getParameter("password"));
         String path = req.getParameter("path");
 
-        // 获取并存放用户登录状态到 Session
-        req.getSession().setAttribute("user", new ObjectMapper().writeValueAsString(new UserService().login(user)));
-
-
+        UserService userService = new UserService();
+        resp.getWriter().print(new ObjectMapper().writeValueAsString(userService.backupFolder(path,user)));
     }
 }
