@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 删除API
+ * 删除所有存档
  * @author 安然的尾巴
  * @version 1.0
  */
