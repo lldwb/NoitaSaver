@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.encrypt.DbUtil.conf;
+package top.lldwb.noitaSaver.DbUtil.conf;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

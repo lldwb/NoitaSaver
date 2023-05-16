@@ -1,8 +1,8 @@
 package top.lldwb.noitaSaverServer.utils;
 
-import top.lldwb.noitaSaver.encrypt.DbUtil.Handler.BeanHandler;
-import top.lldwb.noitaSaver.encrypt.DbUtil.Handler.BeanListHandler;
-import top.lldwb.noitaSaver.encrypt.DbUtil.QueryRunner;
+import top.lldwb.noitaSaver.DbUtil.Handler.BeanHandler;
+import top.lldwb.noitaSaver.DbUtil.Handler.BeanListHandler;
+import top.lldwb.noitaSaver.DbUtil.QueryRunner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

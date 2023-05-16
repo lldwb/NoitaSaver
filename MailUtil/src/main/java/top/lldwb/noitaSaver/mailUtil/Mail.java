@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.encrypt.mailUtil;
+package top.lldwb.noitaSaver.mailUtil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

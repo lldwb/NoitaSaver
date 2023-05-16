@@ -14,6 +14,7 @@
         <module>MailUtil</module>
         <module>EncryptionUtil</module>
         <module>DbUtil</module>
+        <module>SocketUtil</module>
     </modules>
 
     <version>1.0-SNAPSHOT</version>

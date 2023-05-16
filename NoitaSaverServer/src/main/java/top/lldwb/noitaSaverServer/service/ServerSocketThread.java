@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverServer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
@@ -14,24 +15,10 @@ import java.sql.SQLException;
  * @author 安然的尾巴
  * @version 1.0
  */
-public class ServerSocketThread implements Runnable {
-
-    Socket socket;
-    InputStream inputStream;
-    OutputStream outputStream;
+public class ServerSocketThread extends SocketUtil implements Runnable {
 
     public ServerSocketThread(Socket socket) {
-        this.socket = socket;
-        try {
-            // 返回客户端地址并打印出来
-            System.out.println("客户端:" + socket.getInetAddress().getLocalHost() + "已连接到服务器");
-            this.inputStream = socket.getInputStream();
-            this.outputStream = socket.getOutputStream();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super(socket);
     }
 
     @Override
@@ -46,6 +33,7 @@ public class ServerSocketThread implements Runnable {
                     login();
                     break;
                 case "云备份":
+                    backupFile();
                     break;
                 case "云恢复":
                     break;
@@ -102,7 +90,7 @@ public class ServerSocketThread implements Runnable {
 
         // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
         if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName())) {
-            System.out.println(UserDao.setUser(user.getUserName(),user.getUserPassword(),user.getUserMail()));
+            System.out.println(UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail()));
             System.out.println(true);
             this.sendObject(true);
             this.sendObject(UserDao.getUser(user.getUserName()));
@@ -114,36 +102,18 @@ public class ServerSocketThread implements Runnable {
     }
 
     /**
-     * 发送java对象
+     * 备份文件
+     * @throws IOException
      */
-    private <T> void sendObject(T t) throws IOException {
-        // 使用 ObjectMapper 类将其转换成 JSON 格式的数据
-        this.sendString(new ObjectMapper().writeValueAsString(t));
+    private void backupFile() throws IOException {
+        this.receiveFile("G:\\test\\1.zip");
+        this.sendObject(true);
     }
 
     /**
-     * 发送字符串
+     * 恢复文件
      */
-    private void sendString(String judgment) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream,"utf-8"));
-        writer.write(judgment + "\n");
-        writer.flush();
-    }
+    private void restoreFile(){
 
-    /**
-     * 接收对象
-     */
-    private <T> T receiveObject(Class<? extends T> clazz) throws IOException {
-        return new ObjectMapper().readValue(this.receiveString(), clazz);
-    }
-
-    /**
-     * 接收字符串
-     *
-     * @return
-     */
-    private String receiveString() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
-        return reader.readLine();
     }
 }

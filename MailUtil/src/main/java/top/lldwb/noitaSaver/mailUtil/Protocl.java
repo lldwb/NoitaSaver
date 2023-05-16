@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.encrypt.mailUtil;
+package top.lldwb.noitaSaver.mailUtil;
 
 /**
  * 邮箱传输协议类型

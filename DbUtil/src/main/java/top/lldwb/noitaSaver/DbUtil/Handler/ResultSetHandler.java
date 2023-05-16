@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaver.encrypt.DbUtil.Handler;
+package top.lldwb.noitaSaver.DbUtil.Handler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

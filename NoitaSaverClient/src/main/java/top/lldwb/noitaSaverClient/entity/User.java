@@ -3,7 +3,7 @@ package top.lldwb.noitaSaverClient.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.lldwb.noitaSaver.encrypt.DbUtil.conf.AnotherName;
+import top.lldwb.noitaSaver.DbUtil.conf.AnotherName;
 
 /**
  * 用户实体类
