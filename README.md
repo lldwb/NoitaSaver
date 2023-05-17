@@ -49,6 +49,16 @@ https://github.com/lldwb/NoitaSaver.git
 | user_state    | int          | 非空        | 状态(0未邮箱认证,1通过认证,2注销)            |
 | user_key      | char(64)     | 非空,唯一     | 访问秘钥，(用户名+用户邮箱)+(时间戳+密码)使用MD5加密 |
 
+`mailVerificationCode`邮箱验证码表
+
+| 字段 | 类型 | 约束 | 描述 |
+|------------|-------|----------|---------------------|
+| mailVerificationCode_id | int | 主键，自增 | 验证码记录ID |
+| mailVerificationCode_email | varchar(255) | 非空 | 接收验证码的邮箱 |
+| mailVerificationCode_code | varchar(6)   | 非空 | 邮箱验证码，6位数字 |
+| mailVerificationCode_create_time | bigint | 非空 | 验证码创建时间戳（单位：毫秒） |
+| mailVerificationCode_expire_time | bigint | 非空 | 验证码过期时间戳（单位：毫秒） |
+
 ## 项目架构
 
 使用MVC设计模式，前端和后端分离，Servlet 进行通信。
