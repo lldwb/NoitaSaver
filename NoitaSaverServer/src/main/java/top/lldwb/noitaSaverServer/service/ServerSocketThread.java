@@ -38,7 +38,12 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
                 case "云恢复":
                     restoreFolder();
                     break;
-                case "邮箱":
+                case "发送验证码":
+                    types = this.receiveString();
+                    System.out.println(types);
+                    MailUtil.sendSession(types, "验证码","45");
+                    break;
+                case "接收验证码":
                     types = this.receiveString();
                     System.out.println(types);
                     MailUtil.sendSession(types, "验证码", "2345");
@@ -198,5 +203,21 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             this.sendObject(false);
             return null;
         }
+    }
+
+    /**
+     * 发送邮箱验证码
+     */
+    private void sendEmailVerificationCode() throws IOException {
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+        System.out.println(user);
+    }
+
+    /**
+     * 接收邮箱验证码
+     */
+    private void receiveEmailVerificationCode(){
+
     }
 }
