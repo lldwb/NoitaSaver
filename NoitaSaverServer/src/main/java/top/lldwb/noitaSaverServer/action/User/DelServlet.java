@@ -1,7 +1,8 @@
-package top.lldwb.noitaSaverServer.servlet.User;
+package top.lldwb.noitaSaverServer.action.User;
 
 import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.dao.UserDao;
+import top.lldwb.noitaSaverServer.servlet.WebController;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
  * 根据id删除对应的用户
  */
 
-@WebServlet("/DelServlet")
+@WebController("/delServlet")
 public class DelServlet extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
