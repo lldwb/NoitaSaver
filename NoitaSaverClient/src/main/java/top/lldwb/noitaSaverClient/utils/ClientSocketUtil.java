@@ -3,11 +3,9 @@ package top.lldwb.noitaSaverClient.utils;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.fileUtil.FileUtil;
 import top.lldwb.noitaSaverClient.entity.User;
-import top.lldwb.noitaSaverClient.service.UserService;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.SQLException;
 
 /**
  * Socket工具类
@@ -114,7 +112,7 @@ public class ClientSocketUtil extends SocketUtil {
      * @return 云恢复状态信息(0:恢复成功,1:验证失败,2:没有云端备份,3:接收云端备份失败)
      * @throws IOException
      */
-    public int restoreFile(String path, User user) throws IOException {
+    public int restoreFolder(String path, User user) throws IOException {
         // 发送判断信息
         this.sendString("云恢复");
         if (checkUser(user)) {
@@ -123,6 +121,8 @@ public class ClientSocketUtil extends SocketUtil {
                 String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath";
                 // 接收临时文件
                 if (super.receiveFile(temporaryPath + ".zip")) {
+                    // 删除恢复地址的所有文件
+                    FileUtil.deleteFileFolder(path);
                     // 对临时文件进行解压
                     FileUtil.zipInputFolder(path, temporaryPath);
                     // 删除临时文件

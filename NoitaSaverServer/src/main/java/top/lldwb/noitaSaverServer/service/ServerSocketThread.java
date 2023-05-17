@@ -33,10 +33,10 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
                     login();
                     break;
                 case "云备份":
-                    backupFile();
+                    backupFolder();
                     break;
                 case "云恢复":
-                    restoreFile();
+                    restoreFolder();
                     break;
                 case "邮箱":
                     types = this.receiveString();
@@ -95,11 +95,16 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     }
 
     /**
-     * 备份文件
+     * 备份用户所有文件
      *
      * @throws IOException
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
      */
-    private void backupFile() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private void backupFolder() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         // 验证用户
         User user = this.checkUserKey();
         // 读取用户备份路径
@@ -111,9 +116,16 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     }
 
     /**
-     * 恢复文件
+     * 恢复用户所有文件
+     *
+     * @throws SQLException
+     * @throws IOException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
      */
-    private void restoreFile() throws SQLException, IOException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private void restoreFolder() throws SQLException, IOException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         // 验证用户
         User user = this.checkUserKey();
         // 读取用户备份路径

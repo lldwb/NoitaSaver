@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 云端恢复
+ *
  * @author 安然的尾巴
  * @version 1.0
  */
-@WebServlet("/restoreFile")
-public class RestoreFile extends HttpServlet {
+@WebServlet("/restoreFolder")
+public class RestoreFolder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("utf-8");
@@ -26,6 +28,6 @@ public class RestoreFile extends HttpServlet {
         String path = req.getParameter("path");
 
         UserService userService = new UserService();
-        resp.getWriter().print(new ObjectMapper().writeValueAsString(userService.restoreFile(path,user)));
+        resp.getWriter().print(new ObjectMapper().writeValueAsString(userService.restoreFolder(path,user)));
     }
 }
