@@ -52,4 +52,112 @@ public class UserDao {
     public static int setUser(String name, String password, String mail, String key) throws SQLException {
         return new MySQLUtil().update("insert into user(user_name,user_password,user_mail,user_key) values(?,?,?,?)", name, password, mail, key);
     }
+
+    /**
+     *  根据 id 删除用户
+     * @param id 编号
+     * @return
+     * @throws SQLException
+     */
+    public static int delUser(int id) throws SQLException {
+        return new MySQLUtil().update("delete from user where user_id=?", id);
+    }
+
+    /**
+     * 根据用户名 修改用户的密码以及邮箱
+     *
+     * @param name 用户名
+     * @param password 密码
+     * @param mail 邮箱
+     * @return
+     * @throws SQLException
+     */
+    public static int updUser(String name,String password, String mail) throws SQLException {
+        return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
+    }
+
+    /**
+     * 查询全部数据
+     *
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static User selUser() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new User(),"select * from user");
+    }
+
+    /**
+     *  根据 id 删除用户
+     * @param id 编号
+     * @return
+     * @throws SQLException
+     */
+    public static int delUser(int id) throws SQLException {
+        return new MySQLUtil().update("delete from user where user_id=?", id);
+    }
+
+    /**
+     * 根据用户名 修改用户的密码以及邮箱
+     *
+     * @param name 用户名
+     * @param password 密码
+     * @param mail 邮箱
+     * @return
+     * @throws SQLException
+     */
+    public static int updUser(String name,String password, String mail) throws SQLException {
+        return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
+    }
+
+    /**
+     * 查询全部数据
+     *
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static User selUser() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new User(),"select * from user");
+    }
+
+    /**
+     *  根据 id 删除用户
+     * @param id 编号
+     * @return
+     * @throws SQLException
+     */
+    public static int delUser(int id) throws SQLException {
+        return new MySQLUtil().update("delete from user where user_id=?", id);
+    }
+
+    /**
+     * 根据用户名 修改用户的密码以及邮箱
+     *
+     * @param name 用户名
+     * @param password 密码
+     * @param mail 邮箱
+     * @return
+     * @throws SQLException
+     */
+    public static int updUser(String name,String password, String mail) throws SQLException {
+        return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
+    }
+
+    /**
+     * 查询全部数据
+     *
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static User selUser() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new User(),"select * from user");
+    }
 }
