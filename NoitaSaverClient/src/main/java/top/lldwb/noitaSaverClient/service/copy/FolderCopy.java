@@ -2,9 +2,10 @@ package top.lldwb.noitaSaverClient.service.copy;
 
 /**
  * 文件夹复制接口
+ *
  * @author 安然的尾巴
  * @version 1.0
- *
+ * <p>
  * 存档：ArchiveFolderCopyImpl，实现ArchiveSaver接口。
  * 读档：UnArchiveFolderCopyImpl，实现ArchiveReader接口。
  */
@@ -20,15 +21,16 @@ public interface FolderCopy {
 
     /**
      * 静态工厂方法
+     *
      * @param copy 枚举常量
      * @return
      */
-    static FolderCopy getFolderCopyFactory(Copy copy){
-        if (Copy.Archive==copy){
+    static FolderCopy getFolderCopyFactory(Copy copy) {
+        if (Copy.Archive == copy) {
             return new ArchiveFolderCopyImpl();
-        }else if (Copy.UnArchive==copy){
+        } else if (Copy.UnArchive == copy) {
             return new UnArchiveFolderCopyImpl();
-        }else {
+        } else {
             return null;
         }
     }
