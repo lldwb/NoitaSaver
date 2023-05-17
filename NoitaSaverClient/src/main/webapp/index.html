@@ -66,6 +66,9 @@
                 <el-button type="success" @click="backupFolder" :disabled="backupFolderBoolean"
                            icon="el-icon-document-add">云备份
                 </el-button>
+                <el-button type="success" @click="restoreFolder" :disabled="restoreFolderBoolean"
+                           icon="el-icon-document-add">云恢复
+                </el-button>
                 <div>id:{{user.id}}</div>
                 <div>用户名:{{user.name}}</div>
                 <div><i class="el-icon-message"></i>邮箱:{{user.mail}}</div>
@@ -287,7 +290,7 @@
                         getListVue();
                         vue.backupFolderBoolean = false;
                         vue.$message({
-                            message: '云恢复成功',
+                            message: '云备份成功',
                             type: 'success'
                         });
                     }
@@ -307,7 +310,7 @@
                         getListVue();
                         vue.restoreFolderBoolean = false;
                         vue.$message({
-                            message: '云备份成功',
+                            message: '云恢复成功',
                             type: 'success'
                         });
                     }

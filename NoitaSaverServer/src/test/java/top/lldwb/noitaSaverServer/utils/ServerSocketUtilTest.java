@@ -2,6 +2,8 @@ package top.lldwb.noitaSaverServer.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import top.lldwb.noitaSaver.fileUtil.entity.Folder;
+import top.lldwb.noitaSaverServer.service.UserBackupPathService;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -45,9 +47,11 @@ public class ServerSocketUtilTest {
     }
 
     @Test
-    public void files(){
-        System.out.println(new File("G:\\32.zip").exists());
-        System.out.println(new File("G:\\32.zip").isFile());
-        System.out.println(new File("G:\\32.zip").isDirectory());
+    public void files() throws IOException {
+//        new File("C:\\Users\\Public\\Documents\\NoitaSaverClient\\32.zip").delete();
+
+        System.out.println("C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb".replaceAll("\\\\[^\\\\.]*\\.[^\\\\.]*$", ""));
+        System.out.println("C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb".replaceAll("\\\\[^\\\\]*$", ""));
+//        new UserBackupPathService().setUserBackupPath(new Folder("G:\\用户备份"));
     }
 }

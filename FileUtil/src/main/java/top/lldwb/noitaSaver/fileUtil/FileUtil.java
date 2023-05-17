@@ -91,12 +91,21 @@ public class FileUtil {
     }
 
     /**
-     * 序列化
+     * 序列化，序列化前记得实现 Serializable 接口
+     * 如果没有父文件夹会自动创建
      *
      * @param t
      * @param <T>
      */
-    public static <T> void Serialization(T t, String path) throws IOException {
+    public static <T> void serialization(T t, String path) throws IOException {
+        // path 的父目录 File 对象
+        File file = new File(path.replaceAll("\\\\[^\\\\]*$",""));
+        // 文件或目录不存在时执行
+        if (!file.isDirectory()) {
+            // 创建一个新目录，包括必要的父目录
+            file.mkdirs();
+        }
+
         OutputStream objectOutput = new BufferedOutputStream(new FileOutputStream(path));
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(objectOutput);
         objectOutputStream.writeObject(t);
@@ -110,7 +119,7 @@ public class FileUtil {
      * @param <T>
      * @return
      */
-    public static <T> T DeSerialization(String path) throws IOException, ClassNotFoundException {
+    public static <T> T deSerialization(String path) throws IOException, ClassNotFoundException {
         InputStream objectInput = new BufferedInputStream(new FileInputStream(path));
         ObjectInputStream objectInputStream = new ObjectInputStream(objectInput);
         T t = (T) objectInputStream.readObject();
@@ -274,7 +283,6 @@ public class FileUtil {
         // 返回路径列表
         return list;
     }
-
 
 
     /**
