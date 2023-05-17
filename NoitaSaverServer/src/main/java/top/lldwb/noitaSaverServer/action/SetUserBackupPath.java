@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author 安然的尾巴
  * @version 1.0
  */
-@WebController("SetUserBackupPath")
+@WebController("/SetUserBackupPath")
 public class SetUserBackupPath extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

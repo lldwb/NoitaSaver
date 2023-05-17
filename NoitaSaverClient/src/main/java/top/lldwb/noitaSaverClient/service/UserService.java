@@ -83,9 +83,9 @@ public class UserService {
      * @return 云恢复状态信息(0:恢复成功,1:验证失败,2:没有云端备份,3:接收云端备份失败)
      * @throws IOException
      */
-    public int restoreFile(String path, User user) throws IOException {
+    public int restoreFolder(String path, User user) throws IOException {
         ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
-        int count = clientSocketUtil.restoreFile(path,user);
+        int count = clientSocketUtil.restoreFolder(path,user);
         clientSocketUtil.close();
         return count;
     }

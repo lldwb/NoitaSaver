@@ -39,6 +39,7 @@ public abstract class SocketUtil {
 
     /**
      * 发送文件
+     *
      * @param file 需要发送的文件对象
      * @return 返回是否发送成功
      * @throws IOException
@@ -48,26 +49,27 @@ public abstract class SocketUtil {
             throw new IOException("文件为null");
         }
 
-        sendObject((int)file.length());
+        sendObject((int) file.length());
 
         FileInputStream fileInputStream = new FileInputStream(file);
 
         byte[] bytes = new byte[1024];
         int length;
-        while ((length = fileInputStream.read(bytes,0,bytes.length)) != -1) {
-            outputStream.write(bytes,0,length);
+        while ((length = fileInputStream.read(bytes, 0, bytes.length)) != -1) {
+            outputStream.write(bytes, 0, length);
         }
         outputStream.flush();
 
-        if (receiveObject(Boolean.class)){
+        if (receiveObject(Boolean.class)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     /**
      * 接收文件
+     *
      * @param path 文件保存路径(需要文件名)
      * @return 返回是否接收成功
      * @throws IOException
@@ -90,10 +92,11 @@ public abstract class SocketUtil {
         }
         fileOutputStream.close();
 
-        if (fileLengthBoolean==new File(path).length()){
+        if (fileLengthBoolean == new File(path).length()) {
             sendObject(true);
             return true;
-        }else {
+        } else {
+            sendObject(false);
             return false;
         }
     }

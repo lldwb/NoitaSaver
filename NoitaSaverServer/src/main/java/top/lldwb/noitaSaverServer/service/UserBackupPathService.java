@@ -2,7 +2,6 @@ package top.lldwb.noitaSaverServer.service;
 
 import top.lldwb.noitaSaver.fileUtil.FileUtil;
 import top.lldwb.noitaSaver.fileUtil.entity.Folder;
-import top.lldwb.noitaSaverClient.entity.DefaultPath;
 
 import java.io.IOException;
 
@@ -16,13 +15,13 @@ public class UserBackupPathService {
      * 修改用户备份路径
      */
     public void setUserBackupPath(Folder folder) throws IOException {
-        FileUtil.Serialization(folder,"C:\\Users\\Public\\Documents\\NoitaSaverClient\\UserBackupPath.lldwb");
+        FileUtil.serialization(folder,"C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb");
     }
 
     /**
      * 读取用户备份路径
      */
     public Folder getUserBackupPath() throws IOException, ClassNotFoundException {
-        return FileUtil.DeSerialization("C:\\Users\\Public\\Documents\\NoitaSaverClient\\UserBackupPath.lldwb");
+        return FileUtil.deSerialization("C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb");
     }
 }

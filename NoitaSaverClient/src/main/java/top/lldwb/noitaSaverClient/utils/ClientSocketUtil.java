@@ -3,11 +3,9 @@ package top.lldwb.noitaSaverClient.utils;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.fileUtil.FileUtil;
 import top.lldwb.noitaSaverClient.entity.User;
-import top.lldwb.noitaSaverClient.service.UserService;
 
 import java.io.*;
 import java.net.Socket;
-import java.sql.SQLException;
 
 /**
  * Socket工具类
@@ -90,17 +88,16 @@ public class ClientSocketUtil extends SocketUtil {
         // 发送判断信息
         this.sendString("云备份");
         if (checkUser(user)) {
-            // 临时文件文件地址
-            String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath";
+            // 临时文件文件
+            String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaver\\Client\\Tempfiles";
             // 对文件夹进行压缩,创建一个临时文件
             FileUtil.zipOutputFolder(path, temporaryPath);
+            File file = new File(temporaryPath + ".zip");
             // 发送临时文件
-            super.sendFile(new File(temporaryPath + ".zip"));
-            // 获取
-            if (this.receiveObject(Boolean.class)) {
+            if (super.sendFile(file)) {
                 System.out.println("成功");
                 // 删除临时文件
-                new File(temporaryPath + ".zip").delete();
+                file.delete();
                 return true;
             }
         }
@@ -109,20 +106,23 @@ public class ClientSocketUtil extends SocketUtil {
 
     /**
      * 向服务端发起云恢复请求
+     *
      * @param path 需要恢复的地址
      * @param user 用户对象，用于验证权限
-     * @return 云恢复状态信息(0:恢复成功,1:验证失败,2:没有云端备份,3:接收云端备份失败)
+     * @return 云恢复状态信息(0 : 恢复成功, 1 : 验证失败, 2 : 没有云端备份, 3 : 接收云端备份失败)
      * @throws IOException
      */
-    public int restoreFile(String path, User user) throws IOException {
+    public int restoreFolder(String path, User user) throws IOException {
         // 发送判断信息
         this.sendString("云恢复");
         if (checkUser(user)) {
             if (this.receiveObject(Boolean.class)) {
                 // 临时文件文件地址
-                String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath";
+                String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaver\\Client\\Tempfiles";
                 // 接收临时文件
                 if (super.receiveFile(temporaryPath + ".zip")) {
+                    // 删除恢复地址的所有文件
+                    FileUtil.deleteFileFolder(path);
                     // 对临时文件进行解压
                     FileUtil.zipInputFolder(path, temporaryPath);
                     // 删除临时文件
