@@ -43,4 +43,11 @@ public class ServerSocketUtilTest {
 //
 //        System.out.println(reader.readLine());
     }
+
+    @Test
+    public void files(){
+        System.out.println(new File("G:\\32.zip").exists());
+        System.out.println(new File("G:\\32.zip").isFile());
+        System.out.println(new File("G:\\32.zip").isDirectory());
+    }
 }

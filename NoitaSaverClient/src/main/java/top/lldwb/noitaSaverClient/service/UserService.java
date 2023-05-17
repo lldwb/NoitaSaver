@@ -69,12 +69,24 @@ public class UserService {
      * @throws IOException
      */
     public Boolean backupFolder(String path, User user) throws IOException {
-        // 进行用户密码加密
-        user = new UserService().userPassEncrypt(user);
-
         ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
         Boolean aBoolean = clientSocketUtil.backupFolder(path,user);
         clientSocketUtil.close();
         return aBoolean;
+    }
+
+
+    /**
+     * 向服务端发起云恢复请求
+     * @param path 需要恢复的地址
+     * @param user 用户对象，用于验证权限
+     * @return 云恢复状态信息(0:恢复成功,1:验证失败,2:没有云端备份,3:接收云端备份失败)
+     * @throws IOException
+     */
+    public int restoreFile(String path, User user) throws IOException {
+        ClientSocketUtil clientSocketUtil = new ClientSocketUtil();
+        int count = clientSocketUtil.restoreFile(path,user);
+        clientSocketUtil.close();
+        return count;
     }
 }

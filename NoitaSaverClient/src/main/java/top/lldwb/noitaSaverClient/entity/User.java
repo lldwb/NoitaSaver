@@ -21,17 +21,17 @@ public class User {
     @AnotherName("user_id")
     private int userId;
     /**
-     * 用户名，最长15个字符，非空
+     * 用户名，最长15个字符，非空，唯一
      */
     @AnotherName("user_name")
     private String userName;
     /**
-     * 密码，最长15个字符，非空
+     * 密码，(密码+名字)使用MD5加密，最长32个字符，非空
      */
     @AnotherName("user_password")
     private String userPassword;
     /**
-     * 邮箱，最长255个字符，非空
+     * 邮箱，最长255个字符，非空，唯一
      */
     @AnotherName("user_mail")
     private String userMail;
@@ -42,7 +42,7 @@ public class User {
     @AnotherName("user_state")
     private int userState;
     /**
-     * 访问秘钥，(id+时间戳+随机函数)使用MD5加密，最长32个字符
+     * 访问秘钥，(用户名+用户邮箱)+(时间戳+密码)使用MD5加密，非空，唯一
      */
     @AnotherName("user_key")
     private String userKey;

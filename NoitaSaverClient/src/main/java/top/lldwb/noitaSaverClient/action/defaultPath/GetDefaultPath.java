@@ -2,9 +2,7 @@ package top.lldwb.noitaSaverClient.action.defaultPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.service.DefaultService;
-import top.lldwb.noitaSaverClient.utils.FileUtil;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

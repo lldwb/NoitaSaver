@@ -1,8 +1,9 @@
 package top.lldwb.noitaSaverClient.service;
 
+import top.lldwb.noitaSaver.fileUtil.FileUtil;
 import top.lldwb.noitaSaverClient.entity.DefaultPath;
-import top.lldwb.noitaSaverClient.utils.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -16,13 +17,13 @@ public class DefaultService {
      * 修改默认地址
      */
     public void setDefaultPath(DefaultPath defaultPath) throws IOException {
-        FileUtil.setDefaultPath(defaultPath);
+        FileUtil.Serialization(defaultPath,"C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.lldwb");
     }
 
     /**
      * 读取默认地址
      */
     public DefaultPath getDefaultPath() throws IOException, ClassNotFoundException {
-        return FileUtil.getDefaultPath();
+        return FileUtil.DeSerialization("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.lldwb");
     }
 }

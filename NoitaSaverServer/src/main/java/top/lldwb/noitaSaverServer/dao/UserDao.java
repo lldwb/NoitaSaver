@@ -22,8 +22,22 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static User getUser(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public static User getUserNameUser(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", name);
+    }
+
+    /**
+     * 根据key在数据库中获取 UserId
+     *
+     * @param key 远程秘钥
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static User getUserKeyUser(String key) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new User(), "select * from user where user_key=?", key);
     }
 
     /**
@@ -35,7 +49,7 @@ public class UserDao {
      * @return
      * @throws SQLException
      */
-    public static int setUser(String name, String password, String mail) throws SQLException {
-        return new MySQLUtil().update("insert into user(user_name,user_password,user_mail) values(?,?,?)", name, password, mail);
+    public static int setUser(String name, String password, String mail, String key) throws SQLException {
+        return new MySQLUtil().update("insert into user(user_name,user_password,user_mail,user_key) values(?,?,?,?)", name, password, mail, key);
     }
 }

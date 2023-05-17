@@ -1,6 +1,5 @@
 import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
-import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 import top.lldwb.noitaSaverServer.utils.ServerSocketUtil;
 
 import java.io.*;
@@ -93,23 +92,5 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void ss() {
         ServerSocketUtil.getServerSocketUtils();
-    }
-
-    @org.junit.jupiter.api.Test
-    public void sf() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        User user = new User();
-        user.setUserName("1");
-        user.setUserPassword("1");
-        user.setUserMail("lldwb@lldwb.top");
-
-//        System.out.println(new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", user.getUserName()));
-
-        // 根据user的名字返回User对象
-        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName()) && UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail()) != 0) {
-            System.out.println("1234");
-        }
-//        User userDao = UserDao.getUser(user.getUserName());
-//        System.out.println(userDao);
-//        System.out.println(user.getUserName().equals(userDao.getUserName()) && user.getUserPassword().equals(userDao.getUserPassword()));
     }
 }

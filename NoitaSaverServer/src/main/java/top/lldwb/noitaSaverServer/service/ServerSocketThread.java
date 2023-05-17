@@ -1,14 +1,14 @@
 package top.lldwb.noitaSaverServer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
+import top.lldwb.noitaSaver.encrypt.EncryptTypes;
+import top.lldwb.noitaSaver.encrypt.EncryptUtil;
 import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.SQLException;
 
 /**
@@ -36,6 +36,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
                     backupFile();
                     break;
                 case "云恢复":
+                    restoreFile();
                     break;
                 case "邮箱":
                     types = this.receiveString();
@@ -50,8 +51,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             }
             socket.close();
 
-        } catch (IOException | SQLException | NoSuchFieldException | InstantiationException |
-                 IllegalAccessException e) {
+        } catch (IOException | SQLException | NoSuchFieldException | InstantiationException | IllegalAccessException |
+                 ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -77,11 +78,15 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         System.out.println(user);
 
         // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!user.getUserName().equals(UserDao.getUser(user.getUserName()).getUserName())) {
-            System.out.println(UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail()));
+        if (!user.getUserName().equals(UserDao.getUserNameUser(user.getUserName()).getUserName())) {
+            // 创建远程秘钥
+            user.setUserKey(EncryptUtil.encrypt(user.getUserName() + user.getUserMail(), EncryptTypes.MD5) + EncryptUtil.encrypt(System.currentTimeMillis() + user.getUserPassword(), EncryptTypes.MD5));
+
+            // 在数据库创建用户
+            System.out.println(UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
             System.out.println(true);
             this.sendObject(true);
-            this.sendObject(UserDao.getUser(user.getUserName()));
+            this.sendObject(UserDao.getUserNameUser(user.getUserName()));
         }
         // 如果有，向客户端发送 false
         else {
@@ -94,19 +99,33 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      *
      * @throws IOException
      */
-    private void backupFile() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private void backupFile() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         // 验证用户
-        User user = this.checkUser();
+        User user = this.checkUserKey();
+        // 读取用户备份路径
+        String path = new UserBackupPathService().getUserBackupPath().getName();
         if (user != null) {
-            this.receiveFile("G:\\" + user.getUserId() + ".zip");
+            // 用户备份路径+用户id+后缀
+            this.receiveFile(path + user.getUserId() + ".zip");
         }
     }
 
     /**
      * 恢复文件
      */
-    private void restoreFile() {
-
+    private void restoreFile() throws SQLException, IOException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        // 验证用户
+        User user = this.checkUserKey();
+        // 读取用户备份路径
+        String path = new UserBackupPathService().getUserBackupPath().getName();
+        // 是否有用户&&判断服务端存储地址是否有用户的备份文件(路径为:用户备份路径+用户id+后缀)
+        if (user != null && new File(path + user.getUserId() + ".zip").isFile()) {
+            this.sendObject(true);
+            // 发送用户的备份文件
+            this.sendFile(new File(path + user.getUserId() + ".zip"));
+        } else {
+            this.sendObject(false);
+        }
     }
 
     /**
@@ -124,11 +143,41 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
-        // 通过 UserDao 类的 getUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUser(user.getUserName());
+        // 通过 UserDao 类的 getUserNameUser 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUserNameUser(user.getUserName());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (user.getUserPassword().equals(userDao.getUserPassword())) {
+            this.sendObject(true);
+            return userDao;
+        }
+        // 如果密码不一致，向客户端发送 false 并返回 null
+        else {
+            this.sendObject(false);
+            return null;
+        }
+    }
+
+    /**
+     * 验证用户
+     *
+     * @return 返回用户对象，如果没有就是错误
+     * @throws IOException
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private User checkUserKey() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+        System.out.println(user);
+
+        // 通过 UserDao 类的 getUserNameUser 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUserKeyUser(user.getUserKey());
+        System.out.println(userDao);
+        // 如果密码一致，向客户端发送 true 并返回 user 对象
+        if (userDao.getUserId() != 0) {
             this.sendObject(true);
             return userDao;
         }

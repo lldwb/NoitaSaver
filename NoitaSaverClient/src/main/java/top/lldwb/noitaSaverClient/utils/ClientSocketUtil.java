@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverClient.utils;
 
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
+import top.lldwb.noitaSaver.fileUtil.FileUtil;
 import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverClient.service.UserService;
 
@@ -79,6 +80,7 @@ public class ClientSocketUtil extends SocketUtil {
 
     /**
      * 向服务端发起云备份请求
+     *
      * @param path 需要备份的地址
      * @param user 用户对象，用于验证权限
      * @return
@@ -88,19 +90,54 @@ public class ClientSocketUtil extends SocketUtil {
         // 发送判断信息
         this.sendString("云备份");
         if (checkUser(user)) {
+            // 临时文件文件地址
+            String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath";
             // 对文件夹进行压缩,创建一个临时文件
-            FileUtil.zipOutputFolder(path, "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath");
+            FileUtil.zipOutputFolder(path, temporaryPath);
             // 发送临时文件
-            super.sendFile(new File("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.zip"));
+            super.sendFile(new File(temporaryPath + ".zip"));
             // 获取
             if (this.receiveObject(Boolean.class)) {
                 System.out.println("成功");
                 // 删除临时文件
-                new File("C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath.zip").delete();
+                new File(temporaryPath + ".zip").delete();
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * 向服务端发起云恢复请求
+     * @param path 需要恢复的地址
+     * @param user 用户对象，用于验证权限
+     * @return 云恢复状态信息(0:恢复成功,1:验证失败,2:没有云端备份,3:接收云端备份失败)
+     * @throws IOException
+     */
+    public int restoreFile(String path, User user) throws IOException {
+        // 发送判断信息
+        this.sendString("云恢复");
+        if (checkUser(user)) {
+            if (this.receiveObject(Boolean.class)) {
+                // 临时文件文件地址
+                String temporaryPath = "C:\\Users\\Public\\Documents\\NoitaSaverClient\\DefaultPath";
+                // 接收临时文件
+                if (super.receiveFile(temporaryPath + ".zip")) {
+                    // 对临时文件进行解压
+                    FileUtil.zipInputFolder(path, temporaryPath);
+                    // 删除临时文件
+                    new File(temporaryPath + ".zip").delete();
+                    return 0;
+                } else {
+
+                    return 3;
+                }
+            } else {
+                return 2;
+            }
+        } else {
+            return 1;
+        }
     }
 
     /**

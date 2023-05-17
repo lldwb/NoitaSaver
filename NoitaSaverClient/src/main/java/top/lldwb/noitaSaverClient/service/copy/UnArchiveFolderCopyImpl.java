@@ -1,6 +1,6 @@
 package top.lldwb.noitaSaverClient.service.copy;
 
-import top.lldwb.noitaSaverClient.utils.FileUtil;
+import top.lldwb.noitaSaver.fileUtil.FileUtil;
 
 /**
  * 读档类，实现FolderCopy接口，用于将文件夹读档
