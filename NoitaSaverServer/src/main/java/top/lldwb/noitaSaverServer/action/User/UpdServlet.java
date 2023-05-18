@@ -21,8 +21,13 @@ public class UpdServlet extends BaseController {
 
         UserDao userDao = new UserDao();
         try {
-            int i = userDao.updUser(name,password,mail);
-            response.getWriter().print(i);
+            int row = userDao.updUser(name,password,mail);
+            // 打印响应的数据
+            if (row == 1) {
+                print(response, successJson(200, "修改成功", ""));
+                return;
+            }
+            print(response, errorJson(500, "修改失败", ""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

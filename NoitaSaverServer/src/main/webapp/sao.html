@@ -38,9 +38,17 @@
     <form class="layui-form" id="updateForm" lay-filter="example" style="margin: 1rem">
 
         <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="update-userName" name="username"
+                       autocomplete="off" class="layui-input" disabled="disabled" />
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                <input type="text" id="update-productName" name="userPassword"
+                <input type="text" id="update-userPassword" name="userpassword"
                        autocomplete="off" class="layui-input" />
             </div>
         </div>
@@ -48,7 +56,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
-                <input type="text" id="update-productPrice" name="userMail"
+                <input type="text" id="update-userMail" name="usermail"
                        autocomplete="off" class="layui-input" />
             </div>
         </div>
@@ -56,8 +64,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="text" id="update-productCount" name="productCount"
-                       autocomplete="off" class="layui-input" />
+                <input type="text" id="update-userState" name="userstate"
+                       autocomplete="off" class="layui-input" disabled="disabled"/>
             </div>
         </div>
     </form>
@@ -81,16 +89,24 @@
             elem: '#table'
             , id: 'tableReload'
             // 动态加载数据的后台 Servlet 地址
-            , url: 'SelServlet'
+            , url: 'selServlet'
             , title: '用户列表'
             // 定义表格各列
             , cols: [[
                 {field: 'userId', title: '编号', width: '10%'}
                 , {field: 'userName', title: '用户名', width: '15%'}
-                , {field: 'userMail', title: '邮箱', width: '10%'}
+                , {field: 'userMail', title: '邮箱', width: '20%'}
                 , {field: 'userState', title: '状态', width: '8%'}
                 , {field: 'userKey', title: '秘钥', width: '15%'}
+                , {fixed: 'right', title: '操作', toolbar: '#optionBar'}
             ]]
+            , parseData: function (res) {
+                return {
+                    "code": res.code == 200 ? 0 : res.code, 	// 解析接口状态
+                    "msg": res.msg, 					        					// 解析提示文本
+                    "data": res.data 					        				// 解析数据列表
+                };
+                }
         });
 
         // 查询并重新加载表格 let 变量 = {属性：值,行为：方法}
@@ -101,11 +117,108 @@
             reload: function () {
                 // 执行重载 - 重新发起请求，并传递相关条件
                 table.reload('tableReload', {
+                    url: "selNameServlet",
                      where: {
-                        productName: $('#search_productName').val()
+                        name: $('#search_productName').val()
                     }
                 });
             }
         };
+
+        $('#selectBtn').on('click', function () {
+            // type=reload
+            let type = $(this).data('type');
+
+            active[type] ? active[type].call(this) : '';
+        });
+
+        // 4.监听工具条中相关的按钮，实现相关的操作
+        // 监听 table 行工具事件 - 实现删除与修改操作
+        table.on('tool(table)',function ( obj ) {
+            // 获取当前行的数据
+            let currentRow = obj.data;
+
+            // 获取table工具条件的具体事件，事件名称通过lay-event定义
+            let layuiEvent = obj.event;
+
+            // 判断用户单击哪个按钮
+            if(layuiEvent==='off') {
+
+                // 弹出删除确认框，index为确认框的唯一索引
+                layer.confirm('是否确定删除此用户？',function(index){
+                    $.ajax({
+                        url: 'delServlet',
+                        type: 'get',
+                        data:{
+                            'userId':currentRow.userId,
+                        },
+                        success: function (res) {
+                            if (res.code == 200) {
+                                // 重新加载表格数据
+                                table.reload('tableReload');
+                                // 通过index索引关闭确认框
+                                layer.close(index) ;
+                                // 提示
+                                layer.msg(res.msg) ;
+                                return;
+                            }
+                            layer.msg(res.msg) ;
+                        }
+                    });
+                });
+
+
+
+            } else if(layuiEvent==='show') {
+                // 在修改表单中回显修改的数据
+                $("#update-userName").val(currentRow.username) ;
+                $("#update-userMail").val(currentRow.usermail) ;
+                $("#update-userState").val(currentRow.userstate) ;
+                // ...
+
+                layer.open({
+                    type:1,
+                    title:'修改商品',
+                    area:['50%','35em'],
+                    resize:false,
+                    content:$("#updateContainer"),
+                    btn:['确定','取消'],
+                    // 确定按钮
+                    btn1:function( index ) {
+                        $.ajax({
+                            url: 'updServlet',
+                            type: 'get',
+                            data:{
+                                'name':currentRow.username,
+                                'password':currentRow.userpassword,
+                                'mail':currentRow.usermail,
+                            },
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    // 重新加载表格数据
+                                    table.reload('tableReload');
+                                    // 通过index索引关闭确认框
+                                    layer.close(index) ;
+                                    // 提示
+                                    layer.msg(res.msg) ;
+                                    return;
+                                }
+                                layer.msg(res.msg) ;
+                            }
+                        });
+                        layer.close(index) ;
+                    },
+                    // 取消按钮
+                    btn2:function (){
+                       /* layer.close(index);*/
+                    },
+                    // 右上角关闭按钮
+                    cancel:function (index) {
+                        // ...
+                        layer.close(index);
+                    }
+                }) ;
+            }
+        });
     })
 </script>

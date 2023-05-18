@@ -4,6 +4,7 @@ import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * 有关用户的数据库操作类
@@ -85,8 +86,8 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static User selUser() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return new MySQLUtil().pdsT(new User(),"select * from user");
+    public static List<User> getUserList() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsList(new User(),"select * from user");
     }
 
 }

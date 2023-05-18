@@ -39,13 +39,13 @@ public class MySQLUtil {
     }
 
     /**
-     * 从数据库中查询符合条件的记录，并将结果封装为指定类型的List对象
+     * 从数据库中查询符合条件的记录，并将结果封装为指定类型的List<T>对象
      *
      * @param t   用于封装结果的Java对象
      * @param sql SQL语句
      * @param obj SQL语句中的参数列表
      * @param <T> Java类型
-     * @return 返回符合条件的记录封装为的List对象
+     * @return 返回符合条件的记录封装为的List<T>对象
      * @throws SQLException
      */
     public <T> List<T> pdsList(T t, String sql, Object... obj) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
@@ -62,7 +62,7 @@ public class MySQLUtil {
      * @param sql SQL语句
      * @param obj SQL语句中的参数列表
      * @param <T> Java类型
-     * @return 返回符合条件的记录封装为的List对象
+     * @return 返回符合条件的记录封装为的T对象
      * @throws SQLException
      */
     public <T> T pdsT(T t, String sql, Object... obj) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {

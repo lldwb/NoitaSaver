@@ -23,8 +23,13 @@ public class DelServlet extends BaseController {
 
         UserDao userDao = new UserDao();
         try {
-            int i = userDao.delUser(userId);
-            response.getWriter().print(i);
+            int row = userDao.delUser(userId);
+            // 打印响应的数据
+            if (row == 1) {
+                print(response, successJson(200, "删除成功", ""));
+                return;
+            }
+            print(response, errorJson(500, "删除失败", ""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
