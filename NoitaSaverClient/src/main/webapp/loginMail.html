@@ -101,27 +101,21 @@
 				},
 				// 申请验证码
 				sendEmailVerificationCode() {
-					// 手动触发 mail 字段的校验
-					this.$refs.ruleForm.validateField('mail').then(() => {
-						// 验证通过，执行相应操作
-						$.ajax({
-							url: "sendEmailVerificationCode",
-							dataType: "JSON",
-							data: {
-								mail: vue.ruleForm.mail
-							},
-							success(result) {
-								if (result == 1) {
-									callback(new Error('已发送验证码'));
-								} else {
-									callback(new Error('发送失败'));
-								}
+					// 验证通过，执行相应操作
+					$.ajax({
+						url: "sendEmailVerificationCode",
+						dataType: "JSON",
+						data: {
+							mail: this.ruleForm.mail
+						},
+						success(result) {
+							if (result == 1) {
+								callback(new Error('已发送验证码'));
+							} else {
+								callback(new Error('发送失败'));
 							}
-						});
-					}).catch(() => {
-						// 验证失败，执行相应操作
-						callback(new Error('邮箱不正确'));
-					});;
+						}
+					});
 				},
 				// 判断验证码
 				receiveEmailVerificationCode(formmail) {
@@ -146,7 +140,7 @@
 											key: "user"
 										},
 										success(result) {
-											if (result.usermail == vue.ruleForm.mail) {
+											if (result.userMail == vue.ruleForm.mail) {
 												location.href = 'index.html';
 											}
 										}

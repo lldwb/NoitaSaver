@@ -166,6 +166,7 @@ public class ClientSocketUtil extends SocketUtil {
         // 发送判断信息
         this.sendString("接收验证码");
         this.sendObject(mailVerificationCode);
+        System.out.println(mailVerificationCode);
         if (this.receiveObject(Boolean.class)) {
             return this.receiveObject(User.class);
         }

@@ -1,7 +1,9 @@
 package top.lldwb.noitaSaverClient.utils;
 
 import org.junit.jupiter.api.Test;
+import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
 import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaverClient.service.EmailVerificationCodeService;
 
 import java.io.*;
 
@@ -12,8 +14,9 @@ import java.io.*;
 public class ClientSocketUtilTest{
     @Test
     public void file() throws IOException {
-        User user  = new User();
-        user.setUserMail("3247187440@qq.com");
-        System.out.println(new ClientSocketUtil().sendEmailVerificationCode(user));
+        MailVerificationCode mailVerificationCode = new MailVerificationCode();
+        mailVerificationCode.setMailVerificationCodeEmail("3247187440@qq.com");
+        mailVerificationCode.setMailVerificationCodeCode("123456");
+        new EmailVerificationCodeService().receiveEmailVerificationCode( mailVerificationCode);
     }
 }

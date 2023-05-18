@@ -176,13 +176,12 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         // 接收客户端发过来的邮箱
         MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
         System.out.println(mailVerificationCode);
-        String code = MailVerificationCodeDao.getMailVerificationCodeByMail(mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeCode();
-
-        if (code != null && mailVerificationCode.getMailVerificationCodeCode().equals(code)) {
+        if (MailVerificationCodeDao.getMailVerificationCodeByCodeMail(mailVerificationCode.getMailVerificationCodeCode(), mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeId() != 0) {
             // 如果正确，向客户端发送 true 并返回 user 对象
             this.sendObject(true);
+            System.out.println(true);
             // 修改用户状态为通过邮箱验证
-            UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(),1);
+            UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(), 1);
             User user = UserDao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
             System.out.println(user);
             this.sendObject(user);

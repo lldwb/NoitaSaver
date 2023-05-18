@@ -11,18 +11,18 @@ import java.sql.SQLException;
  */
 public class MailVerificationCodeDao {
     /**
-     * 根据 mail 在数据库中获取 MailVerificationCode 对象
+     * 根据 mail 和 验证码 在数据库中获取 MailVerificationCode 对象
      * 并且忽略超过时间的验证码
-     *
+     * @param code 验证码
      * @param mail 用户邮箱
-     * @return
+     * @return 有返回，无返回
      * @throws SQLException
      * @throws NoSuchFieldException
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static MailVerificationCode getMailVerificationCodeByMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailVerificationCode where now() < mailVerificationCode_expire_time and mailVerificationCode_email=?", mail);
+    public static MailVerificationCode getMailVerificationCodeByCodeMail(String code, String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailVerificationCode where now() < mailVerificationCode_expire_time and mailVerificationCode_code=? and mailVerificationCode_email = ?", code, mail);
     }
 
     /**
