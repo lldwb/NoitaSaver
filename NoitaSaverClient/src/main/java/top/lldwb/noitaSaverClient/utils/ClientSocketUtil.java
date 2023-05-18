@@ -143,6 +143,7 @@ public class ClientSocketUtil extends SocketUtil {
 
     /**
      * 发送邮箱验证码
+     *
      * @param mail 需要验证码的邮箱
      * @return 如果为假，邮箱对应的用户不存在
      * @throws IOException
@@ -151,26 +152,24 @@ public class ClientSocketUtil extends SocketUtil {
         // 发送判断信息
         this.sendString("发送验证码");
         this.sendString(mail);
-        if (this.receiveObject(Boolean.class)){
-            return true;
-        }{
-            return false;
-        }
+        return this.receiveObject(Boolean.class);
     }
 
     /**
      * 接收邮箱验证码
+     *
      * @param mailVerificationCode 邮箱验证码对象
-     * @return 如果为假，验证码有误
+     * @return 如果为验证码无误，返回用户对象
      * @throws IOException
      */
-    public Boolean receiveEmailVerificationCode(MailVerificationCode mailVerificationCode) throws IOException {
+    public User receiveEmailVerificationCode(MailVerificationCode mailVerificationCode) throws IOException {
         // 发送判断信息
         this.sendString("接收验证码");
-        if (this.receiveObject(Boolean.class)){
-            return true;
-        }{
-            return false;
+        if (this.receiveObject(Boolean.class)) {
+            return this.receiveObject(User.class);
+        }
+        {
+            return null;
         }
     }
 

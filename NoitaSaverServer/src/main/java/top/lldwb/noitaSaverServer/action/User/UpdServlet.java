@@ -19,7 +19,7 @@ public class UpdServlet extends BaseController {
 
         UserDao userDao = new UserDao();
         try {
-            int row = userDao.updateUserNameUser(name,password,mail);
+            int row = userDao.updateUserByName(name,password,mail);
             // 打印响应的数据
             if (row == 1) {
                 print(response, successJson(200, "修改成功", ""));

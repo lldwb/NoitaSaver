@@ -82,7 +82,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         System.out.println(user);
 
         // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!user.getUserName().equals(UserDao.getUserNameUser(user.getUserName()).getUserName())) {
+        if (!user.getUserName().equals(UserDao.getUserByName(user.getUserName()).getUserName())) {
             // 创建远程秘钥
             user.setUserKey(EncryptUtil.encrypt(user.getUserName() + user.getUserMail(), EncryptTypes.MD5) + EncryptUtil.encrypt(System.currentTimeMillis() + user.getUserPassword(), EncryptTypes.MD5));
 
@@ -90,7 +90,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             System.out.println(UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
             System.out.println(true);
             this.sendObject(true);
-            this.sendObject(UserDao.getUserNameUser(user.getUserName()));
+            this.sendObject(UserDao.getUserByName(user.getUserName()));
         }
         // 如果有，向客户端发送 false
         else {
@@ -150,7 +150,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     private void sendEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         // 接收客户端发过来的邮箱
         String mail = this.receiveString();
-        User user = UserDao.getUserMailUser(mail);
+        User user = UserDao.getUserByMail(mail);
         // 判断用户邮箱是否存在
         if (user.getUserId() != 0) {
             // 发送成功
@@ -173,12 +173,13 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     private void receiveEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         // 接收客户端发过来的邮箱
         MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
-        String code = MailVerificationCodeDao.getMailVerificationCodeMail(mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeCode();
+        String code = MailVerificationCodeDao.getMailVerificationCodeByMail(mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeCode();
         if (code != null && mailVerificationCode.getMailVerificationCodeCode().equals(code)) {
-            // 发送成功
+            // 如果正确，向客户端发送 true 并返回 user 对象
             this.sendObject(true);
-            // 修改用户状态为通过验证
+            // 修改用户状态为通过邮箱验证
             UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(),1);
+            this.sendObject(UserDao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail()));
         } else {
             // 发送失败
             this.sendObject(false);
@@ -200,8 +201,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
-        // 通过 UserDao 类的 getUserNameUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUserNameUser(user.getUserName());
+        // 通过 UserDao 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUserByName(user.getUserName());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (user.getUserPassword().equals(userDao.getUserPassword())) {
@@ -230,8 +231,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
-        // 通过 UserDao 类的 getUserNameUser 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUserKeyUser(user.getUserKey());
+        // 通过 UserDao 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDao.getUserByKey(user.getUserKey());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (userDao.getUserId() != 0) {

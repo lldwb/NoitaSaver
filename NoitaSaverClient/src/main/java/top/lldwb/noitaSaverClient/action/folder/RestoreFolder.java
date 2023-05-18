@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverClient.action.user;
+package top.lldwb.noitaSaverClient.action.folder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.entity.User;

@@ -21,7 +21,7 @@ public class MailVerificationCodeDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static MailVerificationCode getMailVerificationCodeMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public static MailVerificationCode getMailVerificationCodeByMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailverificationcode where now() < mailVerificationCode_expire_time and mailVerificationCode_email=?", mail);
     }
 

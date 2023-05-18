@@ -23,7 +23,7 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static User getUserNameUser(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public static User getUserByName(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_name=?", name);
     }
 
@@ -37,7 +37,7 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static User getUserKeyUser(String key) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public static User getUserByKey(String key) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_key=?", key);
     }
 
@@ -51,7 +51,7 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static User getUserMailUser(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public static User getUserByMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         return new MySQLUtil().pdsT(new User(), "select * from user where user_mail=?", mail);
     }
 
@@ -87,7 +87,7 @@ public class UserDao {
      * @return
      * @throws SQLException
      */
-    public static int updateUserNameUser(String name, String password, String mail) throws SQLException {
+    public static int updateUserByName(String name, String password, String mail) throws SQLException {
         return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
     }
 

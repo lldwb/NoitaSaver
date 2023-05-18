@@ -19,7 +19,7 @@ public class SelNameServlet extends BaseController {
 
         UserDao userDao = new UserDao();
         try {
-            User user = userDao.getUserNameUser(name);
+            User user = userDao.getUserByName(name);
             ObjectMapper mapper = new ObjectMapper();
             String s = mapper.writeValueAsString(user);
             response.getWriter().print(s);

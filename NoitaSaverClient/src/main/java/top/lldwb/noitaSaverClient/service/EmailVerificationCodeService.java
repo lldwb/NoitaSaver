@@ -1,6 +1,7 @@
 package top.lldwb.noitaSaverClient.service;
 
 import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
+import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
 
 import java.io.IOException;
@@ -25,10 +26,10 @@ public class EmailVerificationCodeService {
     /**
      * 接收邮箱验证码
      * @param mailVerificationCode 邮箱验证码对象
-     * @return 如果为假，验证码有误
+     * @return 如果为验证码无误，返回用户对象
      * @throws IOException
      */
-    public Boolean receiveEmailVerificationCode(MailVerificationCode mailVerificationCode) throws IOException {
+    public User receiveEmailVerificationCode(MailVerificationCode mailVerificationCode) throws IOException {
         return new ClientSocketUtil().receiveEmailVerificationCode(mailVerificationCode);
     }
 }
