@@ -74,7 +74,7 @@ public class UserDao {
      * @return
      * @throws SQLException
      */
-    public static int delUser(int id) throws SQLException {
+    public static int deleteUserId(int id) throws SQLException {
         return new MySQLUtil().update("delete from user where user_id=?", id);
     }
 
@@ -87,8 +87,26 @@ public class UserDao {
      * @return
      * @throws SQLException
      */
-    public static int updUser(String name,String password, String mail) throws SQLException {
+    public static int updateUserNameUser(String name, String password, String mail) throws SQLException {
         return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
+    }
+
+    /**
+     * 通过用户id修改用户状态信息
+     * @param id 用户id
+     * @param state 最终的状态信息
+     */
+    public static int updateUserStatusById(int id,int state) throws SQLException {
+        return new MySQLUtil().update("update user set user_state=? where user_id=?",state, id);
+    }
+
+    /**
+     * 通过用户邮箱修改用户状态信息
+     * @param mail 用户邮箱
+     * @param state 最终的状态信息
+     */
+    public static int updateUserStatusByMail(String mail,int state) throws SQLException {
+        return new MySQLUtil().update("update user set user_state=? where user_mail=?",state, mail);
     }
 
     /**

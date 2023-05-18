@@ -2,6 +2,7 @@ package top.lldwb.noitaSaverClient.utils;
 
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.fileUtil.FileUtil;
+import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
 import top.lldwb.noitaSaverClient.entity.User;
 
 import java.io.*;
@@ -142,6 +143,9 @@ public class ClientSocketUtil extends SocketUtil {
 
     /**
      * 发送邮箱验证码
+     * @param mail 需要验证码的邮箱
+     * @return 如果为假，邮箱对应的用户不存在
+     * @throws IOException
      */
     public Boolean sendEmailVerificationCode(String mail) throws IOException {
         // 发送判断信息
@@ -156,11 +160,18 @@ public class ClientSocketUtil extends SocketUtil {
 
     /**
      * 接收邮箱验证码
+     * @param mailVerificationCode 邮箱验证码对象
+     * @return 如果为假，验证码有误
+     * @throws IOException
      */
-    public void receiveEmailVerificationCode() throws IOException {
+    public Boolean receiveEmailVerificationCode(MailVerificationCode mailVerificationCode) throws IOException {
         // 发送判断信息
         this.sendString("接收验证码");
-
+        if (this.receiveObject(Boolean.class)){
+            return true;
+        }{
+            return false;
+        }
     }
 
     /**

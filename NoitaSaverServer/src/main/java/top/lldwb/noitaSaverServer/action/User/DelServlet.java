@@ -6,7 +6,6 @@ import top.lldwb.noitaSaverServer.servlet.WebController;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -23,7 +22,7 @@ public class DelServlet extends BaseController {
 
         UserDao userDao = new UserDao();
         try {
-            int row = userDao.delUser(userId);
+            int row = userDao.deleteUserId(userId);
             // 打印响应的数据
             if (row == 1) {
                 print(response, successJson(200, "删除成功", ""));

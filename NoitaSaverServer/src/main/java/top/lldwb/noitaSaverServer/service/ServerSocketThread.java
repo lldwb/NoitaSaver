@@ -151,7 +151,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         // 接收客户端发过来的邮箱
         String mail = this.receiveString();
         User user = UserDao.getUserMailUser(mail);
-        // 判断邮箱是否存在
+        // 判断用户邮箱是否存在
         if (user.getUserId() != 0) {
             // 发送成功
             this.sendObject(true);
@@ -177,6 +177,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         if (code != null && mailVerificationCode.getMailVerificationCodeCode().equals(code)) {
             // 发送成功
             this.sendObject(true);
+            // 修改用户状态为通过验证
+            UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(),1);
         } else {
             // 发送失败
             this.sendObject(false);
