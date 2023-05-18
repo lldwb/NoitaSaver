@@ -42,12 +42,22 @@ https://github.com/lldwb/NoitaSaver.git
 
 | 字段            | 类型           | 约束        | 描述                              |
 |---------------|--------------|-----------|---------------------------------|
-| user_id       | int          | 自增1,主键,非空 |                                 |
+| user_id       | int          | 主键,自增1,非空 |                                 |
 | user_name     | varchar(15)  | 非空,唯一     | 名字                              |
 | user_password | char(32)     | 非空        | 密码，(密码+名字)使用MD5加密               |
 | user_mail     | varchar(255) | 非空,唯一     | 邮箱                              |
-| user_state    | int          | 非空        | 状态(0未邮箱认证,1通过认证,2注销)            |
+| user_state    | int          | 非空,默认0    | 状态(0未邮箱认证,1通过认证,2注销)            |
 | user_key      | char(64)     | 非空,唯一     | 访问秘钥，(用户名+用户邮箱)+(时间戳+密码)使用MD5加密 |
+
+`mailVerificationCode`邮箱验证码表
+
+| 字段                               | 类型           | 约束        | 描述             |
+|----------------------------------|--------------|-----------|----------------|
+| mailVerificationCode_id          | int          | 主键,自增1,非空 | 验证码记录ID        |
+| mailVerificationCode_email       | varchar(255) | 非空        | 接收验证码的邮箱       |
+| mailVerificationCode_code        | char(6)      | 非空        | 邮箱验证码,6位       |
+| mailVerificationCode_create_time | timestamp    | 非空,默认     | 创建时间           |
+| mailVerificationCode_expire_time | timestamp    | 非空,默认     | 过期时间(创建时间5分钟后) |
 
 ## 项目架构
 

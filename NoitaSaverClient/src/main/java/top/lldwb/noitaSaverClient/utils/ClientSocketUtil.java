@@ -141,6 +141,29 @@ public class ClientSocketUtil extends SocketUtil {
     }
 
     /**
+     * 发送邮箱验证码
+     */
+    public Boolean sendEmailVerificationCode(String mail) throws IOException {
+        // 发送判断信息
+        this.sendString("发送验证码");
+        this.sendString(mail);
+        if (this.receiveObject(Boolean.class)){
+            return true;
+        }{
+            return false;
+        }
+    }
+
+    /**
+     * 接收邮箱验证码
+     */
+    public void receiveEmailVerificationCode() throws IOException {
+        // 发送判断信息
+        this.sendString("接收验证码");
+
+    }
+
+    /**
      * 验证用户
      *
      * @param user 用户对象

@@ -42,6 +42,20 @@ public class UserDao {
     }
 
     /**
+     * 根据 mail 在数据库中获取 User
+     *
+     * @param mail 用户邮箱
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static User getUserMailUser(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsT(new User(), "select * from user where user_mail=?", mail);
+    }
+
+    /**
      * 在数据库中添加用户
      *
      * @param name     用户名
