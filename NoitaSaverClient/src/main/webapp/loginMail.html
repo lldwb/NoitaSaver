@@ -29,14 +29,17 @@
 						<el-form-item label="邮箱" prop="mail">
 							<!-- maxlength="15"：限制长度为15 -->
 							<!-- show-word-limit：展示字数统计 -->
-							<el-input maxlength="15" show-word-limit v-model="ruleForm.mail"></el-input>
+							<el-input v-model="ruleForm.mail"></el-input>
 						</el-form-item>
 						<el-form-item label="验证码" prop="code">
 							<el-input v-model="ruleForm.code" style="width: 70%;"></el-input>
-							<el-button type="primary" @click="registration">获取验证码</el-button>
+							<el-button type="primary" @click="sendEmailVerificationCode">获取验证码</el-button>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" @click="receiveEmailVerificationCode('ruleForm')"  style="width: 100%;">登录</el-button>
+							<el-button type="primary" @click="receiveEmailVerificationCode('ruleForm')"
+								style="width: 100%;">邮箱登录</el-button>
+							<el-button type="primary" @click="login">密码登录</el-button>
+							<el-button type="primary" @click="registration">注册</el-button>
 						</el-form-item>
 					</el-form>
 				</el-col>
@@ -60,6 +63,8 @@
 				var checkCode = (rule, value, callback) => {
 					if (value === '') {
 						callback(new Error('请输入验证码'));
+					} else {
+						callback();
 					}
 				};
 				return {
@@ -85,6 +90,15 @@
 				};
 			},
 			methods: {
+				login() {
+					location.href = 'login.html'
+				},
+				loginMail() {
+					location.href = 'loginMail.html'
+				},
+				registration() {
+					location.href = 'registration.html'
+				},
 				// 申请验证码
 				sendEmailVerificationCode() {
 					// 手动触发 mail 字段的校验
@@ -144,10 +158,6 @@
 							return false;
 						}
 					});
-				},
-				// 跳转到注册页面
-				registration() {
-					location.href = 'registration.html';
 				}
 			}
 		})

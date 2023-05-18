@@ -148,9 +148,11 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      * 发送邮箱验证码
      */
     private void sendEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        // 接收客户端发过来的邮箱
-        String mail = this.receiveString();
-        User user = UserDao.getUserByMail(mail);
+        // 接收客户端发过来的JSON并转成Java对象
+        User user = this.receiveObject(User.class);
+        System.out.println(user);
+        user = UserDao.getUserByMail(user.getUserMail());
+        System.out.println(user);
         // 判断用户邮箱是否存在
         if (user.getUserId() != 0) {
             // 发送成功
@@ -173,13 +175,17 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     private void receiveEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
         // 接收客户端发过来的邮箱
         MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
+        System.out.println(mailVerificationCode);
         String code = MailVerificationCodeDao.getMailVerificationCodeByMail(mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeCode();
+
         if (code != null && mailVerificationCode.getMailVerificationCodeCode().equals(code)) {
             // 如果正确，向客户端发送 true 并返回 user 对象
             this.sendObject(true);
             // 修改用户状态为通过邮箱验证
             UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(),1);
-            this.sendObject(UserDao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail()));
+            User user = UserDao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
+            System.out.println(user);
+            this.sendObject(user);
         } else {
             // 发送失败
             this.sendObject(false);

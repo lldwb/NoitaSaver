@@ -15,12 +15,12 @@ import java.io.IOException;
 public class EmailVerificationCodeService {
     /**
      * 发送邮箱验证码
-     * @param mail 需要验证码的邮箱
+     * @param user 需要验证码的用户
      * @return 如果为假，邮箱对应的用户不存在
      * @throws IOException
      */
-    public Boolean sendEmailVerificationCode(String mail) throws IOException {
-        return new ClientSocketUtil().sendEmailVerificationCode(mail);
+    public Boolean sendEmailVerificationCode(User user) throws IOException {
+        return new ClientSocketUtil().sendEmailVerificationCode(user);
     }
 
     /**

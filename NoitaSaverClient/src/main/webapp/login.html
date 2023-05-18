@@ -40,7 +40,9 @@
 							<el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+							<el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">密码登录
+							</el-button>
+							<el-button type="primary" @click="loginMail">邮箱登录</el-button>
 							<el-button type="primary" @click="registration">注册</el-button>
 						</el-form-item>
 					</el-form>
@@ -108,6 +110,9 @@
 				};
 			},
 			methods: {
+				login(){location.href = 'login.html'},
+				loginMail(){location.href = 'loginMail.html'},
+				registration(){location.href = 'registration.html'},
 				submitForm(formName) {
 					// 通过 this.$refs.ruleForm.validate 获取这个组件的对象并调用 validate 方法
 					// validate 方法会自动触发每个表单项的校验规则进行验证，
@@ -143,10 +148,6 @@
 						}
 					});
 				},
-				// 跳转到注册页面
-				registration() {
-					location.href = 'registration.html';
-				}
 			}
 		})
 	</script>

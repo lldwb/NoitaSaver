@@ -22,7 +22,7 @@ public class MailVerificationCodeDao {
      * @throws IllegalAccessException
      */
     public static MailVerificationCode getMailVerificationCodeByMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailverificationcode where now() < mailVerificationCode_expire_time and mailVerificationCode_email=?", mail);
+        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailVerificationCode where now() < mailVerificationCode_expire_time and mailVerificationCode_email=?", mail);
     }
 
     /**
@@ -34,6 +34,6 @@ public class MailVerificationCodeDao {
      * @throws SQLException
      */
     public static int setMailVerificationCode(String mail, String code) throws SQLException {
-        return new MySQLUtil().update("insert into mailVerificationCodeMail(mailVerificationCode_email,mailVerificationCode_code) values(?,?)", mail, code);
+        return new MySQLUtil().update("insert into mailVerificationCode(mailVerificationCode_email,mailVerificationCode_code) values(?,?)", mail, code);
     }
 }

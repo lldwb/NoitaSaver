@@ -2,6 +2,7 @@ package top.lldwb.noitaSaverClient.action.emailVerificationCode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
+import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverClient.service.EmailVerificationCodeService;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,9 @@ import java.io.IOException;
 public class SendEmailVerificationCode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (new EmailVerificationCodeService().sendEmailVerificationCode(req.getParameter("mail"))){
+        User user  = new User();
+        user.setUserMail(req.getParameter("mail"));
+        if (new EmailVerificationCodeService().sendEmailVerificationCode(user)){
             resp.getWriter().print(1);
         }else {
             resp.getWriter().print(0);
