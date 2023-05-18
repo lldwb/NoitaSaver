@@ -39,14 +39,10 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
                     restoreFolder();
                     break;
                 case "发送验证码":
-                    types = this.receiveString();
-                    System.out.println(types);
-                    MailUtil.sendSession(types, "验证码","45");
+                    sendEmailVerificationCode();
                     break;
                 case "接收验证码":
-                    types = this.receiveString();
-                    System.out.println(types);
-                    MailUtil.sendSession(types, "验证码", "2345");
+                    receiveEmailVerificationCode();
                     break;
                 case "注册":
                     registration();
@@ -146,6 +142,30 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     }
 
     /**
+     * 发送邮箱验证码
+     */
+    private void sendEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的邮箱
+        String mail = this.receiveString();
+        User user = UserDao.getUserMailUser(mail);
+        if (user.getUserId() != 0) {
+            // 发送成功
+            this.sendObject(true);
+//        MailUtil.sendSession(types, "验证码","45");
+        } else {
+            // 发送失败
+            this.sendObject(false);
+        }
+    }
+
+    /**
+     * 接收邮箱验证码
+     */
+    private void receiveEmailVerificationCode() {
+
+    }
+
+    /**
      * 验证用户
      *
      * @return 返回用户对象，如果没有就是错误
@@ -203,21 +223,5 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             this.sendObject(false);
             return null;
         }
-    }
-
-    /**
-     * 发送邮箱验证码
-     */
-    private void sendEmailVerificationCode() throws IOException {
-        // 接收客户端发过来的JSON并转成Java对象
-        User user = this.receiveObject(User.class);
-        System.out.println(user);
-    }
-
-    /**
-     * 接收邮箱验证码
-     */
-    private void receiveEmailVerificationCode(){
-
     }
 }
