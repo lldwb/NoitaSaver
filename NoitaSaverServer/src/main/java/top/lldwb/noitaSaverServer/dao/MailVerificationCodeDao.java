@@ -1,7 +1,6 @@
 package top.lldwb.noitaSaverServer.dao;
 
-import top.lldwb.noitaSaverClient.entity.User;
-import top.lldwb.noitaSaverServer.entity.MailVerificationCode;
+import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
 import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ import java.sql.SQLException;
 public class MailVerificationCodeDao {
     /**
      * 根据 mail 在数据库中获取 MailVerificationCode 对象
+     * 并且忽略超过时间的验证码
      *
      * @param mail 用户邮箱
      * @return
@@ -22,7 +22,7 @@ public class MailVerificationCodeDao {
      * @throws IllegalAccessException
      */
     public static MailVerificationCode getMailVerificationCodeMail(String mail) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from user where user_mail=?", mail);
+        return new MySQLUtil().pdsT(new MailVerificationCode(), "select * from mailverificationcode where now() < mailVerificationCode_expire_time and mailVerificationCode_email=?", mail);
     }
 
     /**

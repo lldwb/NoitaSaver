@@ -3,13 +3,16 @@ package top.lldwb.noitaSaverServer.service;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
+import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
 import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * @author 安然的尾巴
@@ -148,10 +151,16 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         // 接收客户端发过来的邮箱
         String mail = this.receiveString();
         User user = UserDao.getUserMailUser(mail);
+        // 判断邮箱是否存在
         if (user.getUserId() != 0) {
             // 发送成功
             this.sendObject(true);
-//        MailUtil.sendSession(types, "验证码","45");
+            // 生成验证码
+            String code = (new Random().nextInt(900000) + 100000) + "";
+            // 发送验证码
+            MailUtil.sendSession(user.getUserMail(), "noitaSaver验证码", code);
+            // 在数据库中存储验证码
+            MailVerificationCodeDao.setMailVerificationCode(user.getUserMail(), code);
         } else {
             // 发送失败
             this.sendObject(false);
@@ -161,8 +170,17 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     /**
      * 接收邮箱验证码
      */
-    private void receiveEmailVerificationCode() {
-
+    private void receiveEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        // 接收客户端发过来的邮箱
+        MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
+        String code = MailVerificationCodeDao.getMailVerificationCodeMail(mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeCode();
+        if (code != null && mailVerificationCode.getMailVerificationCodeCode().equals(code)) {
+            // 发送成功
+            this.sendObject(true);
+        } else {
+            // 发送失败
+            this.sendObject(false);
+        }
     }
 
     /**

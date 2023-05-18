@@ -55,7 +55,7 @@ https://github.com/lldwb/NoitaSaver.git
 |----------------------------------|--------------|-----------|----------------|
 | mailVerificationCode_id          | int          | 主键,自增1,非空 | 验证码记录ID        |
 | mailVerificationCode_email       | varchar(255) | 非空        | 接收验证码的邮箱       |
-| mailVerificationCode_code        | varchar(6)   | 非空        | 邮箱验证码，6位数字     |
+| mailVerificationCode_code        | char(6)      | 非空        | 邮箱验证码,6位       |
 | mailVerificationCode_create_time | timestamp    | 非空,默认     | 创建时间           |
 | mailVerificationCode_expire_time | timestamp    | 非空,默认     | 过期时间(创建时间5分钟后) |
 
