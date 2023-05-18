@@ -118,8 +118,13 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static List<User> getUserList() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return new MySQLUtil().pdsList(new User(),"select * from user");
+    public static List<User> getUserList(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        StringBuilder sql = new StringBuilder("select * from user");
+        if(name!=null && !"".equals(name.trim())) {
+            sql.append(" where user_name= '" + name + "'") ;
+        }
+
+        return new MySQLUtil().pdsList(new User(), sql.toString() );
     }
 
 }
