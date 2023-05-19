@@ -16,9 +16,13 @@
 	</head>
 	<body>
 		<div id="app">
+			<el-row type="flex" class="row-bg" justify="center">
+				<el-col :span="6" :offset="3">
+					<h1>注册</h1>
+				</el-col>
+			</el-row>
 			<el-row>
-				<el-col :span="8" :offset="8">
-					<h1 align="center">注册</h1>
+				<el-col :span="6" :offset="8">
 					<!-- el-form：表单 -->
 					<!-- ref="ruleForm"：添加引用名 ruleForm ，这样可以通过 this.$refs.ruleForm 获取这个组件的对象 -->
 					<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
@@ -40,9 +44,17 @@
 							<el-input v-model="ruleForm.mail" maxlength="255"></el-input>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
+							<el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">注册</el-button>
 						</el-form-item>
 					</el-form>
+				</el-col>
+			</el-row>
+			<el-row type="flex" class="row-bg">
+				<el-col :span="3":offset="10">
+					<el-link :underline="false" href="loginMail.html" type="primary">邮箱登录</el-link>
+				</el-col>
+				<el-col :span="6">
+					<el-link :underline="false" href="login.html" type="primary">密码登录</el-link>
 				</el-col>
 			</el-row>
 		</div>
