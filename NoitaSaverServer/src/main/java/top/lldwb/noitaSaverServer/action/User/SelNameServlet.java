@@ -20,15 +20,8 @@ public class SelNameServlet extends BaseController {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         try {
-<<<<<<< Updated upstream
-            User user = userDao.getUserByName(name);
-            ObjectMapper mapper = new ObjectMapper();
-            String s = mapper.writeValueAsString(user);
-            response.getWriter().print(s);
-=======
             ResponseData responseData = successJson(new UserDao().getUserList(name));
             print(response,responseData);
->>>>>>> Stashed changes
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

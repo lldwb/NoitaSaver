@@ -23,22 +23,13 @@ public class MySQLUtil {
     }
 
 
-<<<<<<< Updated upstream
-//    private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/noitaSaver?serverTimezone=Asia/Shanghai";
-=======
    // private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/noitaSaver?serverTimezone=Asia/Shanghai";
->>>>>>> Stashed changes
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/noitaSaver?serverTimezone=Asia/Shanghai";
     //账号
     private static final String USER_NAME = "root";
     //密码
-<<<<<<< Updated upstream
 //    private static final String PASSWORD = "@dwb123456";
-    private static final String PASSWORD = "";
-=======
-    //private static final String PASSWORD = "@dwb123456";
     private static final String PASSWORD = "123456";
->>>>>>> Stashed changes
     //QueryRunner对象
     QueryRunner queryRunner = new QueryRunner();
     //数据库连接对象并传入数据库参数

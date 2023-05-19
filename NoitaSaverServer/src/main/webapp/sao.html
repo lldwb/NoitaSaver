@@ -117,6 +117,7 @@
             reload: function () {
                 // 执行重载 - 重新发起请求，并传递相关条件
                 table.reload('tableReload', {
+                    //附带数据
                      where: {
                         name: $('#search_productName').val()
                     }
@@ -124,6 +125,7 @@
             }
         };
 
+        //绑定搜索按钮
         $('#selectBtn').on('click', function () {
             // type=reload
             let type = $(this).data('type');
