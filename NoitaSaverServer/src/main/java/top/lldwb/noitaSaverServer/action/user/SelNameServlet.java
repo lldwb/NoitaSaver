@@ -1,10 +1,8 @@
-package top.lldwb.noitaSaverServer.action.User;
+package top.lldwb.noitaSaverServer.action.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverServer.action.BaseController;
-import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.service.UserService;
-import top.lldwb.noitaSaverServer.servlet.ResponseData;
 import top.lldwb.noitaSaverServer.servlet.WebController;
 
 import javax.servlet.ServletException;

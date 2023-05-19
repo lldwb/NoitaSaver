@@ -1,6 +1,7 @@
-package top.lldwb.noitaSaverServer.action;
+package top.lldwb.noitaSaverServer.action.backupPath;
 
 import top.lldwb.noitaSaver.fileUtil.entity.Folder;
+import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.service.UserBackupPathService;
 import top.lldwb.noitaSaverServer.servlet.WebController;
 
@@ -10,19 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 返回用户备份路径
+ * 修改用户备份路径，不需要添加"\\"为后缀
  *
  * @author 安然的尾巴
  * @version 1.0
  */
-@WebController("/GetUserBackupPath")
-public class GetUserBackupPath extends BaseController{
+@WebController("/SetUserBackupPath")
+public class SetUserBackupPath extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            new UserBackupPathService().getUserBackupPath();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        new UserBackupPathService().setUserBackupPath(new Folder(request.getParameter("path") + "\\"));
     }
 }
