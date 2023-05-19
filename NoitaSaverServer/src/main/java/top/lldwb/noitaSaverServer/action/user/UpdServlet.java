@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverServer.action.User;
+package top.lldwb.noitaSaverServer.action.user;
 
 import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.dao.UserDao;
