@@ -23,7 +23,7 @@ public class SelNameServlet extends BaseController {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String name = request.getParameter("name");
-            response.getWriter().print(new ObjectMapper().writeValueAsString(new UserService().getUserList(name)));
+        print( response,successJson(new UserService().getUserList(name)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchFieldException e) {
