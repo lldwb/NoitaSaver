@@ -1,7 +1,9 @@
 package top.lldwb.noitaSaverServer.action.User;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.dao.UserDao;
+import top.lldwb.noitaSaverServer.service.UserService;
 import top.lldwb.noitaSaverServer.servlet.ResponseData;
 import top.lldwb.noitaSaverServer.servlet.WebController;
 
@@ -9,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * 查询用户
@@ -18,11 +21,16 @@ import java.io.IOException;
 public class SelNameServlet extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
         try {
-            ResponseData responseData = successJson(new UserDao().getUserList(name));
-            print(response,responseData);
-        } catch (Exception e) {
+            String name = request.getParameter("name");
+            response.getWriter().print(new ObjectMapper().writeValueAsString(new UserService().getUserList(name)));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }

@@ -69,7 +69,8 @@ public class UserDao {
     }
 
     /**
-     *  根据 id 删除用户
+     * 根据 id 删除用户
+     *
      * @param id 编号
      * @return
      * @throws SQLException
@@ -81,32 +82,34 @@ public class UserDao {
     /**
      * 根据用户名 修改用户的密码以及邮箱
      *
-     * @param name 用户名
+     * @param name     用户名
      * @param password 密码
-     * @param mail 邮箱
+     * @param mail     邮箱
      * @return
      * @throws SQLException
      */
     public static int updateUserByName(String name, String password, String mail) throws SQLException {
-        return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail,name);
+        return new MySQLUtil().update("update user set user_password=?,user_mail=? where user_name=?", password, mail, name);
     }
 
     /**
      * 通过用户id修改用户状态信息
-     * @param id 用户id
+     *
+     * @param id    用户id
      * @param state 最终的状态信息
      */
-    public static int updateUserStatusById(int id,int state) throws SQLException {
-        return new MySQLUtil().update("update user set user_state=? where user_id=?",state, id);
+    public static int updateUserStatusById(int id, int state) throws SQLException {
+        return new MySQLUtil().update("update user set user_state=? where user_id=?", state, id);
     }
 
     /**
      * 通过用户邮箱修改用户状态信息
-     * @param mail 用户邮箱
+     *
+     * @param mail  用户邮箱
      * @param state 最终的状态信息
      */
-    public static int updateUserStatusByMail(String mail,int state) throws SQLException {
-        return new MySQLUtil().update("update user set user_state=? where user_mail=?",state, mail);
+    public static int updateUserStatusByMail(String mail, int state) throws SQLException {
+        return new MySQLUtil().update("update user set user_state=? where user_mail=?", state, mail);
     }
 
     /**
@@ -118,13 +121,21 @@ public class UserDao {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static List<User> getUserList(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        StringBuilder sql = new StringBuilder("select * from user");
-        if(name!=null && !"".equals(name.trim())) {
-            sql.append(" where user_name= '" + name + "'") ;
-        }
-
-        return new MySQLUtil().pdsList(new User(), sql.toString() );
+    public static List<User> getUserList() throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsList(new User(), "select * from user");
     }
 
+    /**
+     * 根据用户名模糊查询
+     *
+     * @param name
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public static List<User> getUserListLikeName(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return new MySQLUtil().pdsList(new User(), "select * from user where user_name like ?", name);
+    }
 }
