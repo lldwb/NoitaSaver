@@ -89,7 +89,7 @@
             elem: '#table'
             , id: 'tableReload'
             // 动态加载数据的后台 Servlet 地址
-            , url: 'selServlet'
+            , url: 'selNameServlet'
             , title: '用户列表'
             // 定义表格各列
             , cols: [[
@@ -117,7 +117,7 @@
             reload: function () {
                 // 执行重载 - 重新发起请求，并传递相关条件
                 table.reload('tableReload', {
-                    url: "selNameServlet",
+                    //附带数据
                      where: {
                         name: $('#search_productName').val()
                     }
@@ -125,6 +125,7 @@
             }
         };
 
+        //绑定搜索按钮
         $('#selectBtn').on('click', function () {
             // type=reload
             let type = $(this).data('type');
@@ -177,6 +178,7 @@
                 // ...
 
                 layer.open({
+
                     type:1,
                     title:'修改商品',
                     area:['50%','35em'],
@@ -189,16 +191,20 @@
                             url: 'updServlet',
                             type: 'get',
                             data:{
-                                'name':currentRow.username,
-                                'password':currentRow.userpassword,
-                                'mail':currentRow.usermail,
+                                'name':$("#update-userName").val(),
+                                'password':$("#update-userPassword").val(),
+                                'mail':$("#update-userMail").val(),
                             },
                             success: function (res) {
                                 if (res.code == 200) {
                                     // 重新加载表格数据
                                     table.reload('tableReload');
+                                    //清空表单内容
+                                    $('#updateForm')[0].reset();
+                                    //隐藏表单
+                                    $('#updateContainer').hide();
                                     // 通过index索引关闭确认框
-                                    layer.close(index) ;
+                                    layer.close(layer.index) ;
                                     // 提示
                                     layer.msg(res.msg) ;
                                     return;
@@ -206,16 +212,29 @@
                                 layer.msg(res.msg) ;
                             }
                         });
-                        layer.close(index) ;
+                        //清空表单内容
+                        $('#updateForm')[0].reset();
+                        //隐藏表单
+                        $('#updateContainer').hide();
+                        layer.close(layer.index) ;
                     },
                     // 取消按钮
                     btn2:function (){
-                       /* layer.close(index);*/
+                        //清空表单内容
+                        $('#updateForm')[0].reset();
+                        //隐藏表单
+                        $('#updateContainer').hide();
+                        //关闭弹窗
+                           layer.close(layer.index);
                     },
                     // 右上角关闭按钮
-                    cancel:function (index) {
-                        // ...
-                        layer.close(index);
+                    cancel:function () {
+                        //清空表单内容
+                        $('#updateForm')[0].reset();
+                        //隐藏表单
+                        $('#updateContainer').hide();
+                        //关闭弹窗
+                        layer.close(layer.index);
                     }
                 }) ;
             }
