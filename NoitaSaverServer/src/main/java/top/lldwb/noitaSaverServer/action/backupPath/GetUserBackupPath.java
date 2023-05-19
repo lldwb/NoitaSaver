@@ -21,7 +21,8 @@ public class GetUserBackupPath extends BaseController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            new UserBackupPathService().getUserBackupPath();
+           Folder folder = new UserBackupPathService().getUserBackupPath();
+           response.getWriter().print(folder);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

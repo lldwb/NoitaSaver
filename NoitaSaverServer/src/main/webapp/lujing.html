@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- vue -->
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <!-- jquery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- element-ui -->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="js/element-ui@2.15.13.js"></script>
+</head>
+<body>
+<div id="qrc">
+<el-button type="warning" :disabled="buttonBoolean.defaultPath"
+           @click="buttonBoolean.defaultPath=true">设置
+</el-button>
+        <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%"
+        :before-close="handleClose">
+            <el-button @click="openPath">获取数据</el-button>
+        <div class="demo-input-suffix">
+        需要存档的目标路径
+        <el-input v-model="copy.targetPath" placeholder="目标路径"></el-input>
+        </div>
+        <div class="demo-input-suffix">
+        存档保存路径
+        <el-input v-model="copy.saverPath" placeholder="存档保存路径"></el-input>
+        </div>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="buttonBoolean.defaultPath = false">取 消</el-button>
+        <el-button type="primary" @click="defaultPath">确 定</el-button>
+        </span>
+        </el-dialog>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    new Vue({
+        el:'#qrc',
+        data:{
+            copy: {
+                // 需要存档的目标路径
+                targetPath: "",
+                // 存档保存路径
+                saverPath: ""
+            },
+
+            // 按钮权限
+            buttonBoolean: {
+                // 设置
+                defaultPath: false,
+            }
+        },
+        methods:{
+            // 设置
+            defaultPath() {
+                $.ajax({
+                    url: "setDefaultPath",
+                    data: {
+                        readPath: this.copy.targetPath,
+                        writePath: this.copy.saverPath
+                    },
+                    success() {
+                        vue.buttonBoolean.defaultPath = false;
+                        vue.$message({
+                            message: '设置成功',
+                            type: 'success'
+                        });
+                    }
+                })
+            },
+            //获取路径
+            openPath(){
+                let that=this;
+                $.ajax({
+                    url: "GetUserBackupPath",
+                    success(e) {
+                        if (e!=null)
+                        {that.copy.targetPath=e;}
+                        $.ajax({
+                            url: "SetUserBackupPath",
+                            success(e) {
+                                that.copy.saverPath = e;
+                            },
+                            error() {
+                                console.log("set获取失败")
+                            },
+                        })
+                    },
+                    error(){
+                        console.log("get获取失败")
+                    }
+                })
+            }
+        }
+
+    })
+
+</script>
