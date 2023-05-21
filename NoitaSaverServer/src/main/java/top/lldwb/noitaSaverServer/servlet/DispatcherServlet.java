@@ -74,9 +74,6 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // 设置请求和响应为utf-8编码
-        req.setCharacterEncoding("utf-8");
-        resp.setCharacterEncoding("utf-8");
         /**
          * 返回此请求的URL中从协议名称到第一行HTTP请求中的查询字符串的部分。Web容器不会对此字符串进行解码。例如：
          * HTTP请求的第一行
@@ -99,6 +96,9 @@ public class DispatcherServlet extends HttpServlet {
         Class<? extends Controller> controllerClass = map.get(requestURI);
         if (controllerClass != null) {
             try {
+                // 设置请求和响应为utf-8编码
+                req.setCharacterEncoding("utf-8");
+                resp.setCharacterEncoding("utf-8");
                 Controller controller = controllerClass.newInstance();
                 controller.execute(req, resp);
             } catch (Exception e) {
