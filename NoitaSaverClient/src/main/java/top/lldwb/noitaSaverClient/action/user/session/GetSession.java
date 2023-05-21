@@ -19,7 +19,12 @@ public class GetSession extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
+        Object object = req.getSession().getAttribute(req.getParameter("key"));
 
-        resp.getWriter().println(req.getSession().getAttribute(req.getParameter("key")));
+        if (object == null) {
+            // 请求的资源不存在时，返回404状态码
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+        resp.getWriter().println();
     }
 }
