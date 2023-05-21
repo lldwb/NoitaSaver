@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverClient.action.emailVerificationCode;
+package top.lldwb.noitaSaverClient.action.user.emailVerificationCode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.entity.MailVerificationCode;

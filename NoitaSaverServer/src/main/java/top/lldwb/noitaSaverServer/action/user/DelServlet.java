@@ -16,8 +16,8 @@ import java.sql.SQLException;
 @WebController("/delServlet")
 public class DelServlet extends BaseController {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String str_userId = request.getParameter("userId");
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String str_userId = req.getParameter("userId");
         int userId = Integer.parseInt(str_userId);
 
         UserDao userDao = new UserDao();
@@ -25,10 +25,10 @@ public class DelServlet extends BaseController {
             int row = userDao.deleteUserId(userId);
             // 打印响应的数据
             if (row == 1) {
-                print(response, successJson(200, "删除成功", ""));
+                print(resp, successJson(200, "删除成功", ""));
                 return;
             }
-            print(response, errorJson(500, "删除失败", ""));
+            print(resp, errorJson(500, "删除失败", ""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

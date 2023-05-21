@@ -1,5 +1,6 @@
 package top.lldwb.noitaSaverServer.action.backupPath;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaver.fileUtil.entity.Folder;
 import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.service.UserBackupPathService;
@@ -19,7 +20,13 @@ import java.io.IOException;
 @WebController("/SetUserBackupPath")
 public class SetUserBackupPath extends BaseController {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        new UserBackupPathService().setUserBackupPath(new Folder(request.getParameter("path") + "\\"));
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        new UserBackupPathService().setUserBackupPath(new Folder(req.getParameter("path") + "\\"));
+
+        try {
+            resp.getWriter().print(new ObjectMapper().writeValueAsString(new UserBackupPathService().getUserBackupPath()));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

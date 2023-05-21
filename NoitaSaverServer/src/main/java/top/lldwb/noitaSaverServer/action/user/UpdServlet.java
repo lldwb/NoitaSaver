@@ -12,20 +12,20 @@ import java.sql.SQLException;
 @WebController("/updServlet")
 public class UpdServlet extends BaseController {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
-        String mail = request.getParameter("mail");
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String password = req.getParameter("password");
+        String mail = req.getParameter("mail");
 
         UserDao userDao = new UserDao();
         try {
             int row = userDao.updateUserByName(name,password,mail);
             // 打印响应的数据
             if (row == 1) {
-                print(response, successJson(200, "修改成功", ""));
+                print(resp, successJson(200, "修改成功", ""));
                 return;
             }
-            print(response, errorJson(500, "修改失败", ""));
+            print(resp, errorJson(500, "修改失败", ""));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

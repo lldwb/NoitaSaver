@@ -17,8 +17,8 @@ import java.io.IOException;
 @WebController("/openServer")
 public class LoginAdministrator extends BaseController {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServerSocketUtil.getServerSocketUtils();
-        response.getWriter().print("启动服务器成功");
+        resp.getWriter().print("启动服务器成功");
     }
 }

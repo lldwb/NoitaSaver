@@ -1,4 +1,4 @@
-package top.lldwb.noitaSaverClient.action.session;
+package top.lldwb.noitaSaverClient.action.user.session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 返回Session信息
+ *
  * @author 安然的尾巴
  * @version 1.0
  */

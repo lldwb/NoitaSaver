@@ -12,10 +12,10 @@ public interface Controller {
     /**
      * 核心请求处理方法
      *
-     * @param request
-     * @param response
+     * @param req
+     * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
 }
