@@ -119,10 +119,13 @@
 							mail: this.ruleForm.mail
 						},
 						success() {
-							callback(new Error('已发送验证码'));
+							vue.$message({
+								message: '发送成功',
+								type: 'success'
+							});
 						},
 						error() {
-							callback(new Error('发送失败'))
+							vue.$message.error("发送失败,可能是邮箱未注册请先注册");
 						}
 					});
 				},

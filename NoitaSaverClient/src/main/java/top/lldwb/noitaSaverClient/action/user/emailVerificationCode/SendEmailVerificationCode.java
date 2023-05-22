@@ -14,7 +14,6 @@ import java.io.IOException;
 
 /**
  * 发送邮箱验证码接口
- * 返回1(成功)或者0(失败)
  *
  * @author 安然的尾巴
  * @version 1.0

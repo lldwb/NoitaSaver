@@ -81,8 +81,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
 
         System.out.println(user);
 
-        // 判断是否有用户，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!user.getUserName().equals(UserDao.getUserByName(user.getUserName()).getUserName())) {
+        // 判断是否有用户或者邮箱，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
+        if (!(user.getUserName().equals(UserDao.getUserByName(user.getUserName()).getUserName()) || user.getUserMail().equals(UserDao.getUserByMail(user.getUserMail()).getUserMail()))) {
             // 创建远程秘钥
             user.setUserKey(EncryptUtil.encrypt(user.getUserName() + user.getUserMail(), EncryptTypes.MD5) + EncryptUtil.encrypt(System.currentTimeMillis() + user.getUserPassword(), EncryptTypes.MD5));
 
