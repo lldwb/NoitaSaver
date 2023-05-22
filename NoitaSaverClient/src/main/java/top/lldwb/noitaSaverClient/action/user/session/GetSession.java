@@ -1,5 +1,7 @@
 package top.lldwb.noitaSaverClient.action.user.session;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +23,10 @@ public class GetSession extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
         Object object = req.getSession().getAttribute(req.getParameter("key"));
 
-        if (object == null) {
-            // 请求的资源不存在时，返回404状态码
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
-        resp.getWriter().println();
+//        if (object == null) {
+//            // 请求的资源不存在时，返回404状态码
+//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//        }
+        resp.getWriter().println(new ObjectMapper().writeValueAsString(object));
     }
 }
