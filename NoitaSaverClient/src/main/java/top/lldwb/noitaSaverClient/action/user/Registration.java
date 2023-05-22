@@ -32,14 +32,14 @@ public class Registration extends HttpServlet {
 
         System.out.println(user);
 
-//        resp.getWriter().print(user);
-        user = new UserService().registration(user);
-        // 获取并存放用户登录状态到 Session
-         HttpSession session = req.getSession();
-        session.setAttribute("user", new ObjectMapper().writeValueAsString(user));
-
-//        resp.getWriter().print(user);
-//        resp.getWriter().print(new ObjectMapper().writeValueAsString(user));
+        User user1 = new UserService().registration(user);
+        if (user.getUserName().equals(user1.getUserName()) && user.getUserPassword().equals(user1.getUserPassword()) && user.getUserMail().equals(user1.getUserMail())) {
+            resp.getWriter().println(new ObjectMapper().writeValueAsString(user1));
+        } else {
+            // 登录失败时，返回500状态码
+            resp.setStatus(500);
+            resp.getWriter().print("注册失败,可能是用户名或者邮箱被占用");
+        }
 
 
     }

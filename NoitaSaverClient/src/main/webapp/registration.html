@@ -44,13 +44,14 @@
 							<el-input v-model="ruleForm.mail" maxlength="255"></el-input>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">注册</el-button>
+							<el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">注册
+							</el-button>
 						</el-form-item>
 					</el-form>
 				</el-col>
 			</el-row>
 			<el-row type="flex" class="row-bg">
-				<el-col :span="3":offset="10">
+				<el-col :span="3" :offset="10">
 					<el-link :underline="false" href="loginMail.html" type="primary">邮箱登录</el-link>
 				</el-col>
 				<el-col :span="6">
@@ -123,27 +124,17 @@
 							// 去后端发起注册请求
 							$.ajax({
 								url: "registration",
+								dataType:"JSON",
 								data: {
 									name: this.ruleForm.name,
 									password: this.ruleForm.pass,
 									mail: this.ruleForm.mail
 								},
-								success() {
-									// 去后端发起判断是否注册成功
-									$.ajax({
-										url: "getSession",
-										dataType: "JSON",
-										data: {
-											key: "user"
-										},
-										success(result) {
-											if (result.userName == vue.ruleForm.name &&
-												result.userMail == vue
-												.ruleForm.mail) {
-												location.href = 'index.html';
-											}
-										}
-									});
+								success(result) {
+									sessionStorage.setItem('user',result);
+								},
+								error() {
+									vue.$message.error("注册失败,可能是用户名或者邮箱被占用");
 								}
 							});
 
