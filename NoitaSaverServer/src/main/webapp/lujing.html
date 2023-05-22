@@ -13,22 +13,18 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="js/element-ui@2.15.13.js"></script>
+    <meta http-equiv="content-type" content="txt/html charset=utf-8" />
 </head>
 <body>
 <div id="qrc">
 <el-button type="warning" :disabled="buttonBoolean.defaultPath"
            @click="buttonBoolean.defaultPath=true">设置
 </el-button>
-        <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%"
-        :before-close="handleClose">
+        <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%">
             <el-button @click="openPath">获取数据</el-button>
         <div class="demo-input-suffix">
         需要存档的目标路径
         <el-input v-model="copy.targetPath" placeholder="目标路径"></el-input>
-        </div>
-        <div class="demo-input-suffix">
-        存档保存路径
-        <el-input v-model="copy.saverPath" placeholder="存档保存路径"></el-input>
         </div>
         <span slot="footer" class="dialog-footer">
         <el-button @click="buttonBoolean.defaultPath = false">取 消</el-button>
@@ -45,8 +41,6 @@
             copy: {
                 // 需要存档的目标路径
                 targetPath: "",
-                // 存档保存路径
-                saverPath: ""
             },
 
             // 按钮权限
@@ -55,7 +49,7 @@
                 defaultPath: false,
             }
         },
-        methods:{
+        methods: {
             // 设置
             defaultPath() {
                 $.ajax({
@@ -74,30 +68,37 @@
                 })
             },
             //获取路径
-            openPath(){
-                let that=this;
+            openPath() {
+                let that = this;
                 $.ajax({
                     url: "GetUserBackupPath",
                     success(e) {
-                        if (e!=null)
-                        {that.copy.targetPath=e;}
-                        $.ajax({
-                            url: "SetUserBackupPath",
-                            success(e) {
-                                that.copy.saverPath = e;
-                            },
-                            error() {
-                                console.log("set获取失败")
-                            },
-                        })
+                        if (e != null) {
+                            that.copy.targetPath = e.msg;
+                        }
                     },
-                    error(){
+                    error() {
                         console.log("get获取失败")
                     }
                 })
+            },
+            defaultPath() {
+                let that = this;
+                $.ajax({
+                    url: "SetUserBackupPath",
+                    data: {
+                        path: that.copy.targetPath
+                    },
+                    success(e) {
+                        console.log("set获取成功");
+                        that.buttonBoolean.defaultPath = false;
+                    },
+                    error() {
+                        console.log("set获取失败")
+                    },
+                })
             }
         }
-
     })
 
 </script>
