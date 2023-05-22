@@ -21,10 +21,9 @@
            @click="buttonBoolean.defaultPath=true">设置
 </el-button>
         <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%">
-<!--            <el-button @click="openPath">获取数据</el-button>-->
         <div class="demo-input-suffix">
         需要存档的目标路径
-        <el-input v-model="copy.targetPath" placeholder="目标路径"></el-input>
+        <el-input v-model="copy.targetPath.name" placeholder="目标路径"></el-input>
         </div>
         <span slot="footer" class="dialog-footer">
         <el-button @click="buttonBoolean.defaultPath = false">取 消</el-button>
@@ -49,38 +48,39 @@
                 defaultPath: false,
             }
         },
+        mounted(){
+            //获取路径
+                let that = this;
+                $.ajax({
+                    url: "GetUserBackupPath",
+                    dataType:"JSON",
+                    success(e) {
+                        if (e != null) {
+                            that.copy.targetPath = e;
+                            console.log("获取成功")
+                        }
+
+                    },
+                    error() {
+                        console.log("获取失败")
+                    }
+                })
+            },
         methods: {
-            // //获取路径
-            // openPath() {
-            //     let that = this;
-            //     $.ajax({
-            //         url: "GetUserBackupPath",
-            //         success(e) {
-            //             if (e != null) {
-            //                 that.copy.targetPath = e.name;
-            //                 console.log(e)
-            //                 console.log("get获取成功")
-            //             }
-            //
-            //         },
-            //         error() {
-            //             console.log("get获取失败")
-            //         }
-            //     })
-            // },
+            //更改路径
             defaultPaths() {
                 let that = this;
                 $.ajax({
                     url: "SetUserBackupPath",
                     data: {
-                        path: that.copy.targetPath
+                        path: that.copy.targetPath.name
                     },
                     success(e) {
-                        console.log("set获取成功");
+                        console.log("修改成功");
                         that.buttonBoolean.defaultPath = false;
                     },
                     error() {
-                        console.log("set获取失败")
+                        console.log("修改失败")
                     },
                 })
             }
