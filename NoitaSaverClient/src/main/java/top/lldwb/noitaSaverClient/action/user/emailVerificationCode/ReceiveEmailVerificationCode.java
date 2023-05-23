@@ -2,6 +2,7 @@ package top.lldwb.noitaSaverClient.action.user.emailVerificationCode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
+import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverClient.service.EmailVerificationCodeService;
 import top.lldwb.noitaSaverClient.service.UserService;
 
@@ -26,7 +27,13 @@ public class ReceiveEmailVerificationCode extends HttpServlet {
         mailVerificationCode.setMailVerificationCodeEmail(req.getParameter("mail"));
         mailVerificationCode.setMailVerificationCodeCode(req.getParameter("code"));
 
-        // 获取并存放用户登录状态到 Session
-        req.getSession().setAttribute("user", new ObjectMapper().writeValueAsString(new EmailVerificationCodeService().receiveEmailVerificationCode(mailVerificationCode)));
+        User user = new EmailVerificationCodeService().receiveEmailVerificationCode(mailVerificationCode);
+        if (mailVerificationCode.getMailVerificationCodeEmail().equals(user.getUserMail())) {
+            resp.getWriter().println(new ObjectMapper().writeValueAsString(user));
+        } else {
+            // 登录失败时，返回500状态码
+            resp.setStatus(500);
+            resp.getWriter().print("邮箱或者验证码有误");
+        }
     }
 }

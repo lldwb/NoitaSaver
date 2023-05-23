@@ -28,9 +28,13 @@ public class Login extends HttpServlet {
         user.setUserName(req.getParameter("name"));
         user.setUserPassword(req.getParameter("password"));
 
-        // 获取并存放用户登录状态到 Session
-        req.getSession().setAttribute("user", new ObjectMapper().writeValueAsString(new UserService().login(user)));
-
-
+        User user1 = new UserService().login(user);
+        if (user.getUserName().equals(user1.getUserName()) && user.getUserPassword().equals(user1.getUserPassword())) {
+            resp.getWriter().println(new ObjectMapper().writeValueAsString(user1));
+        } else {
+            // 登录失败时，返回500状态码
+            resp.setStatus(500);
+            resp.getWriter().print("账号或者密码有误");
+        }
     }
 }

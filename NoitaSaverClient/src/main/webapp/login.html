@@ -51,7 +51,7 @@
 				</el-col>
 			</el-row>
 			<el-row type="flex" class="row-bg">
-				<el-col :span="3":offset="10">
+				<el-col :span="3" :offset="10">
 					<el-link :underline="false" href="loginMail.html" type="primary">邮箱登录</el-link>
 				</el-col>
 				<el-col :span="6">
@@ -129,24 +129,16 @@
 							// 去后端发起登录请求
 							$.ajax({
 								url: "login",
+								dataType:"JSON",
 								data: {
 									name: this.ruleForm.name,
 									password: this.ruleForm.pass
 								},
-								success() {
-									// 去后端发起判断是否登录成功
-									$.ajax({
-										url: "getSession",
-										dataType: "JSON",
-										data: {
-											key: "user"
-										},
-										success(result) {
-											if (result.userName == vue.ruleForm.name) {
-												location.href = 'index.html';
-											}
-										}
-									});
+								success(result) {
+									sessionStorage.setItem('user',result);
+								},
+								error() {
+									vue.$message.error("账号或者密码有误");
 								}
 							});
 						} else {
