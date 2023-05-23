@@ -79,7 +79,7 @@
 
       <div class="layui-body layui-tab-content site-demo site-demo-body" style="overflow: hidden;">
         <div class="layui-tab-item layui-show" style="overflow-y:auto;">
-          <iframe src="admin/main.html" class="layadmin-iframe" frameborder="no" border="0" allowtransparency="yes"></iframe>
+          <iframe src="sao.html" class="layadmin-iframe" frameborder="no" border="0" allowtransparency="yes"></iframe>
         </div>
       </div>
     </div>

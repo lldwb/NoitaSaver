@@ -10,6 +10,11 @@
     <script src="js/admin.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/jquery.min.js"></script>
+    <!-- element-ui -->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="js/element-ui@2.15.13.js"></script>
 </head>
 <body style="padding-bottom: 55px">
 <!--搜索表单-->
@@ -18,9 +23,23 @@
         <input type="text" name="productName" id="search_productName" style="width: 200px;"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
     </div>
 
-    <div class="layui-inline">
-        <input type="button" id="selectBtn" class="layui-btn" data-type="reload" value="查询">
+    <div id="qrc" class="layui-inline">
+        <input style="margin: 10px" type="button" id="selectBtn" class="layui-btn" data-type="reload" value="查询">
+        <el-button type="warning" :disabled="buttonBoolean.defaultPath"
+                   @click="buttonBoolean.defaultPath=true">设置
+        </el-button>
+        <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%">
+            <div class="demo-input-suffix">
+                需要存档的目标路径
+                <el-input v-model="copy.targetPath.name" placeholder="目标路径"></el-input>
+            </div>
+            <span slot="footer" class="dialog-footer">
+        <el-button @click="buttonBoolean.defaultPath = false">取 消</el-button>
+        <el-button type="primary" @click="defaultPaths">确 定</el-button>
+        </span>
+        </el-dialog>
     </div>
+
 </form>
 
 <!--动态表格-->
@@ -239,5 +258,57 @@
                 }) ;
             }
         });
+    })
+
+    new Vue({
+        el:'#qrc',
+        data:{
+            copy: {
+                // 需要存档的目标路径
+                targetPath: "",
+            },
+
+            // 按钮权限
+            buttonBoolean: {
+                // 设置
+                defaultPath: false,
+            }
+        },
+        mounted(){
+            //获取路径
+            let that = this;
+            $.ajax({
+                url: "GetUserBackupPath",
+                dataType:"JSON",
+                success(e) {
+                    if (e != null) {
+                        that.copy.targetPath = e;
+                        console.log("获取成功")
+                    }
+                },
+                error() {
+                    console.log("获取失败")
+                }
+            })
+        },
+        methods: {
+            //更改路径
+            defaultPaths() {
+                let that = this;
+                $.ajax({
+                    url: "SetUserBackupPath",
+                    data: {
+                        path: that.copy.targetPath.name
+                    },
+                    success(e) {
+                        console.log("修改成功");
+                        that.buttonBoolean.defaultPath = false;
+                    },
+                    error() {
+                        console.log("修改失败")
+                    },
+                })
+            }
+        }
     })
 </script>
