@@ -64,12 +64,17 @@ https://github.com/lldwb/NoitaSaver.git
 使用MVC设计模式，前端和后端分离，Servlet 进行通信。
 
 ### 具体的模块划分如下：
+#### 核心模块
+NoitaSaverClient：客户端
+NoitaSaverServer：服务端
 
-Controller：负责处理请求，控制整个流程的控制器层。
-Service：负责具体业务逻辑的处理，实现存档、读档、删除、备份等操作的服务层。
-Dao：负责与数据库进行交互的数据访问层。
-Entity：实体类，存放与业务相关的数据。
-Utils：一些工具类，如文件操作工具类、时间工具类等。
+#### 工具模块
+DbUtil：根据DbUtil的源码进行的简单模仿
+EncryptionUtil：进行不可逆的加密
+FileUtil：对文件进行操作
+JjwtUtil：jjwt的简单封装
+MailUtil：负责邮箱的发送
+SocketUtil：Socket通讯的工具
 
 ## 项目成果
 
