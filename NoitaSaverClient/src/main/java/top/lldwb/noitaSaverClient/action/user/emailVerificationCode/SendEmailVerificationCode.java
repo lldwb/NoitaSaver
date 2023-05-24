@@ -26,7 +26,7 @@ public class SendEmailVerificationCode extends HttpServlet {
         user.setUserMail(req.getParameter("mail"));
         if (!new EmailVerificationCodeService().sendEmailVerificationCode(user)) {
             // 登录失败时，返回500状态码
-            resp.setStatus(500);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().print("发送失败");
         }
     }
