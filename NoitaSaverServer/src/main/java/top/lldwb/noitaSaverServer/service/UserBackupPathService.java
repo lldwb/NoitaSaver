@@ -11,17 +11,19 @@ import java.io.IOException;
  * @version 1.0
  */
 public class UserBackupPathService {
+    private final String PATH = "C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb";
+
     /**
      * 修改用户备份路径
      */
     public void setUserBackupPath(Folder folder) throws IOException {
-        FileUtil.serialization(folder,"C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb");
+        FileUtil.serialization(folder,PATH);
     }
 
     /**
      * 读取用户备份路径
      */
     public Folder getUserBackupPath() throws IOException, ClassNotFoundException {
-        return FileUtil.deSerialization("C:\\Users\\Public\\Documents\\NoitaSaver\\Server\\UserBackupPath.lldwb");
+        return FileUtil.deSerialization(PATH);
     }
 }
