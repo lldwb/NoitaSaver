@@ -28,7 +28,7 @@
 
 ## 技术栈
 
-1. 后端技术栈：io(字符、字节、序列化、转换、压缩)、设计模式(简单工厂、MVC、单例)、Java8新特性(DateTime、Lambda表达式等)、第三方库(jackson、Lombox、jjwt)、多线程、注解、集合、递归、Socket通讯、反射。
+1. 后端技术栈：io(字符、字节、序列化、转换、压缩)、设计模式(简单工厂、MVC、单例)、Java8新特性(DateTime、Lambda表达式等)、第三方库(jackson、Lombox、jjwt)、Java基础(多线程、注解、集合、递归、Socket通讯、反射)。
 2. 前端技术栈：es6、jquery、element-ui等。
 3. 开发工具：Maven、Idea、Git。
 
