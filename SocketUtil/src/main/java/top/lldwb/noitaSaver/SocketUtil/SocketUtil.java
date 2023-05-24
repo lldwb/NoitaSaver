@@ -136,7 +136,7 @@ public abstract class SocketUtil {
      */
     protected void sendString(String judgment) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
-        writer.write(Jjwt.encryptionString(judgment) + "\n");
+        writer.write(judgment + "\n");
         writer.flush();
     }
 
@@ -148,6 +148,6 @@ public abstract class SocketUtil {
      */
     protected String receiveString() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
-        return Jjwt.decryptionString(reader.readLine());
+        return reader.readLine();
     }
 }

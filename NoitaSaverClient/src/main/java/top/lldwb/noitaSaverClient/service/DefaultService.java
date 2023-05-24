@@ -12,17 +12,19 @@ import java.io.IOException;
  * @version 1.0
  */
 public class DefaultService {
+    private final String PATH = "C:\\Users\\Public\\Documents\\NoitaSave\\Client\\DefaultPath.lldwb";
+
     /**
      * 修改默认地址
      */
     public void setDefaultPath(DefaultPath defaultPath) throws IOException {
-        FileUtil.serialization(defaultPath,"C:\\Users\\Public\\Documents\\NoitaSave\\rClient\\DefaultPath.lldwb");
+        FileUtil.serialization(defaultPath,PATH);
     }
 
     /**
      * 读取默认地址
      */
     public DefaultPath getDefaultPath() throws IOException, ClassNotFoundException {
-        return FileUtil.deSerialization("C:\\Users\\Public\\Documents\\NoitaSaver\\Client\\DefaultPath.lldwb");
+        return FileUtil.deSerialization(PATH);
     }
 }

@@ -145,7 +145,13 @@
 									code: this.ruleForm.code
 								},
 								success(result) {
-									sessionStorage.setItem('user', result);
+									sessionStorage.setItem('user',result);
+									sessionStorage.setItem('id',result.userId);
+									sessionStorage.setItem('name',result.userName);
+									sessionStorage.setItem('mail',result.userMail);
+									sessionStorage.setItem('state',result.userState);
+									sessionStorage.setItem('key',result.userKey);
+									location.href = 'index.html';
 								},
 								error() {
 									vue.$message.error("邮箱或者验证码有误");

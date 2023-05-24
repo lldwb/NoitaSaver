@@ -104,6 +104,8 @@ public class FileUtil {
         if (!file.isDirectory()) {
             // 创建一个新目录，包括必要的父目录
             file.mkdirs();
+        }else{
+            new File(path).delete();
         }
 
         OutputStream objectOutput = new BufferedOutputStream(new FileOutputStream(path));

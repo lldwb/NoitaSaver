@@ -132,6 +132,12 @@
 								},
 								success(result) {
 									sessionStorage.setItem('user',result);
+									sessionStorage.setItem('id',result.userId);
+									sessionStorage.setItem('name',result.userName);
+									sessionStorage.setItem('mail',result.userMail);
+									sessionStorage.setItem('state',result.userState);
+									sessionStorage.setItem('key',result.userKey);
+									location.href = 'index.html';
 								},
 								error() {
 									vue.$message.error("注册失败,可能是用户名或者邮箱被占用");

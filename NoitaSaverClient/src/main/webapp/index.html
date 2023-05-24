@@ -165,9 +165,15 @@
 				},
 			},
 			methods: {
-				login(){location.href = 'login.html'},
-				loginMail(){location.href = 'loginMail.html'},
-				registration(){location.href = 'registration.html'},
+				login() {
+					location.href = 'login.html'
+				},
+				loginMail() {
+					location.href = 'loginMail.html'
+				},
+				registration() {
+					location.href = 'registration.html'
+				},
 				// 获取存档列表
 				getFolderName() {
 					getListVue();
@@ -330,43 +336,33 @@
 			},
 			mounted() {
 				$.ajax({
-						url: "getDefaultPath",
-						dataType: "JSON",
-						success(result) {
-							// 源地址
-							vue.copy.targetPath = result.readPath;
-							// 存档路径
-							vue.copy.saverPath = result.writePath;
+					url: "getDefaultPath",
+					dataType: "JSON",
+					success(result) {
+						// 源地址
+						vue.copy.targetPath = result.readPath;
+						// 存档路径
+						vue.copy.saverPath = result.writePath;
 
-							getList(vue);
-						}
-					}),
+						getList(vue);
+					}
+				});
 
-					// 去后端发起判断是否注册成功
-					$.ajax({
-						url: "getSession",
-						dataType: "JSON",
-						data: {
-							key: "user"
-						},
-						success(result) {
-							if (result != null) {
-								// id
-								vue.user.id = result.userId;
-								// 用户名
-								vue.user.name = result.userName;
-								// 邮箱
-								vue.user.mail = result.userMail;
-								// 用户状态(0未邮箱认证,1通过认证,2注销)
-								vue.user.state = result.userState;
-								// 远程访问秘钥
-								vue.user.key = result.userKey;
-								// 有用户数据
-								vue.user.verification = true;
-							}
-							console.log(result)
-						}
-					});
+				if (sessionStorage.getItem('id') != null) {
+					// id
+					this.user.id = sessionStorage.getItem('id');
+					// 用户名
+					this.user.name = sessionStorage.getItem('name');
+					// 邮箱
+					this.user.mail = sessionStorage.getItem('mail');
+					// 用户状态(0未邮箱认证,1通过认证,2注销)
+					this.user.state = sessionStorage.getItem('state');
+					// 远程访问秘钥
+					this.user.key = sessionStorage.getItem('key');
+					// 有用户数据
+					this.user.verification = true;
+					console.log(user)
+				}
 			}
 		});
 		const getListVue = () => {
