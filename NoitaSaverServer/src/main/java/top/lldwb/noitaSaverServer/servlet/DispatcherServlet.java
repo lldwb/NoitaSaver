@@ -96,10 +96,10 @@ public class DispatcherServlet extends HttpServlet {
         Class<? extends Controller> controllerClass = map.get(requestURI);
         if (controllerClass != null) {
             try {
+                Controller controller = controllerClass.newInstance();
                 // 设置请求和响应为utf-8编码
                 req.setCharacterEncoding("utf-8");
                 resp.setCharacterEncoding("utf-8");
-                Controller controller = controllerClass.newInstance();
                 controller.execute(req, resp);
             } catch (Exception e) {
                 // 全局异常处理

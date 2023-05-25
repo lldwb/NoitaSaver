@@ -135,7 +135,6 @@
 									password: this.ruleForm.pass
 								},
 								success(result) {
-									sessionStorage.setItem('user',result);
 									sessionStorage.setItem('id',result.userId);
 									sessionStorage.setItem('name',result.userName);
 									sessionStorage.setItem('mail',result.userMail);
