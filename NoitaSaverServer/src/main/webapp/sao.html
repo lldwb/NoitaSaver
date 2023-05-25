@@ -28,6 +28,7 @@
         <el-button type="warning" :disabled="buttonBoolean.defaultPath"
                    @click="buttonBoolean.defaultPath=true">设置
         </el-button>
+        <el-button @click="openServer">开启服务器</el-button>
         <el-dialog title="请选择你的目标路径和保存路径" :visible.sync="buttonBoolean.defaultPath" width="30%">
             <div class="demo-input-suffix">
                 需要存档的目标路径
@@ -307,6 +308,22 @@
                     error() {
                         console.log("修改失败")
                     },
+                })
+            },
+            // 开启服务器
+            openServer() {
+                $.ajax({
+                    url: "openServer",
+                    data: {
+                        writePath: this.saverPath + '\\' + this.value,
+                        readPath: this.path
+                    },
+                    success() {
+                        vue.$message({
+                            message: '开启成功',
+                            type: 'success'
+                        });
+                    }
                 })
             }
         }
