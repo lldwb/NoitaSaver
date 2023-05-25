@@ -27,8 +27,8 @@ public class ClientSocketUtil extends SocketUtil {
     public ClientSocketUtil() throws IOException {
         // 创建一个流套接字并将其连接到指定主机上的指定端口号。
         // host:服务器地址 port:服务器端口
-        super(new Socket("127.0.0.1", 8888));
-//        super(new Socket("noitasaver.lldwb.top", 8888));
+//        super(new Socket("127.0.0.1", 8888));
+        super(new Socket("noitasaver.lldwb.top", 888866));
     }
 
     /**
