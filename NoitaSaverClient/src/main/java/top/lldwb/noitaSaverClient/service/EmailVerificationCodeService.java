@@ -1,7 +1,7 @@
 package top.lldwb.noitaSaverClient.service;
 
-import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
-import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaver.Entity.MailVerificationCode;
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
 
 import java.io.IOException;

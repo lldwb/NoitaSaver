@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="88bddb2c-ba14-4206-9066-8e4176ab6696" name="noitasaver_lldwb_top" url="http://lin.lldwb.top">
+        <fileTransfer host="lin.lldwb.top" port="666">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

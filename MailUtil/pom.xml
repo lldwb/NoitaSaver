@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>top.lldwb.noitaSaver.MailUtil</groupId>
     <artifactId>MailUtil</artifactId>
     <packaging>jar</packaging>
 

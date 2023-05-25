@@ -1,10 +1,9 @@
 package top.lldwb.noitaSaverClient.action.user.emailVerificationCode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
-import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaver.Entity.MailVerificationCode;
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaverClient.service.EmailVerificationCodeService;
-import top.lldwb.noitaSaverClient.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

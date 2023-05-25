@@ -1,6 +1,6 @@
 package top.lldwb.noitaSaverServer.dao;
 
-import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
+import top.lldwb.noitaSaver.Entity.MailVerificationCode;
 import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 
 import java.sql.SQLException;

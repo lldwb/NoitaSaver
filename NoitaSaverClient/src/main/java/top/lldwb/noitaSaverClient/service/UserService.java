@@ -1,8 +1,8 @@
 package top.lldwb.noitaSaverClient.service;
 
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
-import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverClient.utils.ClientSocketUtil;
 
 import java.io.IOException;

@@ -1,10 +1,9 @@
 package top.lldwb.noitaSaverClient.action.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaverClient.service.UserService;
-import top.lldwb.noitaSaverClient.entity.User;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

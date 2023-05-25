@@ -1,8 +1,7 @@
 package top.lldwb.noitaSaverServer.service;
 
-import top.lldwb.noitaSaverClient.entity.User;
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaverServer.dao.UserDao;
-import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 
 import java.sql.SQLException;
 import java.util.List;

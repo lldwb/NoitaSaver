@@ -1,10 +1,10 @@
 package top.lldwb.noitaSaverServer.service;
 
+import top.lldwb.noitaSaver.Entity.MailVerificationCode;
+import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
-import top.lldwb.noitaSaverClient.entity.MailVerificationCode;
-import top.lldwb.noitaSaverClient.entity.User;
 import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao;
 import top.lldwb.noitaSaverServer.dao.UserDao;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
