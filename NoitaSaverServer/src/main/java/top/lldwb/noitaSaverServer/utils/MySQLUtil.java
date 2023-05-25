@@ -23,8 +23,8 @@ public class MySQLUtil {
     }
 
 
-    private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/noitasaver?serverTimezone=Asia/Shanghai&useSSL=false";
-//    private static final String URL = "jdbc:mysql://127.0.0.1:3306/noitaSaver?serverTimezone=Asia/Shanghai";
+//    private static final String URL = "jdbc:mysql://mysql.lldwb.top:33366/noitasaver?serverTimezone=Asia/Shanghai&useSSL=false";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/noitaSaver?serverTimezone=Asia/Shanghai";
     //账号
     private static final String USER_NAME = "root";
     //密码

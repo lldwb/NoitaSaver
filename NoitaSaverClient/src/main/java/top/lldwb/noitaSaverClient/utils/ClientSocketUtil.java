@@ -28,7 +28,7 @@ public class ClientSocketUtil extends SocketUtil {
         // 创建一个流套接字并将其连接到指定主机上的指定端口号。
         // host:服务器地址 port:服务器端口
 //        super(new Socket("127.0.0.1", 8888));
-        super(new Socket("noitasaver.lldwb.top", 58866));
+        super(new Socket("free1.fujufrp.cf", 18656));
     }
 
     /**
