@@ -28,8 +28,8 @@ public class MySQLUtil {
     //账号
     private static final String USER_NAME = "root";
     //密码
-    private static final String PASSWORD = "@dwb123456";
-//    private static final String PASSWORD = "";
+//    private static final String PASSWORD = "@dwb123456";
+    private static final String PASSWORD = "";
 
     //QueryRunner对象
     QueryRunner queryRunner = new QueryRunner();

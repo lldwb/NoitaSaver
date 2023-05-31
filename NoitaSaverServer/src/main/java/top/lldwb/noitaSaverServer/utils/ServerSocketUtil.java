@@ -31,7 +31,7 @@ public class ServerSocketUtil {
      * @return Socket服务端工具类对象
      */
     public static ServerSocketUtil getServerSocketUtils() {
-        return getServerSocketUtils(58866);
+        return getServerSocketUtils(8888);
     }
 
     /**

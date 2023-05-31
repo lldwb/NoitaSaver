@@ -12,7 +12,7 @@ import java.io.IOException;
  * @version 1.0
  */
 public class DefaultService {
-    private final String PATH = "C:\\Users\\Public\\Documents\\NoitaSave\\Client\\DefaultPath.lldwb";
+    private final String PATH = "C:\\Users\\Public\\Documents\\NoitaSaver\\Client\\DefaultPath.lldwb";
 
     /**
      * 修改默认地址

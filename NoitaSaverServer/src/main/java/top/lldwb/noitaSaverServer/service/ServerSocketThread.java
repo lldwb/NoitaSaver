@@ -53,7 +53,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
                 default:
                     break;
             }
-            socket.close();
+//            socket.close();
 
         } catch (IOException | SQLException | NoSuchFieldException | InstantiationException | IllegalAccessException |
                  ClassNotFoundException e) {
