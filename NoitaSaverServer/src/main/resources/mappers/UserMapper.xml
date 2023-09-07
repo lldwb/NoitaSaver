@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指定接口的完整类名 -->
+<mapper namespace="top.lldwb.noitaSaverServer.dao.UserDao">
+
+    <!-- 给UserDao接口中的所有方法编写相应的SQL语句 -->
+    <!-- insert表示传入语句，对应的删除和修改是delete和update标签 -->
+    <!-- id对应接口的方法名，parameterType指定参数的类型，如果是实体可以引用mybatis.xml中定义的别名 -->
+    <!-- insert标签中只能写sql语句，注释也不能写 -->
+    <!-- SQL语句中的参数使用#{实体中的属性名}来获取实体对象中的属性的值 -->
+
+    <select id="getUserByName" resultType="user">
+        select *
+        from user
+        where user_name = #{name}
+    </select>
+    <select id="getUserByKey" resultType="user">
+        select *
+        from user
+        where user_key = #{key}
+    </select>
+    <select id="getUserByMail" resultType="user">
+        select *
+        from user
+        where user_mail = #{mail}
+    </select>
+    <select id="getUserList" resultType="user">
+        select * from user
+    </select>
+    <select id="getUserListLikeName" resultType="user">
+        select *
+        from user
+        where user_name like #{name}
+    </select>
+
+    <insert id="setUser">
+        insert into user(user_name, user_password, user_mail, user_key)
+        values (#{name}, #{password}, #{mail}, #{key})
+    </insert>
+
+    <update id="updateUserByName">
+        update user
+        set user_password=#{password},
+            user_mail=#{mail}
+        where user_name = #{name}
+    </update>
+    <update id="updateUserStatusById">
+        update user set user_state=#{state} where user_id=#{id}
+    </update>
+    <update id="updateUserStatusByMail">
+        update user
+        set user_state=#{state}
+        where user_mail = #{mail}
+    </update>
+
+    <delete id="deleteUserId" parameterType="int">
+        delete
+        from user
+        where user_id = #{id}
+    </delete>
+</mapper>

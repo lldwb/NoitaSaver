@@ -28,7 +28,8 @@
 
 ## 技术栈
 
-1. 后端技术栈：io(字符、字节、序列化、转换、压缩)、设计模式(简单工厂、MVC、单例)、Java8新特性(DateTime、Lambda表达式等)、第三方库(jackson、Lombox、jjwt)、Java基础(多线程、注解、集合、递归、Socket通讯、反射)。
+1. 后端技术栈：io(字符、字节、序列化、转换、压缩)、设计模式(简单工厂、MVC、单例)、Java8新特性(DateTime、Lambda表达式等)、第三方库(
+   jackson、Lombox、jjwt)、Java基础(多线程、注解、集合、递归、Socket通讯、反射)。
 2. 前端技术栈：es6、jquery、element-ui等。
 3. 开发工具：Maven、Idea、Git。
 
@@ -51,24 +52,27 @@ https://github.com/lldwb/NoitaSaver.git
 
 `mailVerificationCode`邮箱验证码表
 
-| 字段                               | 类型           | 约束        | 描述             |
-|----------------------------------|--------------|-----------|----------------|
-| mailVerificationCode_id          | int          | 主键,自增1,非空 | 验证码记录ID        |
-| mailVerificationCode_email       | varchar(255) | 非空        | 接收验证码的邮箱       |
-| mailVerificationCode_code        | char(6)      | 非空        | 邮箱验证码,6位       |
-| mailVerificationCode_create_time | timestamp    | 非空,默认     | 创建时间           |
-| mailVerificationCode_expire_time | timestamp    | 非空,默认     | 过期时间(创建时间5分钟后) |
+| 字段                               | 类型           | 约束        | 描述                 |
+|----------------------------------|--------------|-----------|--------------------|
+| mailVerificationCode_id          | int          | 主键,自增1,非空 | 验证码记录ID            |
+| mailVerificationCode_email       | varchar(255) | 非空        | 接收验证码的邮箱           |
+| mailVerificationCode_code        | char(6)      | 非空        | 邮箱验证码,6位           |
+| mailVerificationCode_create_time | timestamp    | 非空,默认     | 创建时间               |
+| mailVerificationCode_expire_time | timestamp    | 非空,默认     | 过期时间(创建时间5分钟后)(抛弃) |
 
 ## 项目架构
 
 使用MVC设计模式，前端和后端分离，Servlet 进行通信。
 
 ### 具体的模块划分如下：
+
 #### 核心模块
+
 NoitaSaverClient：客户端
 NoitaSaverServer：服务端
 
 #### 工具模块
+
 DbUtil：根据DbUtil的源码进行的简单模仿
 EncryptionUtil：进行不可逆的加密
 FileUtil：对文件进行操作

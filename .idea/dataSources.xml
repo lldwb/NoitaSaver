@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="noitaSaver@localhost" uuid="951c034a-ee99-4874-8121-2b513ddc5902">
+    <data-source source="LOCAL" name="noitasaver@lin.lldwb.top" uuid="153d8ad6-5f45-4918-b8ca-5d1e250a1d12">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/noitaSaver</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="noitasaver@mysql.lldwb.top" uuid="153d8ad6-5f45-4918-b8ca-5d1e250a1d12">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://mysql.lldwb.top:33366/noitasaver?serverTimezone=Asia/Shanghai&amp;useSSL=false</jdbc-url>
+      <jdbc-url>jdbc:mysql://lin.lldwb.top:3306/noitasaver?serverTimezone=Asia/Shanghai&amp;useSSL=false</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

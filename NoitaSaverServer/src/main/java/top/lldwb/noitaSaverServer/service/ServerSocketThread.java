@@ -6,7 +6,7 @@ import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
 import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao;
-import top.lldwb.noitaSaverServer.dao.UserDao;
+import top.lldwb.noitaSaverServer.dao.UserDaoNo;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
 import java.io.*;
@@ -82,15 +82,15 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         System.out.println(user);
 
         // 判断是否有用户或者邮箱，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!(user.getUserName().equals(UserDao.getUserByName(user.getUserName()).getUserName()) || user.getUserMail().equals(UserDao.getUserByMail(user.getUserMail()).getUserMail()))) {
+        if (!(user.getUserName().equals(UserDaoNo.getUserByName(user.getUserName()).getUserName()) || user.getUserMail().equals(UserDaoNo.getUserByMail(user.getUserMail()).getUserMail()))) {
             // 创建远程秘钥
             user.setUserKey(EncryptUtil.encrypt(user.getUserName() + user.getUserMail(), EncryptTypes.MD5) + EncryptUtil.encrypt(System.currentTimeMillis() + user.getUserPassword(), EncryptTypes.MD5));
 
             // 在数据库创建用户
-            System.out.println(UserDao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
+            System.out.println(UserDaoNo.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
             System.out.println(true);
             this.sendObject(true);
-            this.sendObject(UserDao.getUserByName(user.getUserName()));
+            this.sendObject(UserDaoNo.getUserByName(user.getUserName()));
         }
         // 如果有，向客户端发送 false
         else {
@@ -151,7 +151,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
         System.out.println(user);
-        user = UserDao.getUserByMail(user.getUserMail());
+        user = UserDaoNo.getUserByMail(user.getUserMail());
         System.out.println(user);
         // 判断用户邮箱是否存在
         if (user.getUserId() != 0) {
@@ -181,8 +181,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             this.sendObject(true);
             System.out.println(true);
             // 修改用户状态为通过邮箱验证
-            UserDao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(), 1);
-            User user = UserDao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
+            UserDaoNo.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(), 1);
+            User user = UserDaoNo.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
             System.out.println(user);
             this.sendObject(user);
         } else {
@@ -206,8 +206,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
-        // 通过 UserDao 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUserByName(user.getUserName());
+        // 通过 UserDaoNo 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDaoNo.getUserByName(user.getUserName());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (user.getUserPassword().equals(userDao.getUserPassword())) {
@@ -236,8 +236,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
-        // 通过 UserDao 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDao.getUserByKey(user.getUserKey());
+        // 通过 UserDaoNo 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
+        User userDao = UserDaoNo.getUserByKey(user.getUserKey());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (userDao.getUserId() != 0) {

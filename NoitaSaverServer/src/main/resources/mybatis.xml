@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- typeAlioses用于配置实体类的别名 -->
+    <typeAliases>
+        <!-- 方式一：为每一个实体类分别指定一个别名。比较繁琐 -->
+        <!--        <typeAlias type="" alias=""/>-->
+        <!-- 直接指定实体类的包，这样mybatis就会自动给这个包下所有的实体类指定创建别名，别名就是类名不包括类名，使用时也不区分大小写 -->
+        <package name="top.lldwb.noitaSaver.Entity"/>
+    </typeAliases>
+
+    <!-- 配置环境，主要是配置不同数据库的数据源，default指定使用的默认数据源环境的id -->
+    <environments default="mysql">
+        <!-- 配置mysql数据源的环境，id通常指定数据库名称 -->
+        <environment id="mysql">
+            <!-- 事务管理使用JDBC的事务 -->
+            <transactionManager type="JDBC"/>
+            <!-- type指定为pool表示数据源连接使用mybatis连接池，目的是可以让连接复用 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://lin.lldwb.top:3306/noitasaver?serverTimezone=Asia/Shanghai&useSSL=false"/>
+                <property name="username" value="noitasaver"/>
+                <property name="password" value="2PpMD7Jxpx53BNw3"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 解析mapper -->
+    <mappers>
+        <mapper resource="mappers/UserMapper.xml"/>
+    </mappers>
+</configuration>

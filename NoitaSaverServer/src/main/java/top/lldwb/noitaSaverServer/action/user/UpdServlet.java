@@ -1,7 +1,7 @@
 package top.lldwb.noitaSaverServer.action.user;
 
 import top.lldwb.noitaSaverServer.action.BaseController;
-import top.lldwb.noitaSaverServer.dao.UserDao;
+import top.lldwb.noitaSaverServer.dao.UserDaoNo;
 import top.lldwb.noitaSaverServer.servlet.WebController;
 
 import javax.servlet.*;
@@ -17,9 +17,9 @@ public class UpdServlet extends BaseController {
         String password = req.getParameter("password");
         String mail = req.getParameter("mail");
 
-        UserDao userDao = new UserDao();
+        UserDaoNo userDaoNo = new UserDaoNo();
         try {
-            int row = userDao.updateUserByName(name,password,mail);
+            int row = userDaoNo.updateUserByName(name,password,mail);
             // 打印响应的数据
             if (row == 1) {
                 print(resp, successJson(200, "修改成功", ""));
