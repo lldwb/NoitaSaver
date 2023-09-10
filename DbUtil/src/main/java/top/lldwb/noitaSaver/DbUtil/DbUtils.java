@@ -1,9 +1,6 @@
 package top.lldwb.noitaSaver.DbUtil;
 
-import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 谢世杰

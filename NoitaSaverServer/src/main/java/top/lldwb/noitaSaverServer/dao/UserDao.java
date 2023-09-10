@@ -1,7 +1,6 @@
 package top.lldwb.noitaSaverServer.dao;
 
 import top.lldwb.noitaSaver.Entity.User;
-import top.lldwb.noitaSaverServer.utils.MySQLUtil;
 
 import java.sql.SQLException;
 import java.util.List;

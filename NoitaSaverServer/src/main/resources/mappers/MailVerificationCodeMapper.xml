@@ -2,11 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace指定接口的完整类名 -->
-<mapper namespace="">
+<mapper namespace="top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao">
+    <select id="getMailVerificationCodeByCodeMail"
+            resultType="mailVerificationCode">
+        select *
+        from mailVerificationCode
+        where mailVerificationCode_code =
+              #{code}
+          and mailVerificationCode_email = #{mail};
+    </select>
 
-    <!-- 给UserDao接口中的所有方法编写相应的SQL语句 -->
-    <!-- insert表示传入语句，对应的删除和修改是delete和update标签 -->
-    <!-- id对应接口的方法名，parameterType指定参数的类型，如果是实体可以引用mybatis.xml中定义的别名 -->
-    <!-- insert标签中只能写sql语句，注释也不能写 -->
-    <!-- SQL语句中的参数使用#{实体中的属性名}来获取实体对象中的属性的值 -->
+    <insert id="setMailVerificationCode" parameterType="mailVerificationCode">
+        insert into mailVerificationCode(mailVerificationCode_email, mailVerificationCode_code)
+        values (#{mailVerificationCodeEmail}, #{mailVerificationCodeCode});
+    </insert>
 </mapper>

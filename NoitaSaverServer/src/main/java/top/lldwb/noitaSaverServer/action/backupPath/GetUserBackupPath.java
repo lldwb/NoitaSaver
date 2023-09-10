@@ -1,7 +1,6 @@
 package top.lldwb.noitaSaverServer.action.backupPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.lldwb.noitaSaver.fileUtil.entity.Folder;
 import top.lldwb.noitaSaverServer.action.BaseController;
 import top.lldwb.noitaSaverServer.service.UserBackupPathService;
 import top.lldwb.noitaSaverServer.servlet.WebController;

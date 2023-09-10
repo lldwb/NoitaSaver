@@ -21,7 +21,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://lin.lldwb.top:3306/noitasaver?serverTimezone=Asia/Shanghai&useSSL=false"/>
+                          value="jdbc:mysql://lin.lldwb.top:3306/noitasaver?serverTimezone=Asia/Shanghai&amp;useSSL=false"/>
                 <property name="username" value="noitasaver"/>
                 <property name="password" value="2PpMD7Jxpx53BNw3"/>
             </dataSource>
@@ -31,5 +31,6 @@
     <!-- 解析mapper -->
     <mappers>
         <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/MailVerificationCodeMapper.xml"/>
     </mappers>
 </configuration>

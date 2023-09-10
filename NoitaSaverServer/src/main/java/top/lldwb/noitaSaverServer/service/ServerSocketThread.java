@@ -5,7 +5,7 @@ import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
-import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao;
+import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDaoNo;
 import top.lldwb.noitaSaverServer.dao.UserDaoNo;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
@@ -162,7 +162,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             // 发送验证码
             MailUtil.sendSession(user.getUserMail(), "noitaSaver验证码", code);
             // 在数据库中存储验证码
-            MailVerificationCodeDao.setMailVerificationCode(user.getUserMail(), code);
+            MailVerificationCodeDaoNo.setMailVerificationCode(user.getUserMail(), code);
         } else {
             // 发送失败
             this.sendObject(false);
@@ -176,7 +176,7 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
         // 接收客户端发过来的邮箱
         MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
         System.out.println(mailVerificationCode);
-        if (MailVerificationCodeDao.getMailVerificationCodeByCodeMail(mailVerificationCode.getMailVerificationCodeCode(), mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeId() != 0) {
+        if (MailVerificationCodeDaoNo.getMailVerificationCodeByCodeMail(mailVerificationCode.getMailVerificationCodeCode(), mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeId() != 0) {
             // 如果正确，向客户端发送 true 并返回 user 对象
             this.sendObject(true);
             System.out.println(true);

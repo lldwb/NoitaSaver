@@ -3,7 +3,6 @@ package top.lldwb.noitaSaverClient.action.copy;
 import top.lldwb.noitaSaverClient.service.copy.Copy;
 import top.lldwb.noitaSaverClient.service.copy.FolderCopy;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
