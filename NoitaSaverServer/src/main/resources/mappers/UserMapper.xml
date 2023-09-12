@@ -4,6 +4,18 @@
 <!-- namespace指定接口的完整类名 -->
 <mapper namespace="top.lldwb.noitaSaverServer.dao.UserDao">
 
+    <!-- 声明resultMap用于User实体类和user_info的表映射-->
+    <resultMap id="userMap" type="user">
+        <!-- id用于映射主键，property指定实体的字段名，column指定表列的名称 -->
+        <id property="userId" column="user_id"/>
+        <!-- 其他属性使用result标签来映射-->
+        <id property="userName" column="user_name"/>
+        <id property="userPassword" column="user_password"/>
+        <id property="userMail" column="user_mail"/>
+        <id property="userState" column="user_state"/>
+        <id property="userKey" column="user_key"/>
+    </resultMap>
+
     <!-- 给UserDao接口中的所有方法编写相应的SQL语句 -->
     <!-- insert表示传入语句，对应的删除和修改是delete和update标签 -->
     <!-- id对应接口的方法名，parameterType指定参数的类型，如果是实体可以引用mybatis.xml中定义的别名 -->
@@ -11,26 +23,26 @@
     <!-- SQL语句中的参数使用#{实体中的属性名}来获取实体对象中的属性的值 -->
 
     <select id="getUserByName" resultType="user">
-        select *
+        select user_id, user_name, user_password, user_mail, user_state, user_key
         from user
         where user_name = #{name}
     </select>
     <select id="getUserByKey" resultType="user">
-        select *
+        select user_id, user_name, user_password, user_mail, user_state, user_key
         from user
         where user_key = #{key}
     </select>
     <select id="getUserByMail" resultType="user">
-        select *
+        select user_id, user_name, user_password, user_mail, user_state, user_key
         from user
         where user_mail = #{mail}
     </select>
     <select id="getUserList" resultType="user">
-        select *
+        select user_id, user_name, user_password, user_mail, user_state, user_key
         from user
     </select>
     <select id="getUserListLikeName" resultType="user">
-        select *
+        select user_id, user_name, user_password, user_mail, user_state, user_key
         from user
         where user_name like #{name}
     </select>
@@ -47,7 +59,9 @@
         where user_name = #{name}
     </update>
     <update id="updateUserStatusById">
-        update user set user_state=#{state} where user_id=#{id}
+        update user
+        set user_state=#{state}
+        where user_id = #{id}
     </update>
     <update id="updateUserStatusByMail">
         update user
