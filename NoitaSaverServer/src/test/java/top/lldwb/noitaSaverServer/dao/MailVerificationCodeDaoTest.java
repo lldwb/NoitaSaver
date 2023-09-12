@@ -7,6 +7,8 @@ class MailVerificationCodeDaoTest {
 
     @Test
     void getMailVerificationCodeByCodeMail() {
+        MailVerificationCodeDao dao = new MailVerificationCodeDaoImpl();
+        System.out.println(dao.getMailVerificationCodeByCodeMail("1432","12dgss"));
     }
 
     @Test

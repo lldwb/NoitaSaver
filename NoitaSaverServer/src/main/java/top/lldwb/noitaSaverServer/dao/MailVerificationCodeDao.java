@@ -1,5 +1,6 @@
 package top.lldwb.noitaSaverServer.dao;
 
+import org.apache.ibatis.annotations.Param;
 import top.lldwb.noitaSaver.Entity.MailVerificationCode;
 
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public interface MailVerificationCodeDao {
      * @throws SQLException
      * @throws NoSuchFieldException
      */
-    MailVerificationCode getMailVerificationCodeByCodeMail(String code, String mail);
+    MailVerificationCode getMailVerificationCodeByCodeMail(@Param("code") String code, @Param("mail") String mail);
 
     /**
      * 在数据库中添加验证码

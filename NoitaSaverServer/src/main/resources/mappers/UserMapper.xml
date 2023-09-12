@@ -26,7 +26,8 @@
         where user_mail = #{mail}
     </select>
     <select id="getUserList" resultType="user">
-        select * from user
+        select *
+        from user
     </select>
     <select id="getUserListLikeName" resultType="user">
         select *

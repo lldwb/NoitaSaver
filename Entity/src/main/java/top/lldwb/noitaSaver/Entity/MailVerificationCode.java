@@ -40,6 +40,6 @@ public class MailVerificationCode {
     /**
      * 过期时间，非空，默认创建时间后的5分钟
      */
-    @AnotherName("mailVerificationCode_expire_time")
-    private Timestamp mailVerificationCodeExpireTime;
+//    @AnotherName("mailVerificationCode_expire_time")
+//    private Timestamp mailVerificationCodeExpireTime;
 }

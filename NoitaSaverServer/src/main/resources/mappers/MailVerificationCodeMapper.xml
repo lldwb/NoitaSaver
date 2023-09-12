@@ -5,7 +5,10 @@
 <mapper namespace="top.lldwb.noitaSaverServer.dao.MailVerificationCodeDao">
     <select id="getMailVerificationCodeByCodeMail"
             resultType="mailVerificationCode">
-        select *
+        select mailVerificationCode_id,
+               mailVerificationCode_email,
+               mailVerificationCode_code,
+               mailVerificationCode_create_time
         from mailVerificationCode
         where mailVerificationCode_code =
               #{code}
