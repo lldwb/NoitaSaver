@@ -17,18 +17,8 @@ import java.sql.SQLException;
 @WebController("/selNameServlet")
 public class SelNameServlet extends BaseController {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            String name = req.getParameter("name");
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = req.getParameter("name");
         print(resp,successJson(new UserService().getUserList(name)));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

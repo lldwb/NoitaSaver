@@ -1,7 +1,8 @@
 package top.lldwb.noitaSaverServer.service;
 
 import top.lldwb.noitaSaver.Entity.User;
-import top.lldwb.noitaSaverServer.dao.UserDaoNo;
+import top.lldwb.noitaSaverServer.dao.UserDao;
+import top.lldwb.noitaSaverServer.dao.UserDaoImpl;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,11 +12,12 @@ import java.util.List;
  * @version 1.0
  */
 public class UserService {
-    public List<User> getUserList(String name) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public List<User> getUserList(String name) {
+        UserDao dao = new UserDaoImpl();
         if (name!=null && !"".equals(name.trim())){
-            return UserDaoNo.getUserListLikeName("%"+name+"%");
+            return dao.getUserListLikeName("%"+name+"%");
         }else {
-            return UserDaoNo.getUserList();
+            return dao.getUserList();
         }
     }
 }

@@ -20,7 +20,7 @@ import java.io.IOException;
 @WebController("/SetUserBackupPath")
 public class SetUserBackupPath extends BaseController {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         new UserBackupPathService().setUserBackupPath(new Folder(req.getParameter("path") + "\\"));
 
         try {

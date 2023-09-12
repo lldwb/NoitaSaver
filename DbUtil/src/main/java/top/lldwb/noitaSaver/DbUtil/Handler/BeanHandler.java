@@ -21,7 +21,7 @@ public class BeanHandler<T> implements ResultSetHandler<T> {
     }
 
     @Override
-    public T handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+    public T handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
         // 创建一个实体类的对象
         T t = type.newInstance();
         ResultSetMetaData metaData = rs.getMetaData();

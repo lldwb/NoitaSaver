@@ -13,5 +13,5 @@ public interface ResultSetHandler<T>{
      * @return 返回处理的结果
      * @throws SQLException 提供有关数据库访问错误或其他错误的信息的异常。
      */
-    <T> T handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException, NoSuchFieldException;
+    <T> T handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException;
 }

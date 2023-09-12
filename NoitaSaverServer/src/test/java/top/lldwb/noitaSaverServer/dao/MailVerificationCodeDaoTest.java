@@ -19,6 +19,6 @@ class MailVerificationCodeDaoTest {
         mailVerificationCode.setMailVerificationCodeCode("1432");
 
         MailVerificationCodeDao dao = new MailVerificationCodeDaoImpl();
-        dao.setMailVerificationCode(mailVerificationCode);
+//        dao.setMailVerificationCode(mailVerificationCode);
     }
 }

@@ -14,8 +14,7 @@ public interface Controller {
      *
      * @param req
      * @param resp
-     * @throws ServletException
      * @throws IOException
      */
-    void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+    void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException;
 }

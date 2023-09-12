@@ -21,7 +21,7 @@ import java.io.IOException;
 @WebServlet("/receiveEmailVerificationCode")
 public class ReceiveEmailVerificationCode extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         MailVerificationCode mailVerificationCode = new MailVerificationCode();
         mailVerificationCode.setMailVerificationCodeEmail(req.getParameter("mail"));
         mailVerificationCode.setMailVerificationCodeCode(req.getParameter("code"));

@@ -19,7 +19,7 @@ import java.io.IOException;
 @WebServlet("/sendEmailVerificationCode")
 public class SendEmailVerificationCode extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = new User();
         user.setUserMail(req.getParameter("mail"));
         if (!new EmailVerificationCodeService().sendEmailVerificationCode(user)) {

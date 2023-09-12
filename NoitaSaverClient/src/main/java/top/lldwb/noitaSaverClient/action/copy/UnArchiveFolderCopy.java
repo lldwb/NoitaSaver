@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet("/unArchiveFolderCopy")
 public class UnArchiveFolderCopy extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 

@@ -12,8 +12,8 @@ public class MailVerificationCodeDaoImpl implements MailVerificationCodeDao{
     }
 
     @Override
-    public void setMailVerificationCode(MailVerificationCode mailVerificationCode) {
+    public void setMailVerificationCode(String mail, String code) {
         SqlSession session = MybatisUtils.getSqlSession(true);
-        session.getMapper(MailVerificationCodeDao.class).setMailVerificationCode(mailVerificationCode);
+        session.getMapper(MailVerificationCodeDao.class).setMailVerificationCode(mail, code);
     }
 }

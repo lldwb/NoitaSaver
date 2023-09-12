@@ -17,6 +17,6 @@
 
     <insert id="setMailVerificationCode" parameterType="mailVerificationCode">
         insert into mailVerificationCode(mailVerificationCode_email, mailVerificationCode_code)
-        values (#{mailVerificationCodeEmail}, #{mailVerificationCodeCode});
+        values (#{mail}, #{code});
     </insert>
 </mapper>

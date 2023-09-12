@@ -34,10 +34,9 @@ public class DispatcherServlet extends HttpServlet {
      * 这是一个便利的方法，可以被重写以避免调用super.init(config)。
      * 不需要重写init(ServletConfig)，只需要重写这个方法，GenericServlet.init(ServletConfig config)将会调用它。ServletConfig对象仍然可以通过getServletConfig方法获取。
      *
-     * @throws ServletException
      */
     @Override
-    public void init() throws ServletException {
+    public void init() {
         // 扫描IDataValidator所在的包 com.lm.validate
         Reflections reflections = new Reflections(Controller.class.getPackage().getName());
         // 获取包com.lm.validate下面所有IDataValidator实现类

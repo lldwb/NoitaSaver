@@ -35,8 +35,6 @@ public class UserService {
             return user;
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -55,8 +53,6 @@ public class UserService {
             clientSocketUtil.close();
             return user;
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

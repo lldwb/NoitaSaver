@@ -23,7 +23,7 @@ public class BeanListHandler<T> implements ResultSetHandler<List<T>> {
     }
 
     @Override
-    public List<T> handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+    public List<T> handle(ResultSet rs) throws SQLException, InstantiationException, IllegalAccessException {
         List<T> list = new ArrayList<>();
         ResultSetMetaData metaData = rs.getMetaData();
         //拿到有多少列

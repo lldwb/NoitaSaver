@@ -2,8 +2,6 @@ package top.lldwb.noitaSaverServer.dao;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserDaoTest {
     UserDao dao = new UserDaoImpl();
 

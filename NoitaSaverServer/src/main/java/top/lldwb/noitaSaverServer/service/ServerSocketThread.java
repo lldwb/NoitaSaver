@@ -5,8 +5,7 @@ import top.lldwb.noitaSaver.Entity.User;
 import top.lldwb.noitaSaver.SocketUtil.SocketUtil;
 import top.lldwb.noitaSaver.encrypt.EncryptTypes;
 import top.lldwb.noitaSaver.encrypt.EncryptUtil;
-import top.lldwb.noitaSaverServer.dao.MailVerificationCodeDaoNo;
-import top.lldwb.noitaSaverServer.dao.UserDaoNo;
+import top.lldwb.noitaSaverServer.dao.*;
 import top.lldwb.noitaSaverServer.utils.MailUtil;
 
 import java.io.*;
@@ -75,22 +74,23 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     /**
      * 注册
      */
-    private void registration() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private void registration() throws IOException {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
 
-        System.out.println(user);
+//        System.out.println(user);
+        UserDao dao = new UserDaoImpl();
 
         // 判断是否有用户或者邮箱，如果没有执行如下代码创建用户，并判断是否创建成功，一切成功后向客户端发送 true
-        if (!(user.getUserName().equals(UserDaoNo.getUserByName(user.getUserName()).getUserName()) || user.getUserMail().equals(UserDaoNo.getUserByMail(user.getUserMail()).getUserMail()))) {
+        if (!(user.getUserName().equals(dao.getUserByName(user.getUserName()).getUserName()) || user.getUserMail().equals(dao.getUserByMail(user.getUserMail()).getUserMail()))) {
             // 创建远程秘钥
             user.setUserKey(EncryptUtil.encrypt(user.getUserName() + user.getUserMail(), EncryptTypes.MD5) + EncryptUtil.encrypt(System.currentTimeMillis() + user.getUserPassword(), EncryptTypes.MD5));
 
             // 在数据库创建用户
-            System.out.println(UserDaoNo.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
+            System.out.println(dao.setUser(user.getUserName(), user.getUserPassword(), user.getUserMail(), user.getUserKey()));
             System.out.println(true);
             this.sendObject(true);
-            this.sendObject(UserDaoNo.getUserByName(user.getUserName()));
+            this.sendObject(dao.getUserByName(user.getUserName()));
         }
         // 如果有，向客户端发送 false
         else {
@@ -102,13 +102,9 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      * 备份用户所有文件
      *
      * @throws IOException
-     * @throws SQLException
-     * @throws NoSuchFieldException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      * @throws ClassNotFoundException
      */
-    private void backupFolder() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private void backupFolder() throws IOException, ClassNotFoundException {
         // 验证用户
         User user = this.checkUserKey();
         // 读取用户备份路径
@@ -122,14 +118,10 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     /**
      * 恢复用户所有文件
      *
-     * @throws SQLException
      * @throws IOException
-     * @throws NoSuchFieldException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      * @throws ClassNotFoundException
      */
-    private void restoreFolder() throws SQLException, IOException, NoSuchFieldException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private void restoreFolder() throws IOException, ClassNotFoundException {
         // 验证用户
         User user = this.checkUserKey();
         // 读取用户备份路径
@@ -147,11 +139,12 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     /**
      * 发送邮箱验证码
      */
-    private void sendEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private void sendEmailVerificationCode() throws IOException {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
         System.out.println(user);
-        user = UserDaoNo.getUserByMail(user.getUserMail());
+        UserDao dao = new UserDaoImpl();
+        user = dao.getUserByMail(user.getUserMail());
         System.out.println(user);
         // 判断用户邮箱是否存在
         if (user.getUserId() != 0) {
@@ -162,7 +155,8 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
             // 发送验证码
             MailUtil.sendSession(user.getUserMail(), "noitaSaver验证码", code);
             // 在数据库中存储验证码
-            MailVerificationCodeDaoNo.setMailVerificationCode(user.getUserMail(), code);
+            MailVerificationCodeDao mailVerificationCodeDao = new MailVerificationCodeDaoImpl();
+            mailVerificationCodeDao.setMailVerificationCode(user.getUserMail(), code);
         } else {
             // 发送失败
             this.sendObject(false);
@@ -172,17 +166,19 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
     /**
      * 接收邮箱验证码
      */
-    private void receiveEmailVerificationCode() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private void receiveEmailVerificationCode() throws IOException {
         // 接收客户端发过来的邮箱
         MailVerificationCode mailVerificationCode = this.receiveObject(MailVerificationCode.class);
         System.out.println(mailVerificationCode);
-        if (MailVerificationCodeDaoNo.getMailVerificationCodeByCodeMail(mailVerificationCode.getMailVerificationCodeCode(), mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeId() != 0) {
+        MailVerificationCodeDao mailVerificationCodeDao = new MailVerificationCodeDaoImpl();
+        if (mailVerificationCodeDao.getMailVerificationCodeByCodeMail(mailVerificationCode.getMailVerificationCodeCode(), mailVerificationCode.getMailVerificationCodeEmail()).getMailVerificationCodeId() != 0) {
             // 如果正确，向客户端发送 true 并返回 user 对象
             this.sendObject(true);
             System.out.println(true);
             // 修改用户状态为通过邮箱验证
-            UserDaoNo.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(), 1);
-            User user = UserDaoNo.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
+            UserDao dao = new UserDaoImpl();
+            dao.updateUserStatusByMail(mailVerificationCode.getMailVerificationCodeEmail(), 1);
+            User user = dao.getUserByMail(mailVerificationCode.getMailVerificationCodeEmail());
             System.out.println(user);
             this.sendObject(user);
         } else {
@@ -196,18 +192,15 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      *
      * @return 返回用户对象，如果没有就是错误
      * @throws IOException
-     * @throws SQLException
-     * @throws NoSuchFieldException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
-    private User checkUser() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private User checkUser() throws IOException {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
         // 通过 UserDaoNo 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDaoNo.getUserByName(user.getUserName());
+        UserDao dao = new UserDaoImpl();
+        User userDao = dao.getUserByName(user.getUserName());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (user.getUserPassword().equals(userDao.getUserPassword())) {
@@ -231,13 +224,14 @@ public class ServerSocketThread extends SocketUtil implements Runnable {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private User checkUserKey() throws IOException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private User checkUserKey() throws IOException {
         // 接收客户端发过来的JSON并转成Java对象
         User user = this.receiveObject(User.class);
         System.out.println(user);
 
         // 通过 UserDaoNo 类的 getUserByName 方法从数据库中获取与输入用户名相符的用户信息（User）
-        User userDao = UserDaoNo.getUserByKey(user.getUserKey());
+        UserDao dao = new UserDaoImpl();
+        User userDao = dao.getUserByKey(user.getUserKey());
         System.out.println(userDao);
         // 如果密码一致，向客户端发送 true 并返回 user 对象
         if (userDao.getUserId() != 0) {
